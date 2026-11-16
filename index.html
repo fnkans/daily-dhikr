@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Zikir">
+<title>Zikir Harian</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+ :root{
+ --p1:#ECCBC9; --p2:#E0C5C4; --p3:#D0A0A3; --p4:#F5E2E3; --p5:#ECEBE8;
+ --mauve:#9C6B73; --plum:#6b4f52; --peach:#F2D3C2; --sage:#C9D3C0;
+ --card:rgba(255,255,255,.7);
+ }
+ *{box-sizing:border-box;margin:0;padding:0}
+ html,body{height:100%}
+ body{
+ font-family:'Quicksand',system-ui,sans-serif;
+ color:var(--plum);
+ background:linear-gradient(160deg,var(--p4),var(--peach));
+ min-height:100vh;
+ padding-bottom:calc(84px + env(safe-area-inset-bottom));
+ }
+ h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:700}
+ .page{display:none;padding:22px 18px 24px;max-width:520px;margin:0 auto}
+ .page.active{display:block}
+ h1{font-size:2.2rem;text-align:center;color:var(--mauve)}
+ .by{text-align:center;font-size:.95rem;margin-top:4px;opacity:.8}
+ h2{font-size:1.5rem;color:var(--mauve);margin:18px 0 10px}
+ .card{
+ background:var(--card);border-radius:18px;padding:14px 16px;margin-bottom:12px;
+ box-shadow:0 4px 14px rgba(156,107,115,.12);
+ }
+ .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+ .muted{font-size:.85rem;opacity:.75}
+ input,select{
+ width:100%;padding:12px 14px;border-radius:14px;border:1px solid var(--p3);
+ background:#fff;font:inherit;color:var(--plum);outline:none;
+ }
+ input:focus,select:focus{border-color:var(--mauve)}
+ .btn{
+ border:none;border-radius:14px;padding:11px 16px;font:inherit;font-weight:600;
+ background:var(--mauve);color:#fff;cursor:pointer;
+ }
+ .btn.ghost{background:transparent;color:var(--mauve);border:1px solid var(--p3)}
+ .btn.small{padding:6px 10px;font-size:.8rem;border-radius:10px}
+ .btn.danger{background:transparent;color:#b5545c;border:1px solid #e3b6b9;padding:6px 10px;font-size:.8rem;border-radius:10px}
+ .msg{min-height:20px;font-size:.88rem;margin-top:8px;color:#b5545c}
+ .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px}
+ .chip{
+ flex:0 0 auto;padding:8px 14px;border-radius:999px;border:1px solid var(--p3);
+ background:#fff;cursor:pointer;font:inherit;font-size:.9rem;color:var(--plum);
+ }
+ .chip.on{background:var(--mauve);color:#fff;border-color:var(--mauve)}
+
+ /* Counter */
+ .counter{text-align:center}
+ .zname{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--mauve);margin-bottom:4px}
+ .ztarget{font-size:.9rem;opacity:.8;margin-bottom:16px}
+ .big{
+ width:230px;height:230px;border-radius:50%;margin:0 auto;border:none;cursor:pointer;
+ background:radial-gradient(circle at 35% 30%,#fff 0%,var(--p4) 35%,var(--p1) 70%,var(--p3) 100%);
+ box-shadow:0 12px 30px rgba(156,107,115,.35), inset 0 -6px 14px rgba(156,107,115,.25);
+ display:flex;align-items:center;justify-content:center;flex-direction:column;
+ color:var(--plum);transition:transform .08s ease;user-select:none;-webkit-tap-highlight-color:transparent;
+ }
+ .big:active{transform:scale(.96)}
+ .bigcount{font-family:'Cormorant Garamond',serif;font-size:4.2rem;font-weight:700;line-height:1}
+ .bigsub{font-size:.85rem;margin-top:4px;opacity:.7}
+ .done{margin-top:12px;color:var(--mauve);font-weight:600;min-height:22px}
+ .actions{display:flex;justify-content:center;align-items:center;gap:18px;margin-top:18px}
+ .minus{background:none;border:none;font-size:2rem;color:var(--mauve);cursor:pointer;padding:6px 14px;font-family:inherit}
+ .resetbtn{margin-top:14px}
+
+ /* Streak */
+ .streak{
+ display:flex;align-items:center;gap:12px;background:var(--sage);
+ border-radius:18px;padding:12px 16px;margin-bottom:14px;
+ }
+ .streak .num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--plum)}
+
+ /* Tabs */
+ .tabs{display:flex;background:var(--card);border-radius:14px;padding:4px;margin-bottom:14px}
+ .tab{flex:1;border:none;background:none;padding:9px;border-radius:10px;font:inherit;cursor:pointer;color:var(--plum)}
+ .tab.on{background:var(--mauve);color:#fff}
+ .subpage{display:none}
+ .subpage.active{display:block}
+
+ /* Chart */
+ canvas{width:100%;height:240px;display:block;background:#fff;border-radius:16px}
+ .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;text-align:center}
+ .stats div{background:var(--card);border-radius:14px;padding:10px 6px}
+ .stats b{display:block;font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--mauve)}
+ .stats span{font-size:.75rem}
+ .legend{font-size:.8rem;margin-top:8px;opacity:.85}
+
+ /* Bottom nav */
+ nav{
+ position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-around;
+ background:rgba(255,255,255,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+ border-top:1px solid var(--p2);padding:8px 8px calc(10px + env(safe-area-inset-bottom));
+ z-index:10;
+ }
+ nav button{
+ flex:1;border:none;background:none;font:inherit;font-size:.82rem;color:var(--plum);
+ padding:8px 4px;border-radius:12px;cursor:pointer;opacity:.6;
+ }
+ nav button.on{opacity:1;background:var(--p4);color:var(--mauve);font-weight:700}
+</style>
+</head>
+<body>
+
+<!-- BERANDA -->
+<section class="page" id="pageHome">
+ <h1>Daily Dhikr</h1>
+ <p class="by">By Fenika Annisa</p>
+
+ <h2>Tambah zikir</h2>
+ <div class="card">
+ <div style="display:grid;gap:10px">
+ <input id="inName" type="text" placeholder="Nama zikir / doa" maxlength="60">
+ <input id="inTarget" type="number" placeholder="Target harian (contoh: 100)" min="1" inputmode="numeric">
+ <button class="btn" id="btnAdd">Simpan zikir</button>
+ <div class="msg" id="formMsg"></div>
+ </div>
+ </div>
+
+ <h2>Daftar zikir</h2>
+ <div id="homeList"></div>
+</section>
+
+<!-- ZIKIR HARI INI -->
+<section class="page" id="pageToday">
+ <h1>Zikir hari ini</h1>
+ <p class="by" id="todayDate"></p>
+
+ <div class="streak">
+ <div class="num" id="streakNum">0</div>
+ <div>
+ <div style="font-weight:600">hari berturut-turut</div>
+ <div class="muted">target semua zikir tercapai</div>
+ </div>
+ </div>
+
+ <div class="chips" id="todayChips"></div>
+
+ <div class="counter card" id="counterBox">
+ <div class="zname" id="zName"></div>
+ <div class="ztarget" id="zTarget"></div>
+ <button class="big" id="bigBtn" aria-label="Tambah hitungan">
+ <span class="bigcount" id="bigCount">0</span>
+ <span class="bigsub">ketuk untuk menghitung</span>
+ </button>
+ <div class="actions">
+ <button class="minus" id="minusBtn" aria-label="Kurangi">−</button>
+ </div>
+ <div class="done" id="doneMsg"></div>
+ <button class="btn ghost resetbtn" id="resetBtn">Reset hari ini</button>
+ </div>
+ <div class="card muted" id="emptyToday" style="text-align:center;display:none">
+ Belum ada zikir. Tambahkan dulu di menu Beranda.
+ </div>
+</section>
+
+<!-- RIWAYAT -->
+<section class="page" id="pageHistory">
+ <h1>Riwayat</h1>
+ <p class="by">Catatan dan grafik zikirmu</p>
+
+ <div class="tabs" style="margin-top:16px">
+ <button class="tab on" data-sub="subLog">Riwayat</button>
+ <button class="tab" data-sub="subChart">Grafik</button>
+ </div>
+
+ <div class="subpage active" id="subLog">
+ <h2>Total sepanjang waktu</h2>
+ <div id="totalList"></div>
+ <h2>Aktivitas harian</h2>
+ <div id="dailyList"></div>
+ <div style="margin-top:14px">
+ <button class="btn ghost" id="btnExport" style="width:100%">Ekspor CSV (untuk Google Sheets)</button>
+ </div>
+ </div>
+
+ <div class="subpage" id="subChart">
+ <div class="card" style="display:grid;gap:10px;margin-top:6px">
+ <input id="monthPick" type="month">
+ <select id="filterSel"></select>
+ </div>
+ <canvas id="chart"></canvas>
+ <div class="legend" id="legend"></div>
+ <div class="stats">
+ <div><b id="stTotal">0</b><span>total bulan ini</span></div>
+ <div><b id="stDays">0</b><span>hari aktif</span></div>
+ <div><b id="stHit">0</b><span>hari target tercapai</span></div>
+ </div>
+ </div>
+</section>
+
+<!-- BOTTOM NAV -->
+<nav>
+ <button data-page="pageToday">Zikir hari ini</button>
+ <button data-page="pageHome" class="on">Beranda</button>
+ <button data-page="pageHistory">Riwayat</button>
+</nav>
+
+<script>
+(function(){
+ const KEY = 'zikirApp';
+ const $ = (id) => document.getElementById(id);
+
+ // ---------- Data ----------
+ let data = load();
+ let currentId = null;
+
+ function load(){
+ try{
+ const raw = localStorage.getItem(KEY);
+ if(raw){
+ const d = JSON.parse(raw);
+ return { zikirs: d.zikirs || [], counts: d.counts || {}, nextId: d.nextId || 1 };
+ }
+ }catch(e){}
+ return { zikirs: [], counts: {}, nextId: 1 };
+ }
+ function save(){ localStorage.setItem(KEY, JSON.stringify(data)); }
+
+ function todayKey(){
+ const d = new Date();
+ return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate());
+ }
+ function pad(n){ return String(n).padStart(2,'0'); }
+ function getCount(dateKey, id){
+ return (data.counts[dateKey] && data.counts[dateKey][id]) || 0;
+ }
+ function setCount(dateKey, id, val){
+ if(!data.counts[dateKey]) data.counts[dateKey] = {};
+ data.counts[dateKey][id] = Math.max(0, val);
+ save();
+ }
+ function zikirById(id){ return data.zikirs.find(z => z.id === id); }
+ function metTarget(dateKey, z){ return z.target > 0 && getCount(dateKey, z.id) >= z.target; }
+
+ // Streak: hari berturut-turut dimana SEMUA zikir (yang punya target) tercapai.
+ // Jika hari ini belum lengkap, hitungan mulai dari kemarin agar tidak langsung putus.
+ function dayComplete(dateKey){
+ const withTarget = data.zikirs.filter(z => z.target > 0);
+ if(withTarget.length === 0) return false;
+ return withTarget.every(z => metTarget(dateKey, z));
+ }
+ function calcStreak(){
+ let streak = 0;
+ let d = new Date();
+ if(!dayComplete(todayKey())) d.setDate(d.getDate() - 1);
+ for(let i = 0; i < 3650; i++){
+ const key = d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate());
+ if(dayComplete(key)){ streak++; d.setDate(d.getDate() - 1); }
+ else break;
+ }
+ return streak;
+ }
+
+ // ---------- Navigasi ----------
+ function showPage(id){
+ document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === id));
+ document.querySelectorAll('nav button').forEach(b => b.classList.toggle('on', b.dataset.page === id));
+ if(id === 'pageToday') renderToday();
+ if(id === 'pageHistory') renderHistory();
+ if(id === 'pageHome') renderHome();
+ window.scrollTo(0,0);
+ }
+ document.querySelectorAll('nav button').forEach(b =>
+ b.addEventListener('click', () => showPage(b.dataset.page)));
+
+ document.querySelectorAll('.tab').forEach(t =>
+ t.addEventListener('click', () => {
+ document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === t));
+ document.querySelectorAll('.subpage').forEach(s => s.classList.toggle('active', s.id === t.dataset.sub));
+ if(t.dataset.sub === 'subChart') drawChart();
+ }));
+
+ // ---------- Beranda ----------
+ $('btnAdd').addEventListener('click', () => {
+ const name = $('inName').value.trim();
+ const target = parseInt($('inTarget').value, 10);
+ if(!name){ $('formMsg').textContent = 'Nama zikir belum diisi.'; return; }
+ if(!target || target < 1){ $('formMsg').textContent = 'Target harus angka lebih dari 0.'; return; }
+ if(data.zikirs.some(z => z.name.toLowerCase() === name.toLowerCase())){
+ $('formMsg').textContent = 'Zikir dengan nama itu sudah ada.'; return;
+ }
+ data.zikirs.push({ id: data.nextId++, name, target });
+ save();
+ $('inName').value = ''; $('inTarget').value = '';
+ $('formMsg').textContent = '';
+ renderHome();
+ });
+
+ function renderHome(){
+ const list = $('homeList');
+ list.innerHTML = '';
+ if(data.zikirs.length === 0){
+ list.innerHTML = '<div class="card muted" style="text-align:center">Belum ada zikir.</div>';
+ return;
+ }
+ data.zikirs.forEach(z => {
+ const card = document.createElement('div');
+ card.className = 'card row';
+ card.innerHTML = '<div><div style="font-weight:600"></div><div class="muted">target ' + z.target + ' per hari</div></div>';
+ card.firstChild.firstChild.textContent = z.name;
+ const del = document.createElement('button');
+ del.className = 'btn danger';
+ del.textContent = 'Hapus';
+ del.addEventListener('click', () => {
+ if(!confirm('Hapus "' + z.name + '"? Riwayat hitungannya ikut terhapus.')) return;
+ data.zikirs = data.zikirs.filter(x => x.id !== z.id);
+ Object.keys(data.counts).forEach(k => { delete data.counts[k][z.id]; });
+ if(currentId === z.id) currentId = null;
+ save(); renderHome();
+ });
+ card.appendChild(del);
+ list.appendChild(card);
+ });
+ }
+
+ // ---------- Zikir hari ini ----------
+ function renderToday(){
+ const d = new Date();
+ $('todayDate').textContent = d.toLocaleDateString('id-ID', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+ $('streakNum').textContent = calcStreak();
+
+ const chips = $('todayChips');
+ chips.innerHTML = '';
+ if(data.zikirs.length === 0){
+ $('counterBox').style.display = 'none';
+ $('emptyToday').style.display = 'block';
+ return;
+ }
+ $('emptyToday').style.display = 'none';
+ $('counterBox').style.display = 'block';
+
+ if(!zikirById(currentId)) currentId = data.zikirs[0].id;
+
+ data.zikirs.forEach(z => {
+ const c = document.createElement('button');
+ c.className = 'chip' + (z.id === currentId ? ' on' : '');
+ c.textContent = z.name;
+ c.addEventListener('click', () => { currentId = z.id; renderToday(); });
+ chips.appendChild(c);
+ });
+ renderCounter();
+ }
+
+ function renderCounter(){
+ const z = zikirById(currentId);
+ if(!z) return;
+ const key = todayKey();
+ const val = getCount(key, z.id);
+ $('zName').textContent = z.name;
+ $('zTarget').textContent = 'Target hari ini: ' + z.target;
+ $('bigCount').textContent = val;
+ $('doneMsg').textContent = metTarget(key, z) ? 'Target hari ini sudah tercapai' : '';
+ }
+
+ $('bigBtn').addEventListener('click', () => {
+ if(!currentId) return;
+ if(navigator.vibrate) navigator.vibrate(25);
+ setCount(todayKey(), currentId, getCount(todayKey(), currentId) + 1);
+ renderCounter();
+ $('streakNum').textContent = calcStreak();
+ });
+
+ $('minusBtn').addEventListener('click', () => {
+ if(!currentId) return;
+ setCount(todayKey(), currentId, getCount(todayKey(), currentId) - 1);
+ renderCounter();
+ $('streakNum').textContent = calcStreak();
+ });
+
+ $('resetBtn').addEventListener('click', () => {
+ if(!currentId) return;
+ const z = zikirById(currentId);
+ if(!confirm('Reset hitungan "' + z.name + '" hari ini?')) return;
+ setCount(todayKey(), currentId, 0);
+ renderCounter();
+ $('streakNum').textContent = calcStreak();
+ });
+
+ // ---------- Riwayat ----------
+ function renderHistory(){
+ // Total sepanjang waktu
+ const totals = $('totalList');
+ totals.innerHTML = '';
+ if(data.zikirs.length === 0){
+ totals.innerHTML = '<div class="card muted" style="text-align:center">Belum ada data.</div>';
+ }
+ data.zikirs.forEach(z => {
+ let sum = 0;
+ Object.values(data.counts).forEach(day => { sum += (day[z.id] || 0); });
+ const c = document.createElement('div');
+ c.className = 'card row';
+ c.innerHTML = '<span></span><b style="font-family:Cormorant Garamond,serif;font-size:1.4rem;color:var(--mauve)"></b>';
+ c.children[0].textContent = z.name;
+ c.children[1].textContent = sum;
+ totals.appendChild(c);
+ });
+
+ // Aktivitas harian (terbaru di atas)
+ const daily = $('dailyList');
+ daily.innerHTML = '';
+ const days = Object.keys(data.counts).filter(k =>
+ Object.values(data.counts[k]).some(v => v > 0)).sort().reverse();
+ if(days.length === 0){
+ daily.innerHTML = '<div class="card muted" style="text-align:center">Belum ada aktivitas.</div>';
+ }
+ days.forEach(k => {
+ const card = document.createElement('div');
+ card.className = 'card';
+ const title = document.createElement('div');
+ title.style.fontWeight = '600';
+ title.textContent = formatDate(k);
+ card.appendChild(title);
+ data.zikirs.forEach(z => {
+ const v = getCount(k, z.id);
+ if(v > 0){
+ const line = document.createElement('div');
+ line.className = 'row muted';
+ line.style.marginTop = '4px';
+ const ok = z.target > 0 && v >= z.target ? ' ✓' : '';
+ line.innerHTML = '<span></span><span></span>';
+ line.children[0].textContent = z.name;
+ line.children[1].textContent = v + ' / ' + z.target + ok;
+ card.appendChild(line);
+ }
+ });
+ daily.appendChild(card);
+ });
+
+ // Filter grafik
+ if(!$('monthPick').value){
+ const d = new Date();
+ $('monthPick').value = d.getFullYear() + '-' + pad(d.getMonth()+1);
+ }
+ const sel = $('filterSel');
+ const prev = sel.value;
+ sel.innerHTML = '<option value="all">Semua zikir</option>';
+ data.zikirs.forEach(z => {
+ const o = document.createElement('option');
+ o.value = String(z.id);
+ o.textContent = z.name;
+ sel.appendChild(o);
+ });
+ if(prev && [...sel.options].some(o => o.value === prev)) sel.value = prev;
+ }
+
+ function formatDate(k){
+ const [y,m,d] = k.split('-').map(Number);
+ return new Date(y, m-1, d).toLocaleDateString('id-ID', { weekday:'short', day:'numeric', month:'short', year:'numeric' });
+ }
+
+ $('btnExport').addEventListener('click', () => {
+ let csv = 'tanggal,zikir,jumlah,target\n';
+ Object.keys(data.counts).sort().forEach(k => {
+ data.zikirs.forEach(z => {
+ const v = getCount(k, z.id);
+ if(v > 0) csv += k + ',"' + z.name.replace(/"/g,'""') + '",' + v + ',' + z.target + '\n';
+ });
+ });
+ const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+ const url = URL.createObjectURL(blob);
+ const a = document.createElement('a');
+ a.href = url;
+ a.download = 'zikir-' + todayKey() + '.csv';
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+ setTimeout(() => URL.revokeObjectURL(url), 1000);
+ });
+
+ // ---------- Grafik ----------
+ $('monthPick').addEventListener('change', drawChart);
+ $('filterSel').addEventListener('change', drawChart);
+
+ function drawChart(){
+ const canvas = $('chart');
+ const dpr = window.devicePixelRatio || 1;
+ const cssW = canvas.clientWidth || 320;
+ const cssH = canvas.clientHeight || 240;
+ canvas.width = cssW * dpr;
+ canvas.height = cssH * dpr;
+ const ctx = canvas.getContext('2d');
+ ctx.setTransform(dpr,0,0,dpr,0,0);
+ ctx.clearRect(0,0,cssW,cssH);
+
+ const [y,m] = ($('monthPick').value || '').split('-').map(Number);
+ if(!y || !m) return;
+ const daysInMonth = new Date(y, m, 0).getDate();
+ const filter = $('filterSel').value;
+ const single = filter !== 'all' ? zikirById(Number(filter)) : null;
+
+ // Nilai per hari
+ const values = [];
+ let total = 0, activeDays = 0, hitDays = 0;
+ for(let d = 1; d <= daysInMonth; d++){
+ const key = y + '-' + pad(m) + '-' + pad(d);
+ let v = 0;
+ if(single){
+ v = getCount(key, single.id);
+ if(metTarget(key, single)) hitDays++;
+ } else {
+ data.zikirs.forEach(z => { v += getCount(key, z.id); });
+ if(data.zikirs.length && dayComplete(key)) hitDays++;
+ }
+ values.push(v);
+ total += v;
+ if(v > 0) activeDays++;
+ }
+ $('stTotal').textContent = total;
+ $('stDays').textContent = activeDays;
+ $('stHit').textContent = hitDays;
+
+ // Skala sumbu Y: dibulatkan ke bilangan bulat, 4 tingkat
+ const target = single ? single.target : 0;
+ const topVal = Math.max(4, ...values, target);
+ const step = Math.ceil(topVal / 4);
+ const maxY = step * 4;
+
+ const padL = 36, padR = 10, padT = 12, padB = 26;
+ const plotW = cssW - padL - padR;
+ const plotH = cssH - padT - padB;
+
+ // Garis sumbu dan label
+ ctx.strokeStyle = 'rgba(107,79,82,.15)';
+ ctx.fillStyle = '#6b4f52';
+ ctx.font = '11px Quicksand, sans-serif';
+ ctx.textAlign = 'right';
+ ctx.textBaseline = 'middle';
+ for(let i = 0; i <= 4; i++){
+ const val = step * i;
+ const yPos = padT + plotH - (val / maxY) * plotH;
+ ctx.beginPath();
+ ctx.moveTo(padL, yPos);
+ ctx.lineTo(cssW - padR, yPos);
+ ctx.stroke();
+ ctx.fillText(String(val), padL - 6, yPos);
+ }
+
+ // Batang
+ const barW = plotW / daysInMonth;
+ values.forEach((v, i) => {
+ if(v <= 0) return;
+ const h = (v / maxY) * plotH;
+ const x = padL + i * barW + barW * 0.15;
+ const yTop = padT + plotH - h;
+ let color = '#D0A0A3';
+ if(single){
+ color = metTarget(y + '-' + pad(m) + '-' + pad(i+1), single) ? '#9C6B73' : '#F2D3C2';
+ }
+ ctx.fillStyle = color;
+ ctx.fillRect(x, yTop, barW * 0.7, h);
+ });
+
+ // Label tanggal (setiap beberapa hari)
+ ctx.fillStyle = '#6b4f52';
+ ctx.textAlign = 'center';
+ ctx.textBaseline = 'top';
+ const every = daysInMonth > 20 ? 5 : 2;
+ for(let d = 1; d <= daysInMonth; d++){
+ if(d === 1 || d % every === 0){
+ ctx.fillText(String(d), padL + (d - 0.5) * barW, padT + plotH + 6);
+ }
+ }
+
+ // Garis target (hanya untuk satu zikir)
+ if(single && target > 0){
+ const yT = padT + plotH - (target / maxY) * plotH;
+ ctx.setLineDash([6,4]);
+ ctx.strokeStyle = '#c0392b';
+ ctx.lineWidth = 1.5;
+ ctx.beginPath();
+ ctx.moveTo(padL, yT);
+ ctx.lineTo(cssW - padR, yT);
+ ctx.stroke();
+ ctx.setLineDash([]);
+ ctx.lineWidth = 1;
+ }
+
+ $('legend').textContent = single
+ ? 'Mawar tua: target tercapai. Pêach: belum tercapai. Garis merah: target ' + target + '.'
+ : 'Semua zikir digabung per hari.';
+ }
+
+ // ---------- Mulai ----------
+ renderHome();
+ showPage('pageHome');
+ window.addEventListener('resize', () => {
+ if($('pageHistory').classList.contains('active') && $('subChart').classList.contains('active')) drawChart();
+ });
+})();
+</script>
+</body>
+</html>
