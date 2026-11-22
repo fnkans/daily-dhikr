@@ -4,139 +4,278 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Zikir">
+<meta name="apple-mobile-web-app-title" content="Daily Dhikr">
 <title>Daily Dhikr by Fenika</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
  :root{
- --p1:#ECCBC9; --p2:#E0C5C4; --p3:#D0A0A3; --p4:#F5E2E3; --p5:#ECEBE8;
- --mauve:#9C6B73; --plum:#6b4f52; --sage:#D3DDD0;
- --green:#6C8269; --green-ring:#9EB09A; --green-bg:#EBF0E9;
- --card:rgba(255,255,255,.78);
+ /* Desert Rose awal + Glassy Pearl yang lembut & terukur */
+ --bg-top:#F8ECEC;
+ --bg-mid:#E6C7C8;
+ --bg-bot:#D8B0B3;
+ --rose-accent:#965F68;
+ --rose-soft:#CFA0A4;
+ --plum:#5A3E43;
+ --sage:#D3E2D0;
+ --green:#557251;
+ --green-ring:#7FA07A;
+ --green-bg:rgba(229,240,227,.85);
+ --glass:rgba(255,255,255,.72);
+ --glass-strong:rgba(255,255,255,.86);
+ --glass-shine:rgba(255,255,255,.55);
  }
  *{box-sizing:border-box;margin:0;padding:0}
  body{
  font-family:'Quicksand',system-ui,sans-serif;color:var(--plum);
- background:linear-gradient(160deg,var(--p4),var(--p1));
- min-height:100vh;padding-bottom:calc(84px + env(safe-area-inset-bottom));
+ background:
+ radial-gradient(circle at 18% 12%, rgba(255,255,255,.75) 0%, transparent 45%),
+ radial-gradient(circle at 85% 24%, rgba(255,250,250,.55) 0%, transparent 40%),
+ linear-gradient(165deg,var(--bg-top) 0%,var(--bg-mid) 56%,var(--bg-bot) 100%);
+ min-height:100vh;padding-bottom:calc(90px + env(safe-area-inset-bottom));
  }
- h1,h2{font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--mauve)}
- h1{font-size:2.1rem;text-align:center}
- h2{font-size:1.45rem;margin:18px 0 10px}
- .by{text-align:center;font-size:.95rem;margin-top:4px;opacity:.8}
- .page{display:none;padding:22px 16px;max-width:520px;margin:0 auto}
+ h1,h2{font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--rose-accent)}
+ h1{font-size:2.15rem;text-align:center;letter-spacing:.2px}
+ h2{font-size:1.45rem;margin:22px 0 11px}
+ .by{text-align:center;font-size:.9rem;margin-top:4px;color:var(--plum);opacity:.78}
+ .page{display:none;padding:24px 16px;max-width:520px;margin:0 auto}
  .page.active{display:block}
- .card{background:var(--card);border-radius:20px;padding:14px 16px;margin-bottom:12px;box-shadow:0 4px 14px rgba(156,107,115,.1)}
+
+ /* Permukaan Glassy Pearl tanpa garis tepi berlebih */
+ .card{
+ background:linear-gradient(145deg,var(--glass-strong),var(--glass));
+ backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+ border-radius:22px;padding:16px;margin-bottom:14px;
+ box-shadow:0 8px 24px rgba(150,95,104,.11), inset 0 1px 0 var(--glass-shine);
+ }
  .row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
- .muted{font-size:.85rem;opacity:.75}
- .zikir-title{font-weight:600;line-height:1.45;word-break:break-word;overflow-wrap:anywhere;white-space:pre-line}
+ .muted{font-size:.84rem;color:var(--plum);opacity:.76;line-height:1.42}
+ .zikir-title{font-weight:600;line-height:1.45;word-break:break-word;overflow-wrap:anywhere;white-space:pre-line;color:var(--plum)}
+
+ /* Header Beranda + Kotak Tombol ID / EN Terpaten */
+ .top-bar{position:relative;display:flex;align-items:center;justify-content:center;min-height:44px}
+ .lang-box{
+ position:absolute;right:0;top:50%;transform:translateY(-50%);
+ width:44px;height:34px;padding:0;border:none;
+ background:var(--glass-strong);backdrop-filter:blur(8px);color:var(--rose-accent);
+ font:inherit;font-size:.78rem;font-weight:700;letter-spacing:.5px;white-space:nowrap;
+ border-radius:11px;cursor:pointer;
+ box-shadow:0 4px 12px rgba(150,95,104,.12), inset 0 1px 0 rgba(255,255,255,.9);
+ display:inline-flex;align-items:center;justify-content:center;
+ }
+ .lang-box:active{transform:translateY(-50%) scale(.96)}
 
  /* Form & Tombol */
- input,select,textarea{width:100%;padding:12px 14px;border-radius:14px;border:1px solid var(--p3);background:#fff;font:inherit;font-size:16px;color:var(--plum);outline:none}
+ input,select,textarea{
+ width:100%;padding:12px 14px;border-radius:14px;border:none;
+ background:rgba(255,255,255,.88);font:inherit;font-size:16px;color:var(--plum);outline:none;
+ box-shadow:0 2px 8px rgba(150,95,104,.07), inset 0 1px 2px rgba(90,62,67,.06);
+ }
  textarea{resize:vertical;min-height:76px;line-height:1.45}
- input:focus,select:focus,textarea:focus{border-color:var(--mauve)}
- .btn{border:none;border-radius:14px;padding:12px 16px;font:inherit;font-weight:600;background:var(--mauve);color:#fff;cursor:pointer}
- .btn.ghost{background:transparent;color:var(--mauve);border:1px solid var(--p3)}
- .btn.danger{background:#fff;color:#b5545c;border:1px solid #e3b6b9;padding:6px 12px;font-size:.82rem;border-radius:10px;flex-shrink:0}
- .btn.danger.confirming{background:#b5545c;color:#fff;border-color:#b5545c}
- .msg{min-height:20px;font-size:.88rem;color:#b5545c}
+ input:focus,select:focus,textarea:focus{box-shadow:0 0 0 2.5px rgba(150,95,104,.28), 0 4px 10px rgba(150,95,104,.1)}
+ .btn{
+ border:none;border-radius:14px;padding:12px 16px;font:inherit;font-weight:700;
+ background:var(--rose-accent);color:#fff;cursor:pointer;
+ box-shadow:0 6px 16px rgba(150,95,104,.22), inset 0 1px 0 rgba(255,255,255,.25);
+ }
+ .btn.ghost{
+ background:var(--glass);backdrop-filter:blur(8px);color:var(--rose-accent);border:none;
+ box-shadow:0 3px 10px rgba(150,95,104,.09), inset 0 1px 0 rgba(255,255,255,.8);
+ }
+ .btn.small{padding:6px 11px;font-size:.8rem;border-radius:10px}
+ .btn.danger{
+ background:rgba(255,245,246,.82);color:#ab434e;border:none;padding:6px 11px;
+ font-size:.8rem;border-radius:10px;flex-shrink:0;font-weight:700;
+ box-shadow:0 2px 8px rgba(171,67,78,.08);
+ }
+ .btn.danger.confirming{background:#ab434e;color:#fff}
+ .msg{min-height:18px;font-size:.85rem;color:#ab434e;font-weight:600}
+ .msg.ok{color:var(--green);font-weight:700}
+
+ /* Aksi Kartu Daftar Zikir */
+ .item-actions{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
+ .order-row,.crud-row{display:flex;gap:5px;align-items:center}
+ .btn-order{
+ width:28px;height:28px;border-radius:9px;border:none;
+ background:rgba(255,255,255,.82);color:var(--rose-accent);font:inherit;font-size:.82rem;font-weight:700;
+ cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+ box-shadow:0 2px 6px rgba(150,95,104,.09), inset 0 1px 0 rgba(255,255,255,.9);
+ }
+ .btn-order:disabled{opacity:.3;cursor:default;box-shadow:none}
+
+ /* Edit Form Inline */
+ .edit-box{margin-top:12px;padding-top:12px;border-top:1px dashed rgba(150,95,104,.22);display:grid;gap:8px}
+ .edit-actions{display:flex;gap:8px;justify-content:flex-end}
 
  /* Streak (Beranda) */
- .streak{display:flex;align-items:center;gap:14px;background:var(--sage);border-radius:18px;padding:12px 16px;margin-top:16px}
- .streak .num{font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:700;line-height:1}
+ .streak{
+ display:flex;align-items:center;gap:14px;
+ background:linear-gradient(145deg,rgba(232,243,229,.84),rgba(205,222,202,.76));
+ backdrop-filter:blur(10px);border-radius:20px;padding:13px 16px;margin-top:16px;
+ box-shadow:0 6px 18px rgba(85,114,81,.11), inset 0 1px 0 rgba(255,255,255,.7);
+ }
+ .streak .num{
+ font-family:'Quicksand',system-ui,sans-serif;font-variant-numeric:tabular-nums;
+ font-size:2rem;font-weight:700;line-height:1;color:var(--plum);flex-shrink:0;
+ }
 
  /* Chips tanpa scrollbar */
- .chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 8px;margin:12px 0 8px;scrollbar-width:none;cursor:grab;user-select:none}
+ .chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 8px;margin:14px 0 10px;scrollbar-width:none;cursor:grab;user-select:none}
  .chips::-webkit-scrollbar{display:none}
- .chip{flex:0 0 auto;max-width:210px;padding:8px 15px;border-radius:999px;border:1px solid var(--p3);background:rgba(255,255,255,.85);cursor:pointer;font:inherit;font-size:.88rem;color:var(--plum);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
- .chip.on{background:var(--mauve);color:#fff;border-color:var(--mauve);font-weight:600}
+ .chip{
+ flex:0 0 auto;max-width:210px;padding:8px 15px;border-radius:999px;border:none;
+ background:var(--glass);backdrop-filter:blur(8px);cursor:pointer;
+ font:inherit;font-size:.88rem;color:var(--plum);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+ box-shadow:0 3px 10px rgba(150,95,104,.09), inset 0 1px 0 rgba(255,255,255,.85);
+ }
+ .chip.on{background:var(--rose-accent);color:#fff;font-weight:700;box-shadow:0 5px 14px rgba(150,95,104,.22)}
 
- /* Tombol Utama: Soft Pearl Tanpa Outline Putih + Progress Ring */
- .counter{text-align:center;padding:22px 16px}
- .zname{font-family:'Cormorant Garamond',serif;font-size:1.55rem;line-height:1.35;color:var(--mauve);margin-bottom:6px;word-break:break-word;white-space:pre-line}
- .ztarget{font-size:.88rem;opacity:.8}
- .zhint{font-size:.76rem;opacity:.55;margin:4px 0 20px}
+ /* Tombol Utama: Glassy Pearl Menonjol + Progress Ring */
+ .counter{text-align:center;padding:24px 16px}
+ .zname{font-family:'Cormorant Garamond',serif;font-size:1.58rem;line-height:1.35;color:var(--rose-accent);margin-bottom:6px;word-break:break-word;white-space:pre-line}
+ .ztarget{font-size:.88rem;opacity:.85;font-weight:600}
+ .zhint{font-size:.78rem;opacity:.62;margin:4px 0 22px}
 
- .ring-wrap{position:relative;width:192px;height:192px;margin:0 auto;display:flex;align-items:center;justify-content:center}
+ .ring-wrap{position:relative;width:194px;height:194px;margin:0 auto;display:flex;align-items:center;justify-content:center}
  .ring-svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);pointer-events:none}
- .ring-bg{fill:none;stroke:rgba(208,160,163,.25);stroke-width:6}
- .ring-fg{fill:none;stroke:var(--mauve);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .25s ease,stroke .35s ease}
+ .ring-bg{fill:none;stroke:rgba(150,95,104,.2);stroke-width:6}
+ .ring-fg{fill:none;stroke:var(--rose-accent);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .25s ease,stroke .35s ease}
  .ring-fg.complete{stroke:var(--green-ring)}
 
  .big{
  width:166px;height:166px;border-radius:50%;border:none;cursor:pointer;
- background:radial-gradient(circle at 32% 28%, #ffffff 0%, var(--p4) 48%, var(--p1) 88%, var(--p2) 100%);
- box-shadow:0 8px 20px rgba(156,107,115,.2), inset 0 -4px 10px rgba(156,107,115,.15);
+ background:
+ radial-gradient(circle at 28% 20%, #ffffff 0%, #f7e6e7 46%, #dfb7ba 86%, #cfa2a6 100%);
+ box-shadow:
+ 0 14px 28px rgba(150,95,104,.28),
+ 0 3px 8px rgba(90,62,67,.12),
+ inset 0 3px 8px rgba(255,255,255,.95),
+ inset 0 -8px 16px rgba(150,95,104,.22);
  display:flex;align-items:center;justify-content:center;color:var(--plum);
  transition:transform .08s ease;user-select:none;-webkit-tap-highlight-color:transparent;
  }
  .big:active{transform:scale(.95)}
- .bigcount{font-family:'Cormorant Garamond',serif;font-size:3.8rem;font-weight:700;line-height:1}
+ .bigcount{
+ font-family:'Quicksand',system-ui,sans-serif;
+ font-variant-numeric:tabular-nums;
+ font-size:3.25rem;font-weight:700;line-height:1;letter-spacing:-1px;
+ }
 
  /* Status Tercapai & Aksi Sekunder */
  .done{margin-top:16px;min-height:30px;font-size:.9rem;font-weight:700;color:var(--green);display:flex;align-items:center;justify-content:center}
- .done span{background:var(--green-bg);border:1px solid rgba(158,176,154,.45);padding:6px 14px;border-radius:999px}
+ .done span{background:var(--green-bg);padding:6px 14px;border-radius:999px;box-shadow:0 3px 10px rgba(85,114,81,.09)}
  .actions{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:14px}
- .btn-minus,.btn-reset{height:40px;border-radius:999px;border:1px solid var(--p3);background:rgba(255,255,255,.9);color:var(--mauve);font:inherit;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+ .btn-minus,.btn-reset{
+ height:40px;border-radius:999px;border:none;
+ background:var(--glass-strong);color:var(--rose-accent);font:inherit;font-weight:700;
+ cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+ box-shadow:0 4px 12px rgba(150,95,104,.11), inset 0 1px 0 rgba(255,255,255,.9);
+ }
  .btn-minus{width:40px;font-size:1.3rem}
  .btn-reset{padding:0 16px;font-size:.84rem;gap:6px}
- .btn-reset.confirming{background:#b5545c;color:#fff;border-color:#b5545c}
+ .btn-reset.confirming{background:#ab434e;color:#fff}
 
  /* Riwayat & Grafik */
- .tabs{display:flex;background:var(--card);border-radius:14px;padding:4px;margin:16px 0 14px}
- .tab{flex:1;border:none;background:none;padding:9px;border-radius:10px;font:inherit;cursor:pointer;color:var(--plum)}
- .tab.on{background:var(--mauve);color:#fff}
+ .tabs{display:flex;background:var(--glass);backdrop-filter:blur(10px);border-radius:16px;padding:4px;margin:16px 0 14px;box-shadow:0 4px 14px rgba(150,95,104,.09)}
+ .tab{flex:1;border:none;background:none;padding:9px;border-radius:12px;font:inherit;font-weight:700;cursor:pointer;color:var(--plum)}
+ .tab.on{background:var(--rose-accent);color:#fff;box-shadow:0 4px 12px rgba(150,95,104,.2)}
  .subpage{display:none}
  .subpage.active{display:block}
- canvas{width:100%;height:230px;display:block;background:#fff;border-radius:16px}
+ .section-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:22px 0 11px}
+ .section-head h2{margin:0}
+ .link-mini{
+ border:none;background:var(--glass);backdrop-filter:blur(8px);color:var(--rose-accent);
+ font:inherit;font-size:.78rem;font-weight:700;padding:5px 12px;border-radius:999px;cursor:pointer;
+ box-shadow:0 2px 8px rgba(150,95,104,.09), inset 0 1px 0 rgba(255,255,255,.85);
+ }
+
+ canvas{
+ width:100%;height:275px;display:block;
+ background:linear-gradient(155deg,rgba(255,255,255,.9),rgba(255,250,250,.78));
+ backdrop-filter:blur(10px);border-radius:20px;
+ box-shadow:0 8px 22px rgba(150,95,104,.11), inset 0 1px 0 rgba(255,255,255,.9);
+ }
  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;text-align:center}
- .stats div{background:var(--card);border-radius:14px;padding:10px 6px}
- .stats b{display:block;font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--mauve)}
- .stats span{font-size:.75rem}
- .legend{font-size:.8rem;margin-top:8px;opacity:.85}
+ .stats div{
+ background:var(--glass);backdrop-filter:blur(10px);border-radius:16px;padding:10px 6px;
+ box-shadow:0 4px 14px rgba(150,95,104,.08), inset 0 1px 0 rgba(255,255,255,.8);
+ }
+ .stats b{
+ display:block;font-family:'Quicksand',system-ui,sans-serif;font-variant-numeric:tabular-nums;
+ font-size:1.35rem;font-weight:700;color:var(--rose-accent);
+ }
+ .stats span{font-size:.75rem;font-weight:600}
+
+ /* Export & Import Sebelahan + Tombol Tanda Tanya (?) */
+ .backup-section{margin-top:16px}
+ .backup-grid{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:stretch}
+ .btn-help{
+ width:42px;border-radius:14px;border:none;background:var(--glass);backdrop-filter:blur(8px);
+ color:var(--rose-accent);font:inherit;font-size:1rem;font-weight:700;cursor:pointer;
+ display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+ box-shadow:0 3px 10px rgba(150,95,104,.09), inset 0 1px 0 rgba(255,255,255,.85);
+ }
+ .btn-help.on{background:var(--rose-accent);color:#fff}
+ .help-box{
+ display:none;margin-top:10px;padding:12px 14px;border-radius:16px;
+ background:var(--glass-strong);backdrop-filter:blur(10px);
+ font-size:.84rem;line-height:1.5;color:var(--plum);
+ box-shadow:0 4px 14px rgba(150,95,104,.09), inset 0 1px 0 rgba(255,255,255,.9);
+ }
+ .help-box.show{display:block}
 
  /* Navigasi Bawah */
- nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);border-top:1px solid var(--p2);padding:8px 8px calc(10px + env(safe-area-inset-bottom));z-index:10}
- nav button{flex:1;border:none;background:none;font:inherit;font-size:.85rem;color:var(--plum);padding:9px 4px;border-radius:12px;cursor:pointer;opacity:.65}
- nav button.on{opacity:1;background:var(--p4);color:var(--mauve);font-weight:700}
+ nav{
+ position:fixed;left:0;right:0;bottom:0;display:flex;
+ background:rgba(255,250,250,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+ padding:8px 8px calc(10px + env(safe-area-inset-bottom));z-index:10;
+ box-shadow:0 -6px 20px rgba(150,95,104,.1), inset 0 1px 0 rgba(255,255,255,.85);
+ }
+ nav button{flex:1;border:none;background:none;font:inherit;font-size:.85rem;color:var(--plum);padding:9px 4px;border-radius:12px;cursor:pointer;opacity:.72}
+ nav button.on{opacity:1;background:rgba(255,255,255,.78);color:var(--rose-accent);font-weight:700;box-shadow:0 2px 8px rgba(150,95,104,.08)}
 </style>
 </head>
 <body>
 
 <!-- BERANDA -->
 <section class="page" id="pageHome">
+ <div class="top-bar">
  <h1>Daily Dhikr</h1>
+ <button type="button" class="lang-box" id="btnLang" aria-label="Switch language">ID</button>
+ </div>
  <p class="by">By Fenika Annisa</p>
  <div class="streak">
  <div class="num" id="streakNum">0</div>
- <div><div style="font-weight:600">hari berturut-turut</div><div class="muted">target semua zikir tercapai</div></div>
+ <div>
+ <div id="streakLabel" style="font-weight:700">Hari Berturut-Turut</div>
+ <div class="muted" id="streakSub">Tambahkan zikir atau dua untuk mulai</div>
  </div>
- <h2>Tambah zikir atau doa</h2>
+ </div>
+ <h2 id="h2Add">Tambah Zikir atau Dua</h2>
  <div class="card" style="display:grid;gap:10px">
- <textarea id="inName" placeholder="Tulis bacaan zikir atau doa di sini..." maxlength="1000"></textarea>
+ <textarea id="inName" placeholder="Tulis bacaan zikir atau dua di sini" maxlength="1000"></textarea>
  <input id="inTarget" type="number" placeholder="Target harian (contoh: 100)" min="1" inputmode="numeric">
- <button class="btn" id="btnAdd">Simpan zikir</button>
+ <button class="btn" id="btnAdd">Simpan Zikir</button>
  <div class="msg" id="formMsg"></div>
  </div>
- <h2>Daftar zikir</h2>
+ <h2 id="h2List">Daftar Zikir</h2>
  <div id="homeList"></div>
 </section>
 
 <!-- ZIKIR HARI INI -->
 <section class="page" id="pageToday">
- <h1>Zikir hari ini</h1>
+ <h1 id="h1Today">Zikir Hari Ini</h1>
  <p class="by" id="todayDate"></p>
  <div class="chips" id="todayChips"></div>
  <div class="counter card" id="counterBox">
  <div class="zname" id="zName"></div>
  <div class="ztarget" id="zTarget"></div>
- <div class="zhint">ketuk lingkaran untuk menghitung</div>
+ <div class="zhint" id="zHint">Ketuk lingkaran untuk menghitung</div>
  <div class="ring-wrap">
- <svg class="ring-svg" viewBox="0 0 192 192">
- <circle class="ring-bg" cx="96" cy="96" r="90"></circle>
- <circle class="ring-fg" id="ringProgress" cx="96" cy="96" r="90"></circle>
+ <svg class="ring-svg" viewBox="0 0 194 194">
+ <circle class="ring-bg" cx="97" cy="97" r="91"></circle>
+ <circle class="ring-fg" id="ringProgress" cx="97" cy="97" r="91"></circle>
  </svg>
  <button class="big" id="bigBtn" aria-label="Tambah hitungan"><span class="bigcount" id="bigCount">0</span></button>
  </div>
@@ -146,23 +285,25 @@
  <button class="btn-reset" id="resetBtn">↺ Reset</button>
  </div>
  </div>
- <div class="card muted" id="emptyToday" style="text-align:center;display:none;margin-top:16px">Belum ada zikir. Tambahkan dulu di menu Beranda.</div>
+ <div class="card muted" id="emptyToday" style="text-align:center;display:none;margin-top:16px">Belum ada zikir atau dua. Tambahkan dulu di menu Beranda.</div>
 </section>
 
 <!-- RIWAYAT -->
 <section class="page" id="pageHistory">
- <h1>Riwayat</h1>
- <p class="by">Catatan dan grafik zikirmu</p>
+ <h1 id="h1History">Riwayat</h1>
+ <p class="by" id="historySub">Catatan dan grafik zikirmu</p>
  <div class="tabs">
- <button class="tab on" data-sub="subLog">Riwayat</button>
- <button class="tab" data-sub="subChart">Grafik</button>
+ <button class="tab on" data-sub="subLog" id="tabLog">Riwayat</button>
+ <button class="tab" data-sub="subChart" id="tabChart">Grafik</button>
  </div>
  <div class="subpage active" id="subLog">
- <h2>Total sepanjang waktu</h2>
+ <h2 id="h2Total">Total Sepanjang Waktu</h2>
  <div id="totalList"></div>
- <h2>Aktivitas harian</h2>
+ <div class="section-head">
+ <h2 id="h2Daily">Aktivitas Harian</h2>
+ <button type="button" class="link-mini" id="btnToggleDays">Lihat Semua</button>
+ </div>
  <div id="dailyList"></div>
- <button class="btn ghost" id="btnExport" style="width:100%;margin-top:14px">Ekspor CSV (untuk Google Sheets)</button>
  </div>
  <div class="subpage" id="subChart">
  <div class="card" style="display:grid;gap:10px">
@@ -170,275 +311,1112 @@
  <select id="filterSel"></select>
  </div>
  <canvas id="chart"></canvas>
- <div class="legend" id="legend"></div>
  <div class="stats">
- <div><b id="stTotal">0</b><span>total bulan ini</span></div>
- <div><b id="stDays">0</b><span>hari aktif</span></div>
- <div><b id="stHit">0</b><span>hari target tercapai</span></div>
+ <div><b id="stTotal">0</b><span id="stTotalLbl">Total Bulan Ini</span></div>
+ <div><b id="stDays">0</b><span id="stDaysLbl">Hari Aktif</span></div>
+ <div><b id="stHit">0</b><span id="stHitLbl">Hari Target Tercapai</span></div>
+ </div>
+ <div class="backup-section">
+ <div class="backup-grid">
+ <button class="btn ghost small" id="btnExport" style="padding:11px 10px;font-size:.82rem">Ekspor CSV</button>
+ <button class="btn ghost small" id="btnImport" style="padding:11px 10px;font-size:.82rem">Impor CSV</button>
+ <button type="button" class="btn-help" id="btnHelpCsv" aria-label="Bantuan CSV" title="Info CSV">?</button>
+ </div>
+ <input type="file" id="fileImport" accept=".csv,text/csv" style="display:none">
+ <div class="help-box" id="helpCsvBox"></div>
+ <div class="msg" id="csvMsg" style="text-align:center;margin-top:8px"></div>
  </div>
  </div>
 </section>
 
 <nav>
- <button data-page="pageToday">Zikir hari ini</button>
- <button data-page="pageHome" class="on">Beranda</button>
- <button data-page="pageHistory">Riwayat</button>
+ <button data-page="pageToday" id="navToday">Zikir Hari Ini</button>
+ <button data-page="pageHome" id="navHome" class="on">Beranda</button>
+ <button data-page="pageHistory" id="navHistory">Riwayat</button>
 </nav>
 
 <script>
 (function(){
- const KEY = 'zikirApp', $ = id => document.getElementById(id);
- const CIRC = 2 * Math.PI * 90, ringEl = $('ringProgress');
+ var KEY = 'zikirApp';
+ var LANG_KEY = 'zikirAppLang';
+ var $ = function(id){ return document.getElementById(id); };
+ var CIRC = 2 * Math.PI * 91;
+ var ringEl = $('ringProgress');
  ringEl.style.strokeDasharray = CIRC;
  ringEl.style.strokeDashoffset = CIRC;
- let data = load(), currentId = null;
+
+ var I18N = {
+ id: {
+ locale: 'id-ID',
+ langBtn: 'ID',
+ streakLabel: 'Hari Berturut-Turut',
+ streakNoData: 'Tambahkan zikir atau dua untuk mulai',
+ streakYesterday: function(met, total){ return 'Kemarin, ' + met + ' dari ' + total + ' tercapai'; },
+ h2Add: 'Tambah Zikir atau Dua',
+ phName: 'Tulis bacaan zikir atau dua di sini',
+ phTarget: 'Target harian (contoh: 100)',
+ btnAdd: 'Simpan Zikir',
+ h2List: 'Daftar Zikir',
+ emptyList: 'Belum ada zikir atau dua.',
+ perDay: function(t){ return 'Target ' + t + ' per hari'; },
+ btnUp: 'Pindah ke atas',
+ btnDown: 'Pindah ke bawah',
+ btnEdit: 'Edit',
+ btnDel: 'Hapus',
+ btnDelConfirm: 'Yakin Hapus?',
+ btnCancel: 'Batal',
+ btnSave: 'Simpan',
+ errEmptyName: 'Bacaan zikir atau dua belum diisi.',
+ errTarget: 'Target harus angka lebih dari 0.',
+ errDuplicate: 'Bacaan zikir atau dua itu sudah ada.',
+ h1Today: 'Zikir Hari Ini',
+ zTarget: function(t){ return 'Target Hari Ini: ' + t; },
+ zHint: 'Ketuk lingkaran untuk menghitung',
+ doneMsg: 'Target Hari Ini Tercapai 🎉',
+ btnReset: '↺ Reset',
+ btnResetConfirm: 'Yakin Reset?',
+ emptyToday: 'Belum ada zikir atau dua. Tambahkan dulu di menu Beranda.',
+ h1History: 'Riwayat',
+ historySub: 'Catatan dan grafik zikirmu',
+ tabLog: 'Riwayat',
+ tabChart: 'Grafik',
+ h2Total: 'Total Sepanjang Waktu',
+ noData: 'Belum ada data.',
+ h2Daily: 'Aktivitas Harian',
+ noActivity: 'Belum ada aktivitas.',
+ showAll: 'Lihat Semua',
+ show7Days: '7 Hari Terakhir',
+ allDoneBadge: '✓ Semua Tercapai',
+ allDhikr: 'Semua Zikir & Dua',
+ stTotalLbl: 'Total Bulan Ini',
+ stDaysLbl: 'Hari Aktif',
+ stHitLbl: 'Hari Target Tercapai',
+ btnExport: 'Ekspor CSV',
+ btnImport: 'Impor CSV',
+ helpCsv: '<b>Ekspor CSV</b> menyimpan catatanmu ke file .csv sebagai cadangan atau untuk dibuka di spreadsheet. <b>Impor CSV</b> memulihkan data dari file .csv hasil ekspor aplikasi ini tanpa harus mengetik ulang.',
+ noExportData: 'Belum ada data hitungan untuk diekspor.',
+ exportedOk: function(n){ return 'File CSV berhasil diunduh (' + n + ' baris).'; },
+ csvEmpty: 'File CSV kosong atau format tidak sesuai.',
+ csvInvalid: 'Tidak ada data valid yang ditemukan di file CSV.',
+ csvReadErr: 'Gagal membaca file CSV. Pastikan file berasal dari ekspor aplikasi ini.',
+ importedOk: function(rows, added){
+ return 'Berhasil memulihkan ' + rows + ' catatan' + (added ? ' (' + added + ' item baru ditambahkan).' : '.');
+ },
+ navToday: 'Zikir Hari Ini',
+ navHome: 'Beranda',
+ navHistory: 'Riwayat',
+ chartDate: 'Tanggal',
+ chartCount: 'Jumlah',
+ chartReached: 'Tercapai',
+ chartNotYet: 'Belum',
+ chartTarget: function(t){ return 'Target (' + t + ')'; },
+ chartAllBars: 'Total Harian'
+ },
+ en: {
+ locale: 'en-US',
+ langBtn: 'EN',
+ streakLabel: 'Day Streak',
+ streakNoData: 'Add dhikr or dua to get started',
+ streakYesterday: function(met, total){ return 'Yesterday, ' + met + ' of ' + total + ' reached'; },
+ h2Add: 'Add Dhikr or Dua',
+ phName: 'Write dhikr or dua here',
+ phTarget: 'Daily target (e.g., 100)',
+ btnAdd: 'Save Dhikr',
+ h2List: 'Dhikr & Dua List',
+ emptyList: 'No dhikr or dua yet.',
+ perDay: function(t){ return 'Target ' + t + ' per day'; },
+ btnUp: 'Move up',
+ btnDown: 'Move down',
+ btnEdit: 'Edit',
+ btnDel: 'Delete',
+ btnDelConfirm: 'Sure to Delete?',
+ btnCancel: 'Cancel',
+ btnSave: 'Save',
+ errEmptyName: 'Please enter a dhikr or dua.',
+ errTarget: 'Target must be greater than 0.',
+ errDuplicate: 'That dhikr or dua already exists.',
+ h1Today: "Today's Dhikr",
+ zTarget: function(t){ return "Today's Target: " + t; },
+ zHint: 'Tap the circle to count',
+ doneMsg: "Today's Target Reached 🎉",
+ btnReset: '↺ Reset',
+ btnResetConfirm: 'Sure to Reset?',
+ emptyToday: 'No dhikr or dua yet. Add some on the Home tab.',
+ h1History: 'History',
+ historySub: 'Your dhikr log and chart',
+ tabLog: 'Log',
+ tabChart: 'Chart',
+ h2Total: 'All-Time Total',
+ noData: 'No data yet.',
+ h2Daily: 'Daily Activity',
+ noActivity: 'No activity yet.',
+ showAll: 'Show All',
+ show7Days: 'Last 7 Days',
+ allDoneBadge: '✓ All Reached',
+ allDhikr: 'All Dhikr & Dua',
+ stTotalLbl: 'Month Total',
+ stDaysLbl: 'Active Days',
+ stHitLbl: 'Target Days Met',
+ btnExport: 'Export CSV',
+ btnImport: 'Import CSV',
+ helpCsv: '<b>Export CSV</b> saves your records to a .csv file as a backup or for spreadsheets. <b>Import CSV</b> restores data from a .csv file exported from this app without re-entering items.',
+ noExportData: 'No count records available to export.',
+ exportedOk: function(n){ return 'CSV file downloaded (' + n + ' rows).'; },
+ csvEmpty: 'CSV file is empty or format does not match.',
+ csvInvalid: 'No valid records found in the CSV file.',
+ csvReadErr: 'Could not read CSV file. Make sure it was exported from this app.',
+ importedOk: function(rows, added){
+ return 'Restored ' + rows + ' records' + (added ? ' (' + added + ' new items added).' : '.');
+ },
+ navToday: 'Today',
+ navHome: 'Home',
+ navHistory: 'History',
+ chartDate: 'Date',
+ chartCount: 'Count',
+ chartReached: 'Reached',
+ chartNotYet: 'Not Yet',
+ chartTarget: function(t){ return 'Target (' + t + ')'; },
+ chartAllBars: 'Daily Total'
+ }
+ };
+
+ function getLang(){
+ try{
+ var l = localStorage.getItem(LANG_KEY);
+ return (l === 'en') ? 'en' : 'id';
+ }catch(e){ return 'id'; }
+ }
+
+ var lang = getLang();
+ var t = function(){ return I18N[lang] || I18N.id; };
+
+ function setLang(newLang){
+ lang = (newLang === 'en') ? 'en' : 'id';
+ try{ localStorage.setItem(LANG_KEY, lang); }catch(e){}
+ document.documentElement.lang = lang;
+ applyStaticLanguage();
+ if($('pageHome').classList.contains('active')) renderHome();
+ if($('pageToday').classList.contains('active')) renderToday();
+ if($('pageHistory').classList.contains('active')){
+ renderHistory();
+ if($('subChart').classList.contains('active')) drawChart();
+ }
+ }
+
+ function applyStaticLanguage(){
+ var tr = t();
+ $('btnLang').textContent = tr.langBtn;
+
+ $('streakLabel').textContent = tr.streakLabel;
+ $('h2Add').textContent = tr.h2Add;
+ $('inName').placeholder = tr.phName;
+ $('inTarget').placeholder = tr.phTarget;
+ $('btnAdd').textContent = tr.btnAdd;
+ $('h2List').textContent = tr.h2List;
+
+ $('h1Today').textContent = tr.h1Today;
+ $('zHint').textContent = tr.zHint;
+ $('emptyToday').textContent = tr.emptyToday;
+ if(!$('resetBtn').classList.contains('confirming')) $('resetBtn').textContent = tr.btnReset;
+
+ $('h1History').textContent = tr.h1History;
+ $('historySub').textContent = tr.historySub;
+ $('tabLog').textContent = tr.tabLog;
+ $('tabChart').textContent = tr.tabChart;
+ $('h2Total').textContent = tr.h2Total;
+ $('h2Daily').textContent = tr.h2Daily;
+ $('stTotalLbl').textContent = tr.stTotalLbl;
+ $('stDaysLbl').textContent = tr.stDaysLbl;
+ $('stHitLbl').textContent = tr.stHitLbl;
+ $('btnExport').textContent = tr.btnExport;
+ $('btnImport').textContent = tr.btnImport;
+ $('helpCsvBox').innerHTML = tr.helpCsv;
+
+ $('navToday').textContent = tr.navToday;
+ $('navHome').textContent = tr.navHome;
+ $('navHistory').textContent = tr.navHistory;
+ }
+
+ $('btnLang').addEventListener('click', function(){
+ setLang(lang === 'id' ? 'en' : 'id');
+ });
+
+ var data = load();
+ var currentId = null;
+ var editingId = null;
+ var showAllDays = false;
+ var activeDay = todayKey();
 
  function load(){
- try{ const d = JSON.parse(localStorage.getItem(KEY)); if(d) return {zikirs:d.zikirs||[], counts:d.counts||{}, nextId:d.nextId||1}; }catch(e){}
- return {zikirs:[], counts:{}, nextId:1};
+ try{
+ var raw = localStorage.getItem(KEY);
+ if(raw){
+ var d = JSON.parse(raw);
+ return {
+ zikirs: Array.isArray(d.zikirs) ? d.zikirs : [],
+ counts: (d.counts && typeof d.counts === 'object') ? d.counts : {},
+ nextId: Number(d.nextId) || 1
+ };
  }
- const save = () => localStorage.setItem(KEY, JSON.stringify(data));
- const pad = n => String(n).padStart(2,'0');
- const todayKey = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; };
- const getCount = (k, id) => (data.counts[k] && data.counts[k][id]) || 0;
- const setCount = (k, id, v) => { (data.counts[k] ||= {})[id] = Math.max(0, v); save(); };
- const zikirById = id => data.zikirs.find(z => z.id === id);
- const metTarget = (k, z) => z.target > 0 && getCount(k, z.id) >= z.target;
- const dayComplete = k => data.zikirs.length > 0 && data.zikirs.every(z => metTarget(k, z));
+ }catch(e){}
+ return { zikirs: [], counts: {}, nextId: 1 };
+ }
+
+ function save(){
+ try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+ }
+
+ function pad(n){ return String(n).padStart(2, '0'); }
+
+ function dateToKey(d){
+ return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+ }
+
+ function todayKey(){
+ return dateToKey(new Date());
+ }
+
+ function yesterdayKey(){
+ var d = new Date();
+ d.setDate(d.getDate() - 1);
+ return dateToKey(d);
+ }
+
+ function syncFromStorage(){
+ var fresh = load();
+ if(fresh.zikirs.length > 0 || Object.keys(fresh.counts).length > 0){
+ data = fresh;
+ }
+ var nowKey = todayKey();
+ if(nowKey !== activeDay){
+ activeDay = nowKey;
+ }
+ }
+
+ function getCount(k, id){
+ var dayMap = data.counts && data.counts[k];
+ if(!dayMap || typeof dayMap !== 'object') return 0;
+ var val = dayMap[String(id)];
+ if(val === undefined) val = dayMap[id];
+ return Number(val) || 0;
+ }
+
+ function setCount(k, id, v){
+ syncFromStorage();
+ if(!data.counts[k] || typeof data.counts[k] !== 'object'){
+ data.counts[k] = {};
+ }
+ data.counts[k][String(id)] = Math.max(0, Number(v) || 0);
+ save();
+ }
+
+ function zikirById(id){
+ for(var i = 0; i < data.zikirs.length; i++){
+ if(String(data.zikirs[i].id) === String(id)) return data.zikirs[i];
+ }
+ return null;
+ }
+
+ function metTarget(k, z){
+ return z && z.target > 0 && getCount(k, z.id) >= z.target;
+ }
+
+ function dayQualified(k){
+ if(!data.zikirs.length) return false;
+ for(var i = 0; i < data.zikirs.length; i++){
+ if(metTarget(k, data.zikirs[i])) return true;
+ }
+ return false;
+ }
+
+ function dayAllComplete(k){
+ if(!data.zikirs.length) return false;
+ for(var i = 0; i < data.zikirs.length; i++){
+ if(!metTarget(k, data.zikirs[i])) return false;
+ }
+ return true;
+ }
 
  function calcStreak(){
- let streak = 0, d = new Date();
- if(!dayComplete(todayKey())) d.setDate(d.getDate() - 1);
- while(dayComplete(`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`)){
- streak++; d.setDate(d.getDate() - 1);
+ var streak = 0;
+ var d = new Date();
+ if(!dayQualified(todayKey())){
+ d.setDate(d.getDate() - 1);
+ }
+ for(var i = 0; i < 3650; i++){
+ var key = dateToKey(d);
+ if(dayQualified(key)){
+ streak++;
+ d.setDate(d.getDate() - 1);
+ }else{
+ break;
+ }
  }
  return streak;
  }
 
+ function getStreakSubtitle(){
+ var tr = t();
+ var totalZ = data.zikirs.length;
+ if(!totalZ) return tr.streakNoData;
+ var yKey = yesterdayKey();
+ var yMet = 0;
+ for(var i = 0; i < totalZ; i++){
+ if(metTarget(yKey, data.zikirs[i])) yMet++;
+ }
+ return tr.streakYesterday(yMet, totalZ);
+ }
+
  function showPage(id){
- document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === id));
- document.querySelectorAll('nav button').forEach(b => b.classList.toggle('on', b.dataset.page === id));
+ syncFromStorage();
+ var pages = document.querySelectorAll('.page');
+ for(var i = 0; i < pages.length; i++){
+ pages[i].classList.toggle('active', pages[i].id === id);
+ }
+ var navBtns = document.querySelectorAll('nav button');
+ for(var j = 0; j < navBtns.length; j++){
+ navBtns[j].classList.toggle('on', navBtns[j].dataset.page === id);
+ }
  if(id === 'pageToday') renderToday();
  if(id === 'pageHistory') renderHistory();
  if(id === 'pageHome') renderHome();
- window.scrollTo(0,0);
+ window.scrollTo(0, 0);
  }
- document.querySelectorAll('nav button').forEach(b => b.onclick = () => showPage(b.dataset.page));
- document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
- document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === t));
- document.querySelectorAll('.subpage').forEach(s => s.classList.toggle('active', s.id === t.dataset.sub));
- if(t.dataset.sub === 'subChart') drawChart();
+
+ var navBtns = document.querySelectorAll('nav button');
+ for(var n = 0; n < navBtns.length; n++){
+ navBtns[n].addEventListener('click', function(){
+ showPage(this.dataset.page);
+ });
+ }
+
+ var tabs = document.querySelectorAll('.tab');
+ for(var tBtn = 0; tBtn < tabs.length; tBtn++){
+ tabs[tBtn].addEventListener('click', function(){
+ syncFromStorage();
+ var subName = this.dataset.sub;
+ for(var a = 0; a < tabs.length; a++){
+ tabs[a].classList.toggle('on', tabs[a] === this);
+ }
+ var subs = document.querySelectorAll('.subpage');
+ for(var b = 0; b < subs.length; b++){
+ subs[b].classList.toggle('active', subs[b].id === subName);
+ }
+ if(subName === 'subChart') drawChart();
+ });
+ }
+
+ $('btnAdd').addEventListener('click', function(){
+ syncFromStorage();
+ var tr = t();
+ var name = $('inName').value.trim();
+ var target = parseInt($('inTarget').value, 10);
+ if(!name){ $('formMsg').textContent = tr.errEmptyName; return; }
+ if(!target || target < 1){ $('formMsg').textContent = tr.errTarget; return; }
+ for(var i = 0; i < data.zikirs.length; i++){
+ if(data.zikirs[i].name.toLowerCase() === name.toLowerCase()){
+ $('formMsg').textContent = tr.errDuplicate;
+ return;
+ }
+ }
+ data.zikirs.push({ id: data.nextId++, name: name, target: target });
+ save();
+ $('inName').value = '';
+ $('inTarget').value = '';
+ $('formMsg').textContent = '';
+ renderHome();
  });
 
- $('btnAdd').onclick = () => {
- const name = $('inName').value.trim(), target = parseInt($('inTarget').value, 10);
- if(!name) return $('formMsg').textContent = 'Nama zikir atau doa belum diisi.';
- if(!target || target < 1) return $('formMsg').textContent = 'Target harus angka lebih dari 0.';
- if(data.zikirs.some(z => z.name.toLowerCase() === name.toLowerCase())) return $('formMsg').textContent = 'Zikir atau doa itu sudah ada.';
- data.zikirs.push({id: data.nextId++, name, target}); save();
- $('inName').value = ''; $('inTarget').value = ''; $('formMsg').textContent = '';
+ function moveZikir(index, delta){
+ syncFromStorage();
+ var targetIdx = index + delta;
+ if(targetIdx < 0 || targetIdx >= data.zikirs.length) return;
+ var temp = data.zikirs[index];
+ data.zikirs[index] = data.zikirs[targetIdx];
+ data.zikirs[targetIdx] = temp;
+ save();
  renderHome();
- };
+ }
 
  function renderHome(){
+ var tr = t();
  $('streakNum').textContent = calcStreak();
- const list = $('homeList'); list.innerHTML = '';
- if(!data.zikirs.length) return list.innerHTML = '<div class="card muted" style="text-align:center">Belum ada zikir.</div>';
- data.zikirs.forEach(z => {
- const card = document.createElement('div'); card.className = 'card row';
- const info = document.createElement('div'); info.style.cssText = 'flex:1;min-width:0';
- info.innerHTML = `<div class="zikir-title"></div><div class="muted" style="margin-top:4px">target ${z.target} per hari</div>`;
+ $('streakSub').textContent = getStreakSubtitle();
+
+ var list = $('homeList');
+ list.innerHTML = '';
+ if(!data.zikirs.length){
+ list.innerHTML = '<div class="card muted" style="text-align:center">' + tr.emptyList + '</div>';
+ return;
+ }
+
+ data.zikirs.forEach(function(z, idx){
+ var card = document.createElement('div');
+ card.className = 'card';
+
+ var topRow = document.createElement('div');
+ topRow.className = 'row';
+
+ var info = document.createElement('div');
+ info.style.cssText = 'flex:1;min-width:0';
+ info.innerHTML = '<div class="zikir-title"></div><div class="muted" style="margin-top:4px">' + tr.perDay(z.target) + '</div>';
  info.firstChild.textContent = z.name;
 
- const del = document.createElement('button'); del.className = 'btn danger'; del.textContent = 'Hapus';
- let timer = null;
- del.onclick = () => {
+ var actionsCol = document.createElement('div');
+ actionsCol.className = 'item-actions';
+
+ var orderRow = document.createElement('div');
+ orderRow.className = 'order-row';
+ var btnUp = document.createElement('button');
+ btnUp.type = 'button';
+ btnUp.className = 'btn-order';
+ btnUp.textContent = '↑';
+ btnUp.title = tr.btnUp;
+ btnUp.disabled = idx === 0;
+ btnUp.addEventListener('click', function(){ moveZikir(idx, -1); });
+
+ var btnDown = document.createElement('button');
+ btnDown.type = 'button';
+ btnDown.className = 'btn-order';
+ btnDown.textContent = '↓';
+ btnDown.title = tr.btnDown;
+ btnDown.disabled = idx === data.zikirs.length - 1;
+ btnDown.addEventListener('click', function(){ moveZikir(idx, 1); });
+
+ orderRow.appendChild(btnUp);
+ orderRow.appendChild(btnDown);
+
+ var crudRow = document.createElement('div');
+ crudRow.className = 'crud-row';
+
+ var btnEdit = document.createElement('button');
+ btnEdit.type = 'button';
+ btnEdit.className = 'btn ghost small';
+ btnEdit.textContent = tr.btnEdit;
+ btnEdit.addEventListener('click', function(){
+ editingId = (String(editingId) === String(z.id)) ? null : z.id;
+ renderHome();
+ });
+
+ var del = document.createElement('button');
+ del.type = 'button';
+ del.className = 'btn danger';
+ del.textContent = tr.btnDel;
+ var timer = null;
+ del.addEventListener('click', function(){
  if(!del.classList.contains('confirming')){
- del.classList.add('confirming'); del.textContent = 'Yakin hapus?';
- timer = setTimeout(() => { del.classList.remove('confirming'); del.textContent = 'Hapus'; }, 3500);
- } else {
+ del.classList.add('confirming');
+ del.textContent = tr.btnDelConfirm;
+ timer = setTimeout(function(){
+ del.classList.remove('confirming');
+ del.textContent = tr.btnDel;
+ }, 3500);
+ }else{
  clearTimeout(timer);
- data.zikirs = data.zikirs.filter(x => x.id !== z.id);
- Object.keys(data.counts).forEach(k => delete data.counts[k][z.id]);
- if(currentId === z.id) currentId = null;
- save(); renderHome();
+ syncFromStorage();
+ data.zikirs = data.zikirs.filter(function(x){ return String(x.id) !== String(z.id); });
+ Object.keys(data.counts).forEach(function(k){
+ if(data.counts[k] && typeof data.counts[k] === 'object'){
+ delete data.counts[k][String(z.id)];
  }
- };
- card.append(info, del); list.appendChild(card);
+ });
+ if(String(currentId) === String(z.id)) currentId = null;
+ if(String(editingId) === String(z.id)) editingId = null;
+ save();
+ renderHome();
+ }
+ });
+
+ crudRow.appendChild(btnEdit);
+ crudRow.appendChild(del);
+
+ actionsCol.appendChild(orderRow);
+ actionsCol.appendChild(crudRow);
+
+ topRow.appendChild(info);
+ topRow.appendChild(actionsCol);
+ card.appendChild(topRow);
+
+ if(String(editingId) === String(z.id)){
+ var editBox = document.createElement('div');
+ editBox.className = 'edit-box';
+
+ var taEdit = document.createElement('textarea');
+ taEdit.value = z.name;
+ taEdit.maxLength = 1000;
+
+ var numEdit = document.createElement('input');
+ numEdit.type = 'number';
+ numEdit.min = '1';
+ numEdit.value = z.target;
+
+ var errEdit = document.createElement('div');
+ errEdit.className = 'msg';
+
+ var editBtns = document.createElement('div');
+ editBtns.className = 'edit-actions';
+
+ var btnCancel = document.createElement('button');
+ btnCancel.type = 'button';
+ btnCancel.className = 'btn ghost small';
+ btnCancel.textContent = tr.btnCancel;
+ btnCancel.addEventListener('click', function(){
+ editingId = null;
+ renderHome();
+ });
+
+ var btnSave = document.createElement('button');
+ btnSave.type = 'button';
+ btnSave.className = 'btn small';
+ btnSave.textContent = tr.btnSave;
+ btnSave.addEventListener('click', function(){
+ var newName = taEdit.value.trim();
+ var newTarget = parseInt(numEdit.value, 10);
+ if(!newName){ errEdit.textContent = tr.errEmptyName; return; }
+ if(!newTarget || newTarget < 1){ errEdit.textContent = tr.errTarget; return; }
+ for(var j = 0; j < data.zikirs.length; j++){
+ if(String(data.zikirs[j].id) !== String(z.id) && data.zikirs[j].name.toLowerCase() === newName.toLowerCase()){
+ errEdit.textContent = tr.errDuplicate;
+ return;
+ }
+ }
+ syncFromStorage();
+ var item = zikirById(z.id);
+ if(item){
+ item.name = newName;
+ item.target = newTarget;
+ }
+ editingId = null;
+ save();
+ renderHome();
+ });
+
+ editBtns.appendChild(btnCancel);
+ editBtns.appendChild(btnSave);
+ editBox.appendChild(taEdit);
+ editBox.appendChild(numEdit);
+ editBox.appendChild(errEdit);
+ editBox.appendChild(editBtns);
+ card.appendChild(editBox);
+ }
+
+ list.appendChild(card);
  });
  }
 
- const chipsEl = $('todayChips');
- let isDown = false, startX = 0, scrollLeft = 0, moved = false;
- chipsEl.onmousedown = e => { isDown = true; moved = false; startX = e.pageX - chipsEl.offsetLeft; scrollLeft = chipsEl.scrollLeft; };
- window.onmouseup = () => isDown = false;
- chipsEl.onmousemove = e => { if(!isDown) return; e.preventDefault(); const w = (e.pageX - chipsEl.offsetLeft - startX) * 1.4; if(Math.abs(w) > 4) moved = true; chipsEl.scrollLeft = scrollLeft - w; };
+ var chipsEl = $('todayChips');
+ var isDown = false, startX = 0, scrollLeft = 0, moved = false;
+ chipsEl.addEventListener('mousedown', function(e){
+ isDown = true;
+ moved = false;
+ startX = e.pageX - chipsEl.offsetLeft;
+ scrollLeft = chipsEl.scrollLeft;
+ });
+ window.addEventListener('mouseup', function(){ isDown = false; });
+ chipsEl.addEventListener('mousemove', function(e){
+ if(!isDown) return;
+ e.preventDefault();
+ var w = (e.pageX - chipsEl.offsetLeft - startX) * 1.4;
+ if(Math.abs(w) > 4) moved = true;
+ chipsEl.scrollLeft = scrollLeft - w;
+ });
 
  function renderToday(){
- $('todayDate').textContent = new Date().toLocaleDateString('id-ID', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+ syncFromStorage();
+ var tr = t();
+ var key = todayKey();
+ $('todayDate').textContent = new Date().toLocaleDateString(tr.locale, { weekday:'long', day:'numeric', month:'long', year:'numeric' });
  chipsEl.innerHTML = '';
  $('counterBox').style.display = data.zikirs.length ? 'block' : 'none';
  $('emptyToday').style.display = data.zikirs.length ? 'none' : 'block';
  if(!data.zikirs.length) return;
  if(!zikirById(currentId)) currentId = data.zikirs[0].id;
 
- data.zikirs.forEach(z => {
- const c = document.createElement('button');
- c.className = 'chip' + (z.id === currentId ? ' on' : '');
- c.textContent = z.name; c.title = z.name;
- c.onclick = () => { if(!moved){ currentId = z.id; renderToday(); } };
+ data.zikirs.forEach(function(z){
+ var c = document.createElement('button');
+ var isDone = metTarget(key, z);
+ c.className = 'chip' + (String(z.id) === String(currentId) ? ' on' : '');
+ c.textContent = (isDone ? '✓ ' : '') + z.name;
+ c.title = z.name;
+ c.addEventListener('click', function(){
+ if(!moved){
+ currentId = z.id;
+ renderToday();
+ }
+ });
  chipsEl.appendChild(c);
  });
- const activeChip = chipsEl.querySelector('.chip.on');
- if(activeChip) activeChip.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+ var activeChip = chipsEl.querySelector('.chip.on');
+ if(activeChip) activeChip.scrollIntoView({ behavior:'smooth', inline:'center', block:'nearest' });
  renderCounter();
  }
 
  function renderCounter(){
- const z = zikirById(currentId); if(!z) return;
- const key = todayKey(), val = getCount(key, z.id), done = metTarget(key, z);
+ var tr = t();
+ var z = zikirById(currentId);
+ if(!z) return;
+ var key = todayKey();
+ var val = getCount(key, z.id);
+ var done = metTarget(key, z);
  $('zName').textContent = z.name;
- $('zTarget').textContent = `Target hari ini: ${z.target}`;
+ $('zTarget').textContent = tr.zTarget(z.target);
  $('bigCount').textContent = val;
 
- const ratio = z.target > 0 ? Math.min(1, val / z.target) : 0;
+ var ratio = z.target > 0 ? Math.min(1, val / z.target) : 0;
  ringEl.style.strokeDashoffset = CIRC * (1 - ratio);
  ringEl.classList.toggle('complete', done);
- $('doneMsg').innerHTML = done ? '<span>Target hari ini sudah tercapai 🎉</span>' : '';
+ $('doneMsg').innerHTML = done ? '<span>' + tr.doneMsg + '</span>' : '';
  }
 
- $('bigBtn').onclick = () => { if(!currentId) return; if(navigator.vibrate) navigator.vibrate(25); setCount(todayKey(), currentId, getCount(todayKey(), currentId) + 1); renderCounter(); };
- $('minusBtn').onclick = () => { if(!currentId) return; setCount(todayKey(), currentId, getCount(todayKey(), currentId) - 1); renderCounter(); };
-
- let resetTimer = null;
- $('resetBtn').onclick = () => {
+ $('bigBtn').addEventListener('click', function(){
  if(!currentId) return;
- const btn = $('resetBtn');
- if(!btn.classList.contains('confirming')){
- btn.classList.add('confirming'); btn.textContent = 'Yakin reset?';
- resetTimer = setTimeout(() => { btn.classList.remove('confirming'); btn.textContent = '↺ Reset'; }, 3500);
- } else {
- clearTimeout(resetTimer); btn.classList.remove('confirming'); btn.textContent = '↺ Reset';
- setCount(todayKey(), currentId, 0); renderCounter();
- }
- };
-
- function renderHistory(){
- const totals = $('totalList'), daily = $('dailyList');
- totals.innerHTML = data.zikirs.length ? '' : '<div class="card muted" style="text-align:center">Belum ada data.</div>';
- data.zikirs.forEach(z => {
- const sum = Object.values(data.counts).reduce((a, d) => a + (d[z.id] || 0), 0);
- const c = document.createElement('div'); c.className = 'card row'; c.style.alignItems = 'center';
- c.innerHTML = `<span class="zikir-title" style="flex:1"></span><b style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--mauve)">${sum.toLocaleString('id-ID')}</b>`;
- c.firstChild.textContent = z.name; totals.appendChild(c);
+ if(navigator.vibrate) navigator.vibrate(25);
+ var key = todayKey();
+ var prevDone = metTarget(key, zikirById(currentId));
+ setCount(key, currentId, getCount(key, currentId) + 1);
+ var nowDone = metTarget(key, zikirById(currentId));
+ renderCounter();
+ if(prevDone !== nowDone) renderToday();
  });
 
- const days = Object.keys(data.counts).filter(k => Object.values(data.counts[k]).some(v => v > 0)).sort().reverse();
- daily.innerHTML = days.length ? '' : '<div class="card muted" style="text-align:center">Belum ada aktivitas.</div>';
- days.forEach(k => {
- const card = document.createElement('div'); card.className = 'card';
- const [y,m,d] = k.split('-').map(Number);
- 
- const cardHeader = document.createElement('div');
+ $('minusBtn').addEventListener('click', function(){
+ if(!currentId) return;
+ var key = todayKey();
+ var prevDone = metTarget(key, zikirById(currentId));
+ setCount(key, currentId, getCount(key, currentId) - 1);
+ var nowDone = metTarget(key, zikirById(currentId));
+ renderCounter();
+ if(prevDone !== nowDone) renderToday();
+ });
+
+ var resetTimer = null;
+ $('resetBtn').addEventListener('click', function(){
+ if(!currentId) return;
+ var tr = t();
+ var btn = $('resetBtn');
+ if(!btn.classList.contains('confirming')){
+ btn.classList.add('confirming');
+ btn.textContent = tr.btnResetConfirm;
+ resetTimer = setTimeout(function(){
+ btn.classList.remove('confirming');
+ btn.textContent = tr.btnReset;
+ }, 3500);
+ }else{
+ clearTimeout(resetTimer);
+ btn.classList.remove('confirming');
+ btn.textContent = tr.btnReset;
+ setCount(todayKey(), currentId, 0);
+ renderToday();
+ }
+ });
+
+ $('btnToggleDays').addEventListener('click', function(){
+ showAllDays = !showAllDays;
+ renderHistory();
+ });
+
+ function renderHistory(){
+ syncFromStorage();
+ var tr = t();
+ var totals = $('totalList');
+ var daily = $('dailyList');
+ totals.innerHTML = data.zikirs.length ? '' : '<div class="card muted" style="text-align:center">' + tr.noData + '</div>';
+
+ data.zikirs.forEach(function(z){
+ var sum = 0;
+ Object.keys(data.counts).forEach(function(k){
+ sum += getCount(k, z.id);
+ });
+ var c = document.createElement('div');
+ c.className = 'card row';
+ c.style.alignItems = 'center';
+ c.innerHTML = '<span class="zikir-title" style="flex:1"></span><b style="font-family:\'Quicksand\',system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:1.25rem;color:var(--rose-accent)">' + sum.toLocaleString(tr.locale) + '</b>';
+ c.firstChild.textContent = z.name;
+ totals.appendChild(c);
+ });
+
+ var allActiveDays = Object.keys(data.counts).filter(function(k){
+ var dayObj = data.counts[k];
+ if(!dayObj || typeof dayObj !== 'object') return false;
+ return Object.keys(dayObj).some(function(id){ return (Number(dayObj[id]) || 0) > 0; });
+ }).sort().reverse();
+
+ var toggleBtn = $('btnToggleDays');
+ if(allActiveDays.length > 7){
+ toggleBtn.style.display = 'inline-block';
+ toggleBtn.textContent = showAllDays ? tr.show7Days : tr.showAll;
+ }else{
+ toggleBtn.style.display = 'none';
+ }
+
+ var visibleDays = showAllDays ? allActiveDays : allActiveDays.slice(0, 7);
+
+ daily.innerHTML = visibleDays.length ? '' : '<div class="card muted" style="text-align:center">' + tr.noActivity + '</div>';
+ visibleDays.forEach(function(k){
+ var card = document.createElement('div');
+ card.className = 'card';
+ var parts = k.split('-').map(Number);
+ var cardHeader = document.createElement('div');
  cardHeader.className = 'row';
- cardHeader.style.cssText = 'font-weight:600;margin-bottom:6px;align-items:center;';
- 
- const dateTitle = document.createElement('span');
- dateTitle.textContent = new Date(y,m-1,d).toLocaleDateString('id-ID',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+ cardHeader.style.cssText = 'font-weight:700;margin-bottom:6px;align-items:center;';
+
+ var dateTitle = document.createElement('span');
+ dateTitle.textContent = parts.length === 3
+ ? new Date(parts[0], parts[1] - 1, parts[2]).toLocaleDateString(tr.locale, { weekday:'short', day:'numeric', month:'short', year:'numeric' })
+ : k;
  cardHeader.appendChild(dateTitle);
 
- // Cek apakah seluruh zikir di hari tersebut sudah lengkap targetnya
- const isDayDone = data.zikirs.length > 0 && data.zikirs.every(z => metTarget(k, z));
- if(isDayDone){
- const dayBadge = document.createElement('span');
- dayBadge.style.cssText = 'font-size:0.8rem;background:var(--green-bg);color:var(--green);border:1px solid rgba(158,176,154,.45);padding:2px 8px;border-radius:999px;font-weight:600;';
- dayBadge.textContent = '✓ Selesai';
+ if(dayAllComplete(k)){
+ var dayBadge = document.createElement('span');
+ dayBadge.style.cssText = 'font-size:0.78rem;background:var(--green-bg);color:var(--green);padding:2px 9px;border-radius:999px;font-weight:700;';
+ dayBadge.textContent = tr.allDoneBadge;
  cardHeader.appendChild(dayBadge);
  }
  card.appendChild(cardHeader);
 
- data.zikirs.forEach(z => {
- const v = getCount(k, z.id);
+ var idList = data.zikirs.map(function(z){ return String(z.id); });
+ Object.keys(data.counts[k] || {}).forEach(function(id){
+ if(idList.indexOf(String(id)) === -1) idList.push(String(id));
+ });
+
+ idList.forEach(function(id){
+ var v = getCount(k, id);
  if(v > 0){
- const line = document.createElement('div'); line.className = 'row muted'; line.style.marginTop = '4px';
- line.innerHTML = `<span class="zikir-title" style="font-weight:400;flex:1"></span><span>${v} / ${z.target}${v >= z.target ? ' ✓' : ''}</span>`;
- line.firstChild.textContent = z.name; card.appendChild(line);
+ var z = zikirById(id);
+ var labelName = z ? z.name : ('#' + id);
+ var targetVal = z ? z.target : 0;
+ var line = document.createElement('div');
+ line.className = 'row muted';
+ line.style.marginTop = '4px';
+ var okText = (targetVal > 0 && v >= targetVal) ? ' ✓' : '';
+ line.innerHTML = '<span class="zikir-title" style="font-weight:500;flex:1"></span><span>' + v + ' / ' + targetVal + okText + '</span>';
+ line.firstChild.textContent = labelName;
+ card.appendChild(line);
  }
  });
  daily.appendChild(card);
  });
 
- if(!$('monthPick').value){ const d = new Date(); $('monthPick').value = `${d.getFullYear()}-${pad(d.getMonth()+1)}`; }
- const sel = $('filterSel'), prev = sel.value;
- sel.innerHTML = '<option value="all">Semua zikir</option>';
- data.zikirs.forEach(z => {
- const o = document.createElement('option'); o.value = z.id;
- o.textContent = z.name.length > 45 ? z.name.slice(0,45) + '...' : z.name;
+ if(!$('monthPick').value){
+ var d = new Date();
+ $('monthPick').value = d.getFullYear() + '-' + pad(d.getMonth() + 1);
+ }
+ var sel = $('filterSel');
+ var prev = sel.value;
+ sel.innerHTML = '<option value="all">' + tr.allDhikr + '</option>';
+ data.zikirs.forEach(function(z){
+ var o = document.createElement('option');
+ o.value = z.id;
+ o.textContent = z.name.length > 45 ? z.name.slice(0, 45) + '...' : z.name;
  sel.appendChild(o);
  });
- if([...sel.options].some(o => o.value === prev)) sel.value = prev;
+ if([].slice.call(sel.options).some(function(o){ return o.value === prev; })){
+ sel.value = prev;
+ }
  }
 
- $('btnExport').onclick = () => {
- let csv = 'tanggal,zikir,jumlah,target\n';
- Object.keys(data.counts).sort().forEach(k => data.zikirs.forEach(z => {
- const v = getCount(k, z.id);
- if(v > 0) csv += `${k},"${z.name.replace(/"/g,'""').replace(/\r?\n/g,' ')}",${v},${z.target}\n`;
- }));
- const a = document.createElement('a');
- a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8'}));
- a.download = `zikir-${todayKey()}.csv`; a.click();
+ $('btnHelpCsv').addEventListener('click', function(){
+ var box = $('helpCsvBox');
+ var isOpen = box.classList.toggle('show');
+ $('btnHelpCsv').classList.toggle('on', isOpen);
+ });
+
+ $('btnExport').addEventListener('click', function(){
+ syncFromStorage();
+ var tr = t();
+ var csv = 'tanggal,zikir,jumlah,target\n';
+ var rowCount = 0;
+ Object.keys(data.counts).sort().forEach(function(k){
+ var dayObj = data.counts[k] || {};
+ Object.keys(dayObj).forEach(function(id){
+ var v = getCount(k, id);
+ if(v > 0){
+ var z = zikirById(id);
+ var name = z ? z.name : ('#' + id);
+ var target = z ? z.target : 0;
+ csv += k + ',"' + name.replace(/"/g, '""').replace(/\r?\n/g, ' ') + '",' + v + ',' + target + '\n';
+ rowCount++;
+ }
+ });
+ });
+ var msgEl = $('csvMsg');
+ if(rowCount === 0){
+ msgEl.className = 'msg';
+ msgEl.textContent = tr.noExportData;
+ return;
+ }
+ var a = document.createElement('a');
+ a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+ a.download = 'zikir-' + todayKey() + '.csv';
+ a.click();
+ msgEl.className = 'msg ok';
+ msgEl.textContent = tr.exportedOk(rowCount);
+ });
+
+ $('btnImport').addEventListener('click', function(){
+ $('fileImport').value = '';
+ $('fileImport').click();
+ });
+
+ function parseCSVLine(line){
+ var result = [], cur = '', inQuotes = false;
+ for(var i = 0; i < line.length; i++){
+ var ch = line[i];
+ if(inQuotes){
+ if(ch === '"' && line[i + 1] === '"'){ cur += '"'; i++; }
+ else if(ch === '"'){ inQuotes = false; }
+ else{ cur += ch; }
+ }else{
+ if(ch === '"'){ inQuotes = true; }
+ else if(ch === ','){ result.push(cur); cur = ''; }
+ else{ cur += ch; }
+ }
+ }
+ result.push(cur);
+ return result;
+ }
+
+ $('fileImport').addEventListener('change', function(e){
+ var file = e.target.files && e.target.files[0];
+ if(!file) return;
+ var tr = t();
+ var reader = new FileReader();
+ reader.onload = function(evt){
+ var msgEl = $('csvMsg');
+ try{
+ var text = String(evt.target.result || '').replace(/^\uFEFF/, '');
+ var lines = text.split(/\r?\n/).filter(function(l){ return l.trim().length > 0; });
+ if(lines.length < 2){
+ msgEl.className = 'msg';
+ msgEl.textContent = tr.csvEmpty;
+ return;
+ }
+
+ syncFromStorage();
+ var importedRows = 0, addedZikirs = 0;
+
+ for(var i = 1; i < lines.length; i++){
+ var cols = parseCSVLine(lines[i]);
+ if(cols.length < 4) continue;
+ var dateStr = cols[0].trim();
+ var zName = cols[1].trim();
+ var countVal = parseInt(cols[2], 10);
+ var targetVal = parseInt(cols[3], 10) || 1;
+
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(dateStr) || !zName || isNaN(countVal)) continue;
+
+ var existing = null;
+ for(var j = 0; j < data.zikirs.length; j++){
+ if(data.zikirs[j].name.toLowerCase() === zName.toLowerCase()){
+ existing = data.zikirs[j];
+ break;
+ }
+ }
+ if(!existing){
+ existing = { id: data.nextId++, name: zName, target: Math.max(1, targetVal) };
+ data.zikirs.push(existing);
+ addedZikirs++;
+ }
+
+ if(!data.counts[dateStr] || typeof data.counts[dateStr] !== 'object'){
+ data.counts[dateStr] = {};
+ }
+ var prevCount = Number(data.counts[dateStr][String(existing.id)]) || 0;
+ data.counts[dateStr][String(existing.id)] = Math.max(prevCount, Math.max(0, countVal));
+ importedRows++;
+ }
+
+ if(importedRows === 0){
+ msgEl.className = 'msg';
+ msgEl.textContent = tr.csvInvalid;
+ return;
+ }
+
+ save();
+ renderHistory();
+ msgEl.className = 'msg ok';
+ msgEl.textContent = tr.importedOk(importedRows, addedZikirs);
+ }catch(err){
+ msgEl.className = 'msg';
+ msgEl.textContent = tr.csvReadErr;
+ }
  };
+ reader.readAsText(file, 'UTF-8');
+ });
 
- $('monthPick').onchange = $('filterSel').onchange = drawChart;
+ $('monthPick').addEventListener('change', drawChart);
+ $('filterSel').addEventListener('change', drawChart);
+
  function drawChart(){
- const canvas = $('chart'), dpr = window.devicePixelRatio || 1;
- const w = canvas.clientWidth || 320, h = canvas.clientHeight || 230;
- canvas.width = w * dpr; canvas.height = h * dpr;
- const ctx = canvas.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,h);
+ syncFromStorage();
+ var tr = t();
+ var canvas = $('chart');
+ var dpr = window.devicePixelRatio || 1;
+ var w = canvas.clientWidth || 320;
+ var h = canvas.clientHeight || 275;
+ canvas.width = w * dpr;
+ canvas.height = h * dpr;
+ var ctx = canvas.getContext('2d');
+ ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+ ctx.clearRect(0, 0, w, h);
 
- const [y,m] = ($('monthPick').value || '').split('-').map(Number); if(!y || !m) return;
- const daysInMonth = new Date(y, m, 0).getDate();
- const single = $('filterSel').value !== 'all' ? zikirById(Number($('filterSel').value)) : null;
+ var ym = ($('monthPick').value || '').split('-').map(Number);
+ var y = ym[0], m = ym[1];
+ if(!y || !m) return;
 
- const values = []; let total = 0, active = 0, hit = 0;
- for(let d = 1; d <= daysInMonth; d++){
- const key = `${y}-${pad(m)}-${pad(d)}`;
- const v = single ? getCount(key, single.id) : data.zikirs.reduce((a, z) => a + getCount(key, z.id), 0);
- if(single ? metTarget(key, single) : dayComplete(key)) hit++;
- values.push(v); total += v; if(v > 0) active++;
+ var daysInMonth = new Date(y, m, 0).getDate();
+ var single = $('filterSel').value !== 'all' ? zikirById(Number($('filterSel').value)) : null;
+
+ var values = [];
+ var total = 0, active = 0, hit = 0;
+ for(var d = 1; d <= daysInMonth; d++){
+ var key = y + '-' + pad(m) + '-' + pad(d);
+ var dayObj = data.counts[key] || {};
+ var v = 0;
+ if(single){
+ v = getCount(key, single.id);
+ }else{
+ Object.keys(dayObj).forEach(function(id){ v += getCount(key, id); });
  }
- $('stTotal').textContent = total.toLocaleString('id-ID'); $('stDays').textContent = active; $('stHit').textContent = hit;
+ if(single ? metTarget(key, single) : dayQualified(key)) hit++;
+ values.push(v);
+ total += v;
+ if(v > 0) active++;
+ }
+ $('stTotal').textContent = total.toLocaleString(tr.locale);
+ $('stDays').textContent = active;
+ $('stHit').textContent = hit;
 
- const target = single ? single.target : 0, step = Math.ceil(Math.max(4, ...values, target) / 4), maxY = step * 4;
- const padL = 36, padR = 10, padT = 12, padB = 26, plotW = w - padL - padR, plotH = h - padT - padB;
+ var target = single ? single.target : 0;
+ var maxCandidates = [4, target].concat(values);
+ var maxVal = Math.max.apply(null, maxCandidates);
+ var step = Math.ceil(maxVal / 4);
+ var maxY = step * 4;
 
- ctx.strokeStyle = 'rgba(107,79,82,.15)'; ctx.fillStyle = '#6b4f52'; ctx.font = '11px Quicksand,sans-serif'; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
- for(let i = 0; i <= 4; i++){
- const val = step * i, yPos = padT + plotH - (val / maxY) * plotH;
- ctx.beginPath(); ctx.moveTo(padL, yPos); ctx.lineTo(w - padR, yPos); ctx.stroke();
+ var padL = 42, padR = 12, padT = 36, padB = 34;
+ var plotW = w - padL - padR;
+ var plotH = h - padT - padB;
+
+ ctx.font = '10.5px Quicksand,sans-serif';
+ ctx.textBaseline = 'middle';
+ ctx.textAlign = 'left';
+ var lx = padL, ly = 15;
+
+ if(single){
+ ctx.fillStyle = '#965F68';
+ ctx.fillRect(lx, ly - 5, 10, 10);
+ ctx.fillStyle = '#5A3E43';
+ ctx.fillText(tr.chartReached, lx + 14, ly);
+ lx += 76;
+
+ ctx.fillStyle = '#E6C7C8';
+ ctx.fillRect(lx, ly - 5, 10, 10);
+ ctx.fillStyle = '#5A3E43';
+ ctx.fillText(tr.chartNotYet, lx + 14, ly);
+ lx += 64;
+
+ if(target > 0){
+ ctx.setLineDash([4, 3]);
+ ctx.strokeStyle = '#ab434e';
+ ctx.lineWidth = 1.5;
+ ctx.beginPath();
+ ctx.moveTo(lx, ly);
+ ctx.lineTo(lx + 14, ly);
+ ctx.stroke();
+ ctx.setLineDash([]);
+ ctx.fillStyle = '#5A3E43';
+ ctx.fillText(tr.chartTarget(target), lx + 18, ly);
+ }
+ }else{
+ ctx.fillStyle = '#CFA0A4';
+ ctx.fillRect(lx, ly - 5, 10, 10);
+ ctx.fillStyle = '#5A3E43';
+ ctx.fillText(tr.chartAllBars, lx + 14, ly);
+ }
+
+ ctx.strokeStyle = 'rgba(90,62,67,.14)';
+ ctx.fillStyle = '#5A3E43';
+ ctx.font = '10.5px Quicksand,sans-serif';
+ ctx.textAlign = 'right';
+ for(var i = 0; i <= 4; i++){
+ var val = step * i;
+ var yPos = padT + plotH - (val / maxY) * plotH;
+ ctx.beginPath();
+ ctx.moveTo(padL, yPos);
+ ctx.lineTo(w - padR, yPos);
+ ctx.stroke();
  ctx.fillText(val, padL - 6, yPos);
  }
- const barW = plotW / daysInMonth;
- values.forEach((v, i) => {
+
+ var barW = plotW / daysInMonth;
+ values.forEach(function(v, idx){
  if(!v) return;
- const bh = (v / maxY) * plotH;
- ctx.fillStyle = single ? (metTarget(`${y}-${pad(m)}-${pad(i+1)}`, single) ? '#9C6B73' : '#ECCBC9') : '#D0A0A3';
- ctx.fillRect(padL + i * barW + barW * 0.15, padT + plotH - bh, barW * 0.7, bh);
+ var bh = (v / maxY) * plotH;
+ var dayKey = y + '-' + pad(m) + '-' + pad(idx + 1);
+ ctx.fillStyle = single ? (metTarget(dayKey, single) ? '#965F68' : '#E6C7C8') : '#CFA0A4';
+ ctx.fillRect(padL + idx * barW + barW * 0.15, padT + plotH - bh, barW * 0.7, bh);
  });
- ctx.fillStyle = '#6b4f52'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
- for(let d = 1; d <= daysInMonth; d++) if(d === 1 || d % 5 === 0) ctx.fillText(d, padL + (d - .5) * barW, padT + plotH + 6);
+
+ ctx.fillStyle = '#5A3E43';
+ ctx.textAlign = 'center';
+ ctx.textBaseline = 'top';
+ for(var day = 1; day <= daysInMonth; day++){
+ if(day === 1 || day % 5 === 0){
+ ctx.fillText(day, padL + (day - 0.5) * barW, padT + plotH + 5);
+ }
+ }
 
  if(single && target > 0){
- const yT = padT + plotH - (target / maxY) * plotH;
- ctx.setLineDash([6,4]); ctx.strokeStyle = '#b5545c'; ctx.lineWidth = 1.5;
- ctx.beginPath(); ctx.moveTo(padL, yT); ctx.lineTo(w - padR, yT); ctx.stroke(); ctx.setLineDash([]);
- }
- $('legend').textContent = single ? `Mawar tua: target tercapai. Rose pastel: belum. Garis merah: target ${target}.` : 'Semua zikir digabung per hari.';
+ var yT = padT + plotH - (target / maxY) * plotH;
+ ctx.setLineDash([6, 4]);
+ ctx.strokeStyle = '#ab434e';
+ ctx.lineWidth = 1.5;
+ ctx.beginPath();
+ ctx.moveTo(padL, yT);
+ ctx.lineTo(w - padR, yT);
+ ctx.stroke();
+ ctx.setLineDash([]);
  }
 
+ ctx.fillStyle = 'rgba(90,62,67,.82)';
+ ctx.font = 'bold 10px Quicksand,sans-serif';
+ ctx.textAlign = 'center';
+ ctx.textBaseline = 'bottom';
+ ctx.fillText(tr.chartDate, padL + plotW / 2, h - 2);
+
+ ctx.save();
+ ctx.translate(10, padT + plotH / 2);
+ ctx.rotate(-Math.PI / 2);
+ ctx.textAlign = 'center';
+ ctx.textBaseline = 'middle';
+ ctx.fillText(tr.chartCount, 0, 0);
+ ctx.restore();
+ }
+
+ setInterval(function(){
+ var nowKey = todayKey();
+ if(nowKey !== activeDay){
+ activeDay = nowKey;
+ if($('pageToday').classList.contains('active')) renderToday();
+ if($('pageHistory').classList.contains('active')) renderHistory();
+ if($('pageHome').classList.contains('active')) renderHome();
+ }
+ }, 30000);
+
+ document.addEventListener('visibilitychange', function(){
+ if(document.visibilityState === 'visible'){
+ activeDay = todayKey();
+ if($('pageToday').classList.contains('active')) renderToday();
+ if($('pageHistory').classList.contains('active')) renderHistory();
+ if($('pageHome').classList.contains('active')) renderHome();
+ }
+ });
+
+ applyStaticLanguage();
  showPage(data.zikirs.length ? 'pageToday' : 'pageHome');
- window.onresize = () => { if($('pageHistory').classList.contains('active') && $('subChart').classList.contains('active')) drawChart(); };
+ window.addEventListener('resize', function(){
+ if($('pageHistory').classList.contains('active') && $('subChart').classList.contains('active')) drawChart();
+ });
 })();
 </script>
 </body>
