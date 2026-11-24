@@ -2,122 +2,186 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Daily Dhikr">
 <title>Daily Dhikr by Fenika</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=GFS+Didot&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
  :root{
- /* Desert Rose awal + Glassy Pearl yang lembut & terukur */
- --bg-top:#F8ECEC;
- --bg-mid:#E6C7C8;
- --bg-bot:#D8B0B3;
- --rose-accent:#965F68;
- --rose-soft:#CFA0A4;
- --plum:#5A3E43;
- --sage:#D3E2D0;
- --green:#557251;
- --green-ring:#7FA07A;
- --green-bg:rgba(229,240,227,.85);
- --glass:rgba(255,255,255,.72);
- --glass-strong:rgba(255,255,255,.86);
- --glass-shine:rgba(255,255,255,.55);
+ --dusty-pink:#C8848E;
+ --dusty-pink-deep:#B56D78;
+ --dusty-blush:#E8D3D6;
+ --dusty-tint:#F8ECEE;
+ --dusty-surface:#FDF8F9;
+ --dusty-bg-top:#FBF5F6;
+ --dusty-bg-bot:#F1E2E5;
+ --dusty-ink:#6A3F39;
+ --dusty-muted:#8C635E;
+ --white:#FFFFFF;
  }
- *{box-sizing:border-box;margin:0;padding:0}
+ *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
  body{
- font-family:'Quicksand',system-ui,sans-serif;color:var(--plum);
- background:
- radial-gradient(circle at 18% 12%, rgba(255,255,255,.75) 0%, transparent 45%),
- radial-gradient(circle at 85% 24%, rgba(255,250,250,.55) 0%, transparent 40%),
- linear-gradient(165deg,var(--bg-top) 0%,var(--bg-mid) 56%,var(--bg-bot) 100%);
- min-height:100vh;padding-bottom:calc(90px + env(safe-area-inset-bottom));
+ font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--dusty-ink);
+ background:linear-gradient(170deg,var(--dusty-bg-top) 0%,var(--dusty-tint) 52%,var(--dusty-bg-bot) 100%);
+ min-height:100vh;padding-bottom:calc(98px + env(safe-area-inset-bottom));
+ overflow-x:hidden;
  }
- h1,h2{font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--rose-accent)}
- h1{font-size:2.15rem;text-align:center;letter-spacing:.2px}
- h2{font-size:1.45rem;margin:22px 0 11px}
- .by{text-align:center;font-size:.9rem;margin-top:4px;color:var(--plum);opacity:.78}
+ h1,h2{font-family:'GFS Didot',Georgia,serif;font-weight:400;color:var(--dusty-ink)}
+ h1{font-size:2.1rem;text-align:center;letter-spacing:.4px}
+ h2{font-size:1.38rem;margin:22px 0 11px}
+ .by{text-align:center;font-size:.86rem;margin-top:4px;color:var(--dusty-muted)}
  .page{display:none;padding:24px 16px;max-width:520px;margin:0 auto}
  .page.active{display:block}
 
- /* Permukaan Glassy Pearl tanpa garis tepi berlebih */
- .card{
- background:linear-gradient(145deg,var(--glass-strong),var(--glass));
- backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
- border-radius:22px;padding:16px;margin-bottom:14px;
- box-shadow:0 8px 24px rgba(150,95,104,.11), inset 0 1px 0 var(--glass-shine);
- }
- .row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
- .muted{font-size:.84rem;color:var(--plum);opacity:.76;line-height:1.42}
- .zikir-title{font-weight:600;line-height:1.45;word-break:break-word;overflow-wrap:anywhere;white-space:pre-line;color:var(--plum)}
-
- /* Header Beranda + Kotak Tombol ID / EN Terpaten */
+ /* Header + Tombol ID / EN di Semua Halaman (Matte Tanpa Outline) */
  .top-bar{position:relative;display:flex;align-items:center;justify-content:center;min-height:44px}
  .lang-box{
  position:absolute;right:0;top:50%;transform:translateY(-50%);
  width:44px;height:34px;padding:0;border:none;
- background:var(--glass-strong);backdrop-filter:blur(8px);color:var(--rose-accent);
- font:inherit;font-size:.78rem;font-weight:700;letter-spacing:.5px;white-space:nowrap;
+ background:var(--dusty-surface);
+ color:var(--dusty-pink-deep);
+ font:inherit;font-size:.76rem;font-weight:700;letter-spacing:.5px;white-space:nowrap;
  border-radius:11px;cursor:pointer;
- box-shadow:0 4px 12px rgba(150,95,104,.12), inset 0 1px 0 rgba(255,255,255,.9);
+ box-shadow:0 4px 12px rgba(181,109,120,.1);
  display:inline-flex;align-items:center;justify-content:center;
+ transition:background-color .14s ease,transform .1s ease;
  }
- .lang-box:active{transform:translateY(-50%) scale(.96)}
+ .lang-box:active{transform:translateY(-50%) scale(.96);background:var(--dusty-blush)}
 
- /* Form & Tombol */
+ /* Permukaan Matte Pink Lembut Tanpa Outline */
+ .card{
+ background:var(--dusty-surface);
+ border-radius:24px;padding:16px;margin-bottom:14px;
+ box-shadow:0 7px 20px rgba(181,109,120,.085);
+ }
+ .zikir-card{
+ cursor:pointer;
+ transition:transform .14s ease,background-color .16s ease,box-shadow .18s ease,opacity .18s ease;
+ }
+ .zikir-card:active{transform:scale(.992);background:var(--dusty-tint)}
+ .zikir-card.dragging{opacity:.56;transform:scale(.985)}
+ .zikir-card.drag-over{
+ box-shadow:0 -3px 0 0 var(--dusty-pink), 0 7px 20px rgba(181,109,120,.12);
+ }
+
+ .row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+ .muted{font-size:.82rem;color:var(--dusty-muted);line-height:1.45}
+ .zikir-title{font-weight:600;line-height:1.45;word-break:break-word;overflow-wrap:anywhere;white-space:pre-line;color:var(--dusty-ink)}
+
+ /* Kartu Doa Zikir di Beranda */
+ .doa-box{
+ margin-top:16px;padding:15px 17px;border-radius:22px;
+ background:var(--dusty-surface);
+ box-shadow:0 7px 18px rgba(181,109,120,.085);
+ text-align:center;
+ }
+ .doa-arabic{
+ font-family:'GFS Didot',Georgia,serif;font-size:1.32rem;
+ color:var(--dusty-ink);line-height:1.55;margin-bottom:5px;
+ }
+ .doa-text{
+ font-size:.82rem;color:var(--dusty-muted);line-height:1.48;
+ }
+
+ /* Form Input Simple Tanpa Kotak Pembungkus Luar */
+ .simple-form{display:flex;gap:8px;align-items:center}
+ .simple-name{flex:1;min-width:0}
+ .simple-target{width:78px;flex-shrink:0;text-align:center;font-variant-numeric:tabular-nums}
+ .btn-plus{
+ width:44px;height:42px;border:none;border-radius:14px;flex-shrink:0;
+ background:var(--dusty-pink);color:var(--white);
+ font-family:'GFS Didot',Georgia,serif;font-size:1.55rem;line-height:1;
+ cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+ box-shadow:0 5px 14px rgba(181,109,120,.22);
+ transition:background-color .14s ease,transform .1s ease;
+ }
+ .btn-plus:hover{background:var(--dusty-pink-deep)}
+ .btn-plus:active{transform:scale(.95)}
+
  input,select,textarea{
- width:100%;padding:12px 14px;border-radius:14px;border:none;
- background:rgba(255,255,255,.88);font:inherit;font-size:16px;color:var(--plum);outline:none;
- box-shadow:0 2px 8px rgba(150,95,104,.07), inset 0 1px 2px rgba(90,62,67,.06);
+ width:100%;padding:11px 13px;border-radius:15px;border:none;
+ background:var(--white);
+ font:inherit;font-size:15px;color:var(--dusty-ink);outline:none;
+ box-shadow:0 4px 12px rgba(181,109,120,.065);
+ transition:box-shadow .14s ease;
  }
  textarea{resize:vertical;min-height:76px;line-height:1.45}
- input:focus,select:focus,textarea:focus{box-shadow:0 0 0 2.5px rgba(150,95,104,.28), 0 4px 10px rgba(150,95,104,.1)}
- .btn{
- border:none;border-radius:14px;padding:12px 16px;font:inherit;font-weight:700;
- background:var(--rose-accent);color:#fff;cursor:pointer;
- box-shadow:0 6px 16px rgba(150,95,104,.22), inset 0 1px 0 rgba(255,255,255,.25);
+ input:focus,select:focus,textarea:focus{
+ box-shadow:0 0 0 2.5px rgba(200,132,142,.26), 0 5px 14px rgba(181,109,120,.095);
  }
- .btn.ghost{
- background:var(--glass);backdrop-filter:blur(8px);color:var(--rose-accent);border:none;
- box-shadow:0 3px 10px rgba(150,95,104,.09), inset 0 1px 0 rgba(255,255,255,.8);
- }
- .btn.small{padding:6px 11px;font-size:.8rem;border-radius:10px}
- .btn.danger{
- background:rgba(255,245,246,.82);color:#ab434e;border:none;padding:6px 11px;
- font-size:.8rem;border-radius:10px;flex-shrink:0;font-weight:700;
- box-shadow:0 2px 8px rgba(171,67,78,.08);
- }
- .btn.danger.confirming{background:#ab434e;color:#fff}
- .msg{min-height:18px;font-size:.85rem;color:#ab434e;font-weight:600}
- .msg.ok{color:var(--green);font-weight:700}
 
- /* Aksi Kartu Daftar Zikir */
- .item-actions{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
- .order-row,.crud-row{display:flex;gap:5px;align-items:center}
- .btn-order{
- width:28px;height:28px;border-radius:9px;border:none;
- background:rgba(255,255,255,.82);color:var(--rose-accent);font:inherit;font-size:.82rem;font-weight:700;
- cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
- box-shadow:0 2px 6px rgba(150,95,104,.09), inset 0 1px 0 rgba(255,255,255,.9);
+ .btn{
+ border:none;border-radius:14px;padding:11px 15px;font:inherit;font-weight:600;
+ background:var(--dusty-pink);
+ color:var(--white);cursor:pointer;white-space:nowrap;flex-shrink:0;
+ box-shadow:0 5px 14px rgba(181,109,120,.2);
+ transition:background-color .14s ease,transform .1s ease;
  }
- .btn-order:disabled{opacity:.3;cursor:default;box-shadow:none}
+ .btn:hover{background:var(--dusty-pink-deep)}
+ .btn:active{transform:scale(.96)}
+ .btn.ghost{
+ background:var(--dusty-tint);
+ color:var(--dusty-ink);
+ box-shadow:0 2px 8px rgba(181,109,120,.065);
+ }
+ .btn.ghost:active{background:var(--dusty-blush)}
+ .btn.small{padding:6px 11px;font-size:.78rem;border-radius:10px}
+ .btn.danger{
+ background:var(--dusty-tint);
+ color:var(--dusty-pink-deep);padding:6px 11px;
+ font-size:.78rem;border-radius:10px;flex-shrink:0;font-weight:700;
+ box-shadow:0 2px 8px rgba(181,109,120,.065);
+ }
+ .btn.danger.confirming{background:var(--dusty-pink-deep);color:var(--white)}
+ .msg{min-height:18px;font-size:.82rem;color:var(--dusty-pink-deep);font-weight:600;margin-top:8px}
+ .msg.ok{color:var(--dusty-ink);font-weight:700}
+
+ /* Aksi Kartu Daftar Zikir (Rata Tengah Vertikal) */
+ .crud-row{display:flex;gap:6px;align-items:center;align-self:center;flex-shrink:0}
+ .drag-handle{
+ width:28px;height:28px;border:none;border-radius:9px;
+ background:var(--dusty-tint);color:var(--dusty-pink-deep);
+ font-size:.92rem;line-height:1;cursor:grab;
+ display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+ touch-action:none;user-select:none;
+ box-shadow:0 2px 7px rgba(181,109,120,.065);
+ }
+ .drag-handle:active{cursor:grabbing;background:var(--dusty-blush)}
 
  /* Edit Form Inline */
- .edit-box{margin-top:12px;padding-top:12px;border-top:1px dashed rgba(150,95,104,.22);display:grid;gap:8px}
+ .edit-box{margin-top:12px;padding-top:12px;border-top:1px dashed rgba(200,132,142,.26);display:grid;gap:8px}
  .edit-actions{display:flex;gap:8px;justify-content:flex-end}
 
- /* Streak (Beranda) */
+ /* Streak (Di Halaman Riwayat) — Matte Tanpa Outline */
  .streak{
- display:flex;align-items:center;gap:14px;
- background:linear-gradient(145deg,rgba(232,243,229,.84),rgba(205,222,202,.76));
- backdrop-filter:blur(10px);border-radius:20px;padding:13px 16px;margin-top:16px;
- box-shadow:0 6px 18px rgba(85,114,81,.11), inset 0 1px 0 rgba(255,255,255,.7);
+ display:flex;align-items:center;justify-content:space-between;gap:12px;
+ background:var(--dusty-surface);
+ color:var(--dusty-ink);
+ border-radius:22px;padding:14px 16px;margin-top:16px;
+ box-shadow:0 7px 20px rgba(181,109,120,.085);
+ cursor:pointer;
  }
+ .streak-left{display:flex;align-items:center;gap:14px;min-width:0}
  .streak .num{
- font-family:'Quicksand',system-ui,sans-serif;font-variant-numeric:tabular-nums;
- font-size:2rem;font-weight:700;line-height:1;color:var(--plum);flex-shrink:0;
+ font-family:'GFS Didot',Georgia,serif;font-variant-numeric:tabular-nums;
+ font-size:2.1rem;line-height:1;color:var(--dusty-pink-deep);flex-shrink:0;
+ }
+ .streak-title{font-weight:700;color:var(--dusty-ink);font-size:.94rem}
+ .streak-sub{
+ font-size:.81rem;color:var(--dusty-muted);line-height:1.42;
+ transition:opacity .24s ease;
+ }
+ .streak-sub.fading{opacity:0}
+ .best-pill{
+ flex-shrink:0;
+ background:var(--dusty-tint);
+ color:var(--dusty-pink-deep);
+ font-size:.74rem;font-weight:700;padding:6px 12px;border-radius:999px;
+ font-variant-numeric:tabular-nums;white-space:nowrap;
+ box-shadow:0 2px 7px rgba(181,109,120,.065);
  }
 
  /* Chips tanpa scrollbar */
@@ -125,160 +189,224 @@
  .chips::-webkit-scrollbar{display:none}
  .chip{
  flex:0 0 auto;max-width:210px;padding:8px 15px;border-radius:999px;border:none;
- background:var(--glass);backdrop-filter:blur(8px);cursor:pointer;
- font:inherit;font-size:.88rem;color:var(--plum);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
- box-shadow:0 3px 10px rgba(150,95,104,.09), inset 0 1px 0 rgba(255,255,255,.85);
+ background:var(--dusty-surface);cursor:pointer;
+ font:inherit;font-size:.85rem;color:var(--dusty-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+ box-shadow:0 4px 11px rgba(181,109,120,.075);
  }
- .chip.on{background:var(--rose-accent);color:#fff;font-weight:700;box-shadow:0 5px 14px rgba(150,95,104,.22)}
+ .chip.on{
+ background:var(--dusty-pink);
+ color:var(--white);font-weight:600;
+ box-shadow:0 5px 14px rgba(181,109,120,.22);
+ }
 
- /* Tombol Utama: Glassy Pearl Menonjol + Progress Ring */
- .counter{text-align:center;padding:24px 16px}
- .zname{font-family:'Cormorant Garamond',serif;font-size:1.58rem;line-height:1.35;color:var(--rose-accent);margin-bottom:6px;word-break:break-word;white-space:pre-line}
- .ztarget{font-size:.88rem;opacity:.85;font-weight:600}
- .zhint{font-size:.78rem;opacity:.62;margin:4px 0 22px}
-
- .ring-wrap{position:relative;width:194px;height:194px;margin:0 auto;display:flex;align-items:center;justify-content:center}
- .ring-svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);pointer-events:none}
- .ring-bg{fill:none;stroke:rgba(150,95,104,.2);stroke-width:6}
- .ring-fg{fill:none;stroke:var(--rose-accent);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .25s ease,stroke .35s ease}
- .ring-fg.complete{stroke:var(--green-ring)}
+ /* Tombol Tap Utama: Polos Tegas, Dusty Rose Kalem, Kesan Pearl Halus */
+ .counter{text-align:center;padding:26px 16px}
+ .zname{font-family:'GFS Didot',Georgia,serif;font-size:1.52rem;line-height:1.38;color:var(--dusty-ink);margin-bottom:6px;word-break:break-word;white-space:pre-line}
+ .ztarget{font-size:.85rem;color:var(--dusty-muted);font-weight:600}
+ .zhint{font-size:.76rem;color:var(--dusty-muted);opacity:.85;margin:4px 0 24px}
 
  .big{
- width:166px;height:166px;border-radius:50%;border:none;cursor:pointer;
+ position:relative;overflow:hidden;
+ width:174px;height:174px;margin:0 auto;border-radius:50%;
+ border:none;cursor:pointer;
  background:
- radial-gradient(circle at 28% 20%, #ffffff 0%, #f7e6e7 46%, #dfb7ba 86%, #cfa2a6 100%);
+ radial-gradient(circle at 30% 24%, rgba(255,250,252,.52) 0%, rgba(255,244,247,.16) 36%, rgba(200,132,142,0) 64%),
+ linear-gradient(155deg, #D3919B 0%, var(--dusty-pink) 58%, #BA737E 100%);
  box-shadow:
- 0 14px 28px rgba(150,95,104,.28),
- 0 3px 8px rgba(90,62,67,.12),
- inset 0 3px 8px rgba(255,255,255,.95),
- inset 0 -8px 16px rgba(150,95,104,.22);
- display:flex;align-items:center;justify-content:center;color:var(--plum);
- transition:transform .08s ease;user-select:none;-webkit-tap-highlight-color:transparent;
+ inset 0 1.5px 2px rgba(255,252,253,.48),
+ inset 0 -4px 10px rgba(154,88,98,.18),
+ 0 10px 22px rgba(181,109,120,.2);
+ display:flex;align-items:center;justify-content:center;color:var(--white);
+ transition:transform .1s cubic-bezier(.22,1,.36,1), box-shadow .18s ease, filter .18s ease;
+ user-select:none;-webkit-tap-highlight-color:transparent;
  }
- .big:active{transform:scale(.95)}
- .bigcount{
- font-family:'Quicksand',system-ui,sans-serif;
- font-variant-numeric:tabular-nums;
- font-size:3.25rem;font-weight:700;line-height:1;letter-spacing:-1px;
+ .big.is-down{
+ transform:scale(.955);
+ filter:brightness(.97);
+ box-shadow:
+ inset 0 2px 5px rgba(145,82,92,.22),
+ 0 5px 14px rgba(181,109,120,.18);
  }
 
- /* Status Tercapai & Aksi Sekunder */
- .done{margin-top:16px;min-height:30px;font-size:.9rem;font-weight:700;color:var(--green);display:flex;align-items:center;justify-content:center}
- .done span{background:var(--green-bg);padding:6px 14px;border-radius:999px;box-shadow:0 3px 10px rgba(85,114,81,.09)}
+ .tap-ripple{
+ position:absolute;border-radius:50%;pointer-events:none;
+ width:28px;height:28px;margin-left:-14px;margin-top:-14px;
+ background:radial-gradient(circle, rgba(255,251,252,.42) 0%, rgba(255,251,252,0) 72%);
+ transform:scale(0);opacity:.85;
+ animation:rippleOut .45s cubic-bezier(.16,1,.3,1) forwards;
+ }
+ @keyframes rippleOut{
+ 0%{transform:scale(.2);opacity:.78}
+ 100%{transform:scale(5.2);opacity:0}
+ }
+
+ .bigcount{
+ position:relative;z-index:1;
+ font-family:'GFS Didot',Georgia,serif;
+ font-variant-numeric:tabular-nums;
+ font-size:3.25rem;font-weight:400;line-height:1;letter-spacing:.5px;
+ color:var(--white);
+ text-shadow:0 1px 2px rgba(138,76,86,.16);
+ transition:transform .14s cubic-bezier(.22,1,.36,1);
+ }
+ .bigcount.bump{transform:scale(1.1)}
+
+ /* Status Tercapai & Aksi Sekunder Matte Tanpa Outline */
+ .done{
+ margin-top:18px;min-height:28px;font-size:.88rem;font-weight:700;
+ color:var(--dusty-pink-deep);display:flex;align-items:center;justify-content:center;
+ }
+ .done span{
+ background:var(--dusty-tint);
+ padding:6px 14px;border-radius:999px;
+ box-shadow:0 3px 9px rgba(181,109,120,.075);
+ }
+ .badge-soft{
+ font-size:0.76rem;
+ background:var(--dusty-tint);
+ color:var(--dusty-pink-deep);
+ padding:2px 9px;border-radius:999px;font-weight:700;
+ }
  .actions{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:14px}
  .btn-minus,.btn-reset{
  height:40px;border-radius:999px;border:none;
- background:var(--glass-strong);color:var(--rose-accent);font:inherit;font-weight:700;
+ background:var(--dusty-surface);
+ color:var(--dusty-ink);font:inherit;font-weight:600;
  cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
- box-shadow:0 4px 12px rgba(150,95,104,.11), inset 0 1px 0 rgba(255,255,255,.9);
+ box-shadow:0 4px 11px rgba(181,109,120,.075);
+ transition:background-color .12s ease,transform .1s ease;
  }
+ .btn-minus:active,.btn-reset:active{transform:scale(.95);background:var(--dusty-tint)}
  .btn-minus{width:40px;font-size:1.3rem}
- .btn-reset{padding:0 16px;font-size:.84rem;gap:6px}
- .btn-reset.confirming{background:#ab434e;color:#fff}
+ .btn-reset{padding:0 16px;font-size:.82rem;gap:6px}
+ .btn-reset.confirming{background:var(--dusty-pink-deep);color:var(--white)}
 
- /* Riwayat & Grafik */
- .tabs{display:flex;background:var(--glass);backdrop-filter:blur(10px);border-radius:16px;padding:4px;margin:16px 0 14px;box-shadow:0 4px 14px rgba(150,95,104,.09)}
- .tab{flex:1;border:none;background:none;padding:9px;border-radius:12px;font:inherit;font-weight:700;cursor:pointer;color:var(--plum)}
- .tab.on{background:var(--rose-accent);color:#fff;box-shadow:0 4px 12px rgba(150,95,104,.2)}
+ /* Riwayat & Grafik — Matte Tanpa Outline */
+ .tabs{
+ display:flex;
+ background:var(--dusty-surface);
+ border-radius:18px;padding:4px;margin:16px 0 14px;
+ box-shadow:0 5px 14px rgba(181,109,120,.075);
+ }
+ .tab{flex:1;border:none;background:none;padding:9px;border-radius:14px;font:inherit;font-weight:600;cursor:pointer;color:var(--dusty-ink)}
+ .tab.on{
+ background:var(--dusty-pink);
+ color:var(--white);box-shadow:0 4px 12px rgba(181,109,120,.2);
+ }
  .subpage{display:none}
  .subpage.active{display:block}
- .section-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:22px 0 11px}
+ .section-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:18px 0 11px}
  .section-head h2{margin:0}
  .link-mini{
- border:none;background:var(--glass);backdrop-filter:blur(8px);color:var(--rose-accent);
- font:inherit;font-size:.78rem;font-weight:700;padding:5px 12px;border-radius:999px;cursor:pointer;
- box-shadow:0 2px 8px rgba(150,95,104,.09), inset 0 1px 0 rgba(255,255,255,.85);
+ border:none;
+ background:var(--dusty-surface);
+ color:var(--dusty-pink-deep);
+ font:inherit;font-size:.76rem;font-weight:600;padding:5px 12px;border-radius:999px;cursor:pointer;
+ box-shadow:0 3px 9px rgba(181,109,120,.075);
  }
+ .link-mini:active{background:var(--dusty-tint)}
 
  canvas{
  width:100%;height:275px;display:block;
- background:linear-gradient(155deg,rgba(255,255,255,.9),rgba(255,250,250,.78));
- backdrop-filter:blur(10px);border-radius:20px;
- box-shadow:0 8px 22px rgba(150,95,104,.11), inset 0 1px 0 rgba(255,255,255,.9);
+ background:var(--dusty-surface);
+ border-radius:22px;
+ box-shadow:0 7px 20px rgba(181,109,120,.085);
  }
  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;text-align:center}
  .stats div{
- background:var(--glass);backdrop-filter:blur(10px);border-radius:16px;padding:10px 6px;
- box-shadow:0 4px 14px rgba(150,95,104,.08), inset 0 1px 0 rgba(255,255,255,.8);
+ background:var(--dusty-surface);
+ border-radius:18px;padding:10px 6px;
+ box-shadow:0 5px 14px rgba(181,109,120,.075);
  }
  .stats b{
- display:block;font-family:'Quicksand',system-ui,sans-serif;font-variant-numeric:tabular-nums;
- font-size:1.35rem;font-weight:700;color:var(--rose-accent);
+ display:block;font-family:'GFS Didot',Georgia,serif;font-variant-numeric:tabular-nums;
+ font-size:1.42rem;font-weight:400;color:var(--dusty-pink-deep);
  }
- .stats span{font-size:.75rem;font-weight:600}
+ .stats span{font-size:.73rem;font-weight:600;color:var(--dusty-muted)}
 
  /* Export & Import Sebelahan + Tombol Tanda Tanya (?) */
  .backup-section{margin-top:16px}
  .backup-grid{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:stretch}
  .btn-help{
- width:42px;border-radius:14px;border:none;background:var(--glass);backdrop-filter:blur(8px);
- color:var(--rose-accent);font:inherit;font-size:1rem;font-weight:700;cursor:pointer;
+ width:42px;border-radius:14px;border:none;
+ background:var(--dusty-surface);
+ color:var(--dusty-pink-deep);font:inherit;font-size:1rem;font-weight:700;cursor:pointer;
  display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
- box-shadow:0 3px 10px rgba(150,95,104,.09), inset 0 1px 0 rgba(255,255,255,.85);
+ box-shadow:0 4px 11px rgba(181,109,120,.075);
  }
- .btn-help.on{background:var(--rose-accent);color:#fff}
+ .btn-help.on{background:var(--dusty-pink-deep);color:var(--white)}
  .help-box{
- display:none;margin-top:10px;padding:12px 14px;border-radius:16px;
- background:var(--glass-strong);backdrop-filter:blur(10px);
- font-size:.84rem;line-height:1.5;color:var(--plum);
- box-shadow:0 4px 14px rgba(150,95,104,.09), inset 0 1px 0 rgba(255,255,255,.9);
+ display:none;margin-top:10px;padding:12px 14px;border-radius:18px;
+ background:var(--dusty-surface);
+ font-size:.82rem;line-height:1.5;color:var(--dusty-ink);
+ box-shadow:0 5px 14px rgba(181,109,120,.075);
  }
  .help-box.show{display:block}
 
- /* Navigasi Bawah */
+ /* Navigasi Bawah Kapsul Matte Tanpa Outline */
  nav{
- position:fixed;left:0;right:0;bottom:0;display:flex;
- background:rgba(255,250,250,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
- padding:8px 8px calc(10px + env(safe-area-inset-bottom));z-index:10;
- box-shadow:0 -6px 20px rgba(150,95,104,.1), inset 0 1px 0 rgba(255,255,255,.85);
+ position:fixed;left:50%;transform:translateX(-50%);bottom:14px;
+ width:calc(100% - 32px);max-width:468px;
+ display:flex;gap:4px;
+ background:var(--dusty-surface);
+ padding:6px;border-radius:999px;z-index:10;
+ box-shadow:0 9px 24px rgba(181,109,120,.14);
  }
- nav button{flex:1;border:none;background:none;font:inherit;font-size:.85rem;color:var(--plum);padding:9px 4px;border-radius:12px;cursor:pointer;opacity:.72}
- nav button.on{opacity:1;background:rgba(255,255,255,.78);color:var(--rose-accent);font-weight:700;box-shadow:0 2px 8px rgba(150,95,104,.08)}
+ nav button{
+ flex:1;border:none;background:transparent;font:inherit;font-size:.84rem;color:var(--dusty-ink);
+ padding:10px 6px;border-radius:999px;cursor:pointer;opacity:.75;transition:all .16s ease;
+ white-space:nowrap;
+ }
+ nav button.on{
+ opacity:1;
+ background:var(--dusty-pink);
+ color:var(--white);font-weight:700;
+ }
 </style>
 </head>
 <body>
 
-<!-- BERANDA -->
+<!-- BERANDA (HOME) -->
 <section class="page" id="pageHome">
  <div class="top-bar">
  <h1>Daily Dhikr</h1>
- <button type="button" class="lang-box" id="btnLang" aria-label="Switch language">ID</button>
+ <button type="button" class="lang-box btnLang" aria-label="Switch language">ID</button>
  </div>
  <p class="by">By Fenika Annisa</p>
- <div class="streak">
- <div class="num" id="streakNum">0</div>
- <div>
- <div id="streakLabel" style="font-weight:700">Hari Berturut-Turut</div>
- <div class="muted" id="streakSub">Tambahkan zikir atau dua untuk mulai</div>
+
+ <div class="doa-box">
+ <div class="doa-arabic">اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ</div>
+ <div class="doa-text" id="doaText"></div>
  </div>
- </div>
+
  <h2 id="h2Add">Tambah Zikir atau Dua</h2>
- <div class="card" style="display:grid;gap:10px">
- <textarea id="inName" placeholder="Tulis bacaan zikir atau dua di sini" maxlength="1000"></textarea>
- <input id="inTarget" type="number" placeholder="Target harian (contoh: 100)" min="1" inputmode="numeric">
- <button class="btn" id="btnAdd">Simpan Zikir</button>
- <div class="msg" id="formMsg"></div>
+ <div class="simple-form">
+ <input id="inName" class="simple-name" type="text" placeholder="Tulis zikir atau dua..." maxlength="1000">
+ <input id="inTarget" class="simple-target" type="number" placeholder="100" min="1" inputmode="numeric">
+ <button type="button" class="btn-plus" id="btnAdd" aria-label="Simpan">+</button>
  </div>
+ <div class="msg" id="formMsg"></div>
+
+ <div class="section-head">
  <h2 id="h2List">Daftar Zikir</h2>
+ <span class="muted" id="dragHint">Seret ☰ untuk urutkan</span>
+ </div>
  <div id="homeList"></div>
 </section>
 
-<!-- ZIKIR HARI INI -->
+<!-- HITUNG (COUNT) -->
 <section class="page" id="pageToday">
- <h1 id="h1Today">Zikir Hari Ini</h1>
+ <div class="top-bar">
+ <h1 id="h1Today">Hitung</h1>
+ <button type="button" class="lang-box btnLang" aria-label="Switch language">ID</button>
+ </div>
  <p class="by" id="todayDate"></p>
  <div class="chips" id="todayChips"></div>
  <div class="counter card" id="counterBox">
  <div class="zname" id="zName"></div>
  <div class="ztarget" id="zTarget"></div>
  <div class="zhint" id="zHint">Ketuk lingkaran untuk menghitung</div>
- <div class="ring-wrap">
- <svg class="ring-svg" viewBox="0 0 194 194">
- <circle class="ring-bg" cx="97" cy="97" r="91"></circle>
- <circle class="ring-fg" id="ringProgress" cx="97" cy="97" r="91"></circle>
- </svg>
  <button class="big" id="bigBtn" aria-label="Tambah hitungan"><span class="bigcount" id="bigCount">0</span></button>
- </div>
  <div class="done" id="doneMsg"></div>
  <div class="actions">
  <button class="btn-minus" id="minusBtn" aria-label="Kurangi">−</button>
@@ -288,23 +416,38 @@
  <div class="card muted" id="emptyToday" style="text-align:center;display:none;margin-top:16px">Belum ada zikir atau dua. Tambahkan dulu di menu Beranda.</div>
 </section>
 
-<!-- RIWAYAT -->
+<!-- RIWAYAT (HISTORY) -->
 <section class="page" id="pageHistory">
+ <div class="top-bar">
  <h1 id="h1History">Riwayat</h1>
+ <button type="button" class="lang-box btnLang" aria-label="Switch language">ID</button>
+ </div>
  <p class="by" id="historySub">Catatan dan grafik zikirmu</p>
+
+ <div class="streak" id="streakCard">
+ <div class="streak-left">
+ <div class="num" id="streakNum">0</div>
+ <div>
+ <div class="streak-title" id="streakLabel">Hari Berturut-Turut</div>
+ <div class="streak-sub" id="streakSub">Tambahkan zikir atau dua untuk mulai</div>
+ </div>
+ </div>
+ <div class="best-pill" id="bestPill">Terbaik: 0h</div>
+ </div>
+
  <div class="tabs">
  <button class="tab on" data-sub="subLog" id="tabLog">Riwayat</button>
  <button class="tab" data-sub="subChart" id="tabChart">Grafik</button>
  </div>
+
  <div class="subpage active" id="subLog">
- <h2 id="h2Total">Total Sepanjang Waktu</h2>
- <div id="totalList"></div>
  <div class="section-head">
  <h2 id="h2Daily">Aktivitas Harian</h2>
  <button type="button" class="link-mini" id="btnToggleDays">Lihat Semua</button>
  </div>
  <div id="dailyList"></div>
  </div>
+
  <div class="subpage" id="subChart">
  <div class="card" style="display:grid;gap:10px">
  <input id="monthPick" type="month">
@@ -312,7 +455,7 @@
  </div>
  <canvas id="chart"></canvas>
  <div class="stats">
- <div><b id="stTotal">0</b><span id="stTotalLbl">Total Bulan Ini</span></div>
+ <div><b id="stAvg">0</b><span id="stAvgLbl">Rata-Rata Harian</span></div>
  <div><b id="stDays">0</b><span id="stDaysLbl">Hari Aktif</span></div>
  <div><b id="stHit">0</b><span id="stHitLbl">Hari Target Tercapai</span></div>
  </div>
@@ -330,7 +473,7 @@
 </section>
 
 <nav>
- <button data-page="pageToday" id="navToday">Zikir Hari Ini</button>
+ <button data-page="pageToday" id="navToday">Hitung</button>
  <button data-page="pageHome" id="navHome" class="on">Beranda</button>
  <button data-page="pageHistory" id="navHistory">Riwayat</button>
 </nav>
@@ -340,36 +483,35 @@
  var KEY = 'zikirApp';
  var LANG_KEY = 'zikirAppLang';
  var $ = function(id){ return document.getElementById(id); };
- var CIRC = 2 * Math.PI * 91;
- var ringEl = $('ringProgress');
- ringEl.style.strokeDasharray = CIRC;
- ringEl.style.strokeDashoffset = CIRC;
 
  var I18N = {
  id: {
  locale: 'id-ID',
  langBtn: 'ID',
+ doaText: '“Ya Allah, tolonglah aku untuk berzikir kepada-Mu, bersyukur kepada-Mu, dan beribadah dengan baik kepada-Mu.”',
  streakLabel: 'Hari Berturut-Turut',
+ bestPrefix: 'Terbaik',
+ dayShort: 'h',
  streakNoData: 'Tambahkan zikir atau dua untuk mulai',
  streakYesterday: function(met, total){ return 'Kemarin, ' + met + ' dari ' + total + ' tercapai'; },
+ streakToday: function(met, total){ return 'Hari ini, ' + met + ' dari ' + total + ' tercapai'; },
  h2Add: 'Tambah Zikir atau Dua',
- phName: 'Tulis bacaan zikir atau dua di sini',
- phTarget: 'Target harian (contoh: 100)',
- btnAdd: 'Simpan Zikir',
+ phName: 'Tulis zikir atau dua...',
+ phTarget: '100',
  h2List: 'Daftar Zikir',
+ dragHint: 'Seret ☰ untuk urutkan',
  emptyList: 'Belum ada zikir atau dua.',
  perDay: function(t){ return 'Target ' + t + ' per hari'; },
- btnUp: 'Pindah ke atas',
- btnDown: 'Pindah ke bawah',
  btnEdit: 'Edit',
  btnDel: 'Hapus',
  btnDelConfirm: 'Yakin Hapus?',
  btnCancel: 'Batal',
  btnSave: 'Simpan',
+ btnDrag: 'Geser urutan',
  errEmptyName: 'Bacaan zikir atau dua belum diisi.',
  errTarget: 'Target harus angka lebih dari 0.',
  errDuplicate: 'Bacaan zikir atau dua itu sudah ada.',
- h1Today: 'Zikir Hari Ini',
+ h1Today: 'Hitung',
  zTarget: function(t){ return 'Target Hari Ini: ' + t; },
  zHint: 'Ketuk lingkaran untuk menghitung',
  doneMsg: 'Target Hari Ini Tercapai 🎉',
@@ -380,15 +522,13 @@
  historySub: 'Catatan dan grafik zikirmu',
  tabLog: 'Riwayat',
  tabChart: 'Grafik',
- h2Total: 'Total Sepanjang Waktu',
- noData: 'Belum ada data.',
  h2Daily: 'Aktivitas Harian',
  noActivity: 'Belum ada aktivitas.',
  showAll: 'Lihat Semua',
  show7Days: '7 Hari Terakhir',
  allDoneBadge: '✓ Semua Tercapai',
  allDhikr: 'Semua Zikir & Dua',
- stTotalLbl: 'Total Bulan Ini',
+ stAvgLbl: 'Rata-Rata Harian',
  stDaysLbl: 'Hari Aktif',
  stHitLbl: 'Hari Target Tercapai',
  btnExport: 'Ekspor CSV',
@@ -402,7 +542,7 @@
  importedOk: function(rows, added){
  return 'Berhasil memulihkan ' + rows + ' catatan' + (added ? ' (' + added + ' item baru ditambahkan).' : '.');
  },
- navToday: 'Zikir Hari Ini',
+ navToday: 'Hitung',
  navHome: 'Beranda',
  navHistory: 'Riwayat',
  chartDate: 'Tanggal',
@@ -415,27 +555,30 @@
  en: {
  locale: 'en-US',
  langBtn: 'EN',
+ doaText: '“O Allah, help me to remember You, to give thanks to You, and to worship You in the best of manners.”',
  streakLabel: 'Day Streak',
+ bestPrefix: 'Best',
+ dayShort: 'd',
  streakNoData: 'Add dhikr or dua to get started',
  streakYesterday: function(met, total){ return 'Yesterday, ' + met + ' of ' + total + ' reached'; },
+ streakToday: function(met, total){ return 'Today, ' + met + ' of ' + total + ' reached'; },
  h2Add: 'Add Dhikr or Dua',
- phName: 'Write dhikr or dua here',
- phTarget: 'Daily target (e.g., 100)',
- btnAdd: 'Save Dhikr',
+ phName: 'Write dhikr or dua...',
+ phTarget: '100',
  h2List: 'Dhikr & Dua List',
+ dragHint: 'Drag ☰ to reorder',
  emptyList: 'No dhikr or dua yet.',
  perDay: function(t){ return 'Target ' + t + ' per day'; },
- btnUp: 'Move up',
- btnDown: 'Move down',
  btnEdit: 'Edit',
  btnDel: 'Delete',
  btnDelConfirm: 'Sure to Delete?',
  btnCancel: 'Cancel',
  btnSave: 'Save',
+ btnDrag: 'Reorder',
  errEmptyName: 'Please enter a dhikr or dua.',
  errTarget: 'Target must be greater than 0.',
  errDuplicate: 'That dhikr or dua already exists.',
- h1Today: "Today's Dhikr",
+ h1Today: 'Count',
  zTarget: function(t){ return "Today's Target: " + t; },
  zHint: 'Tap the circle to count',
  doneMsg: "Today's Target Reached 🎉",
@@ -446,15 +589,13 @@
  historySub: 'Your dhikr log and chart',
  tabLog: 'Log',
  tabChart: 'Chart',
- h2Total: 'All-Time Total',
- noData: 'No data yet.',
  h2Daily: 'Daily Activity',
  noActivity: 'No activity yet.',
  showAll: 'Show All',
  show7Days: 'Last 7 Days',
  allDoneBadge: '✓ All Reached',
  allDhikr: 'All Dhikr & Dua',
- stTotalLbl: 'Month Total',
+ stAvgLbl: 'Daily Average',
  stDaysLbl: 'Active Days',
  stHitLbl: 'Target Days Met',
  btnExport: 'Export CSV',
@@ -468,7 +609,7 @@
  importedOk: function(rows, added){
  return 'Restored ' + rows + ' records' + (added ? ' (' + added + ' new items added).' : '.');
  },
- navToday: 'Today',
+ navToday: 'Count',
  navHome: 'Home',
  navHistory: 'History',
  chartDate: 'Date',
@@ -505,14 +646,18 @@
 
  function applyStaticLanguage(){
  var tr = t();
- $('btnLang').textContent = tr.langBtn;
+ var langBtns = document.querySelectorAll('.btnLang');
+ for(var i = 0; i < langBtns.length; i++){
+ langBtns[i].textContent = tr.langBtn;
+ }
+ $('doaText').textContent = tr.doaText;
 
  $('streakLabel').textContent = tr.streakLabel;
  $('h2Add').textContent = tr.h2Add;
  $('inName').placeholder = tr.phName;
  $('inTarget').placeholder = tr.phTarget;
- $('btnAdd').textContent = tr.btnAdd;
  $('h2List').textContent = tr.h2List;
+ $('dragHint').textContent = tr.dragHint;
 
  $('h1Today').textContent = tr.h1Today;
  $('zHint').textContent = tr.zHint;
@@ -523,9 +668,8 @@
  $('historySub').textContent = tr.historySub;
  $('tabLog').textContent = tr.tabLog;
  $('tabChart').textContent = tr.tabChart;
- $('h2Total').textContent = tr.h2Total;
  $('h2Daily').textContent = tr.h2Daily;
- $('stTotalLbl').textContent = tr.stTotalLbl;
+ $('stAvgLbl').textContent = tr.stAvgLbl;
  $('stDaysLbl').textContent = tr.stDaysLbl;
  $('stHitLbl').textContent = tr.stHitLbl;
  $('btnExport').textContent = tr.btnExport;
@@ -537,15 +681,20 @@
  $('navHistory').textContent = tr.navHistory;
  }
 
- $('btnLang').addEventListener('click', function(){
+ var langBtnsAll = document.querySelectorAll('.btnLang');
+ for(var lb = 0; lb < langBtnsAll.length; lb++){
+ langBtnsAll[lb].addEventListener('click', function(){
  setLang(lang === 'id' ? 'en' : 'id');
  });
+ }
 
  var data = load();
  var currentId = null;
  var editingId = null;
  var showAllDays = false;
  var activeDay = todayKey();
+ var streakSubMode = 'yesterday';
+ var streakRotTimer = null;
 
  function load(){
  try{
@@ -655,17 +804,77 @@
  return streak;
  }
 
+ function calcBestStreak(currentStreak){
+ var best = currentStreak || 0;
+ var keys = Object.keys(data.counts || {}).sort();
+ var run = 0;
+ var prevDate = null;
+ for(var i = 0; i < keys.length; i++){
+ var k = keys[i];
+ if(!dayQualified(k)){
+ run = 0;
+ prevDate = null;
+ continue;
+ }
+ if(prevDate){
+ var partsA = prevDate.split('-').map(Number);
+ var partsB = k.split('-').map(Number);
+ var dtA = new Date(partsA[0], partsA[1] - 1, partsA[2]);
+ var dtB = new Date(partsB[0], partsB[1] - 1, partsB[2]);
+ var diffDays = Math.round((dtB - dtA) / 86400000);
+ run = (diffDays === 1) ? (run + 1) : 1;
+ }else{
+ run = 1;
+ }
+ if(run > best) best = run;
+ prevDate = k;
+ }
+ return best;
+ }
+
  function getStreakSubtitle(){
  var tr = t();
  var totalZ = data.zikirs.length;
  if(!totalZ) return tr.streakNoData;
- var yKey = yesterdayKey();
- var yMet = 0;
+ var targetKey = (streakSubMode === 'today') ? todayKey() : yesterdayKey();
+ var metCount = 0;
  for(var i = 0; i < totalZ; i++){
- if(metTarget(yKey, data.zikirs[i])) yMet++;
+ if(metTarget(targetKey, data.zikirs[i])) metCount++;
  }
- return tr.streakYesterday(yMet, totalZ);
+ return (streakSubMode === 'today')
+ ? tr.streakToday(metCount, totalZ)
+ : tr.streakYesterday(metCount, totalZ);
  }
+
+ function updateStreakDisplay(){
+ var tr = t();
+ var current = calcStreak();
+ var best = calcBestStreak(current);
+ $('streakNum').textContent = current;
+ $('bestPill').textContent = tr.bestPrefix + ': ' + best + tr.dayShort;
+ $('streakSub').textContent = getStreakSubtitle();
+ }
+
+ function rotateStreakSub(){
+ if(!$('pageHistory').classList.contains('active') || !data.zikirs.length) return;
+ var subEl = $('streakSub');
+ subEl.classList.add('fading');
+ setTimeout(function(){
+ streakSubMode = (streakSubMode === 'yesterday') ? 'today' : 'yesterday';
+ subEl.textContent = getStreakSubtitle();
+ subEl.classList.remove('fading');
+ }, 220);
+ }
+
+ function restartStreakRotation(){
+ if(streakRotTimer) clearInterval(streakRotTimer);
+ streakRotTimer = setInterval(rotateStreakSub, 4800);
+ }
+
+ $('streakCard').addEventListener('click', function(){
+ rotateStreakSub();
+ restartStreakRotation();
+ });
 
  function showPage(id){
  syncFromStorage();
@@ -706,7 +915,7 @@
  });
  }
 
- $('btnAdd').addEventListener('click', function(){
+ function submitSimpleForm(){
  syncFromStorage();
  var tr = t();
  var name = $('inName').value.trim();
@@ -725,24 +934,88 @@
  $('inTarget').value = '';
  $('formMsg').textContent = '';
  renderHome();
+ }
+
+ $('btnAdd').addEventListener('click', submitSimpleForm);
+ $('inName').addEventListener('keydown', function(e){
+ if(e.key === 'Enter') submitSimpleForm();
+ });
+ $('inTarget').addEventListener('keydown', function(e){
+ if(e.key === 'Enter') submitSimpleForm();
  });
 
- function moveZikir(index, delta){
+ function reorderZikir(fromIdx, toIdx){
+ if(fromIdx === toIdx || fromIdx < 0 || toIdx < 0 || fromIdx >= data.zikirs.length || toIdx >= data.zikirs.length) return;
  syncFromStorage();
- var targetIdx = index + delta;
- if(targetIdx < 0 || targetIdx >= data.zikirs.length) return;
- var temp = data.zikirs[index];
- data.zikirs[index] = data.zikirs[targetIdx];
- data.zikirs[targetIdx] = temp;
+ var moved = data.zikirs.splice(fromIdx, 1)[0];
+ data.zikirs.splice(toIdx, 0, moved);
  save();
  renderHome();
  }
 
+ function attachHandleDrag(card, handle, idx){
+ var dragging = false;
+ var targetDropIdx = idx;
+
+ function clearIndicators(){
+ var allCards = $('homeList').querySelectorAll('.zikir-card');
+ for(var i = 0; i < allCards.length; i++){
+ allCards[i].classList.remove('dragging', 'drag-over');
+ }
+ }
+
+ function findDropIndex(clientY){
+ var allCards = Array.prototype.slice.call($('homeList').querySelectorAll('.zikir-card'));
+ if(!allCards.length) return idx;
+ for(var i = 0; i < allCards.length; i++){
+ var rect = allCards[i].getBoundingClientRect();
+ if(clientY < rect.top + rect.height / 2) return i;
+ }
+ return allCards.length - 1;
+ }
+
+ handle.addEventListener('pointerdown', function(e){
+ if(e.pointerType === 'mouse' && e.button !== 0) return;
+ e.stopPropagation();
+ if(e.cancelable) e.preventDefault();
+
+ dragging = true;
+ targetDropIdx = idx;
+ card.classList.add('dragging');
+ if(navigator.vibrate) navigator.vibrate(15);
+
+ function onMove(moveE){
+ if(!dragging) return;
+ if(moveE.cancelable) moveE.preventDefault();
+ var allCards = $('homeList').querySelectorAll('.zikir-card');
+ for(var i = 0; i < allCards.length; i++){
+ allCards[i].classList.remove('drag-over');
+ }
+ var overIdx = findDropIndex(moveE.clientY);
+ targetDropIdx = overIdx;
+ if(allCards[overIdx]){
+ allCards[overIdx].classList.add('drag-over');
+ }
+ }
+
+ function onEnd(){
+ if(!dragging) return;
+ dragging = false;
+ window.removeEventListener('pointermove', onMove);
+ window.removeEventListener('pointerup', onEnd);
+ window.removeEventListener('pointercancel', onEnd);
+ clearIndicators();
+ reorderZikir(idx, targetDropIdx);
+ }
+
+ window.addEventListener('pointermove', onMove, { passive: false });
+ window.addEventListener('pointerup', onEnd);
+ window.addEventListener('pointercancel', onEnd);
+ });
+ }
+
  function renderHome(){
  var tr = t();
- $('streakNum').textContent = calcStreak();
- $('streakSub').textContent = getStreakSubtitle();
-
  var list = $('homeList');
  list.innerHTML = '';
  if(!data.zikirs.length){
@@ -752,7 +1025,14 @@
 
  data.zikirs.forEach(function(z, idx){
  var card = document.createElement('div');
- card.className = 'card';
+ card.className = 'card zikir-card';
+ card.dataset.id = String(z.id);
+
+ card.addEventListener('click', function(){
+ if(String(editingId) === String(z.id)) return;
+ currentId = z.id;
+ showPage('pageToday');
+ });
 
  var topRow = document.createElement('div');
  topRow.className = 'row';
@@ -762,30 +1042,6 @@
  info.innerHTML = '<div class="zikir-title"></div><div class="muted" style="margin-top:4px">' + tr.perDay(z.target) + '</div>';
  info.firstChild.textContent = z.name;
 
- var actionsCol = document.createElement('div');
- actionsCol.className = 'item-actions';
-
- var orderRow = document.createElement('div');
- orderRow.className = 'order-row';
- var btnUp = document.createElement('button');
- btnUp.type = 'button';
- btnUp.className = 'btn-order';
- btnUp.textContent = '↑';
- btnUp.title = tr.btnUp;
- btnUp.disabled = idx === 0;
- btnUp.addEventListener('click', function(){ moveZikir(idx, -1); });
-
- var btnDown = document.createElement('button');
- btnDown.type = 'button';
- btnDown.className = 'btn-order';
- btnDown.textContent = '↓';
- btnDown.title = tr.btnDown;
- btnDown.disabled = idx === data.zikirs.length - 1;
- btnDown.addEventListener('click', function(){ moveZikir(idx, 1); });
-
- orderRow.appendChild(btnUp);
- orderRow.appendChild(btnDown);
-
  var crudRow = document.createElement('div');
  crudRow.className = 'crud-row';
 
@@ -793,7 +1049,8 @@
  btnEdit.type = 'button';
  btnEdit.className = 'btn ghost small';
  btnEdit.textContent = tr.btnEdit;
- btnEdit.addEventListener('click', function(){
+ btnEdit.addEventListener('click', function(e){
+ e.stopPropagation();
  editingId = (String(editingId) === String(z.id)) ? null : z.id;
  renderHome();
  });
@@ -803,7 +1060,8 @@
  del.className = 'btn danger';
  del.textContent = tr.btnDel;
  var timer = null;
- del.addEventListener('click', function(){
+ del.addEventListener('click', function(e){
+ e.stopPropagation();
  if(!del.classList.contains('confirming')){
  del.classList.add('confirming');
  del.textContent = tr.btnDelConfirm;
@@ -827,19 +1085,26 @@
  }
  });
 
+ var dragHandle = document.createElement('button');
+ dragHandle.type = 'button';
+ dragHandle.className = 'drag-handle';
+ dragHandle.textContent = '☰';
+ dragHandle.title = tr.btnDrag;
+ dragHandle.setAttribute('aria-label', tr.btnDrag);
+ dragHandle.addEventListener('click', function(e){ e.stopPropagation(); });
+
  crudRow.appendChild(btnEdit);
  crudRow.appendChild(del);
-
- actionsCol.appendChild(orderRow);
- actionsCol.appendChild(crudRow);
+ crudRow.appendChild(dragHandle);
 
  topRow.appendChild(info);
- topRow.appendChild(actionsCol);
+ topRow.appendChild(crudRow);
  card.appendChild(topRow);
 
  if(String(editingId) === String(z.id)){
  var editBox = document.createElement('div');
  editBox.className = 'edit-box';
+ editBox.addEventListener('click', function(e){ e.stopPropagation(); });
 
  var taEdit = document.createElement('textarea');
  taEdit.value = z.name;
@@ -900,6 +1165,7 @@
  card.appendChild(editBox);
  }
 
+ attachHandleDrag(card, dragHandle, idx);
  list.appendChild(card);
  });
  }
@@ -961,14 +1227,52 @@
  $('zName').textContent = z.name;
  $('zTarget').textContent = tr.zTarget(z.target);
  $('bigCount').textContent = val;
-
- var ratio = z.target > 0 ? Math.min(1, val / z.target) : 0;
- ringEl.style.strokeDashoffset = CIRC * (1 - ratio);
- ringEl.classList.toggle('complete', done);
  $('doneMsg').innerHTML = done ? '<span>' + tr.doneMsg + '</span>' : '';
  }
 
- $('bigBtn').addEventListener('click', function(){
+ var bigBtn = $('bigBtn');
+ var bigCountEl = $('bigCount');
+ var countBumpTimer = null;
+
+ function spawnTapRipple(clientX, clientY){
+ var rect = bigBtn.getBoundingClientRect();
+ var x = (typeof clientX === 'number' && clientX > 0) ? (clientX - rect.left) : rect.width / 2;
+ var y = (typeof clientY === 'number' && clientY > 0) ? (clientY - rect.top) : rect.height / 2;
+ var rip = document.createElement('span');
+ rip.className = 'tap-ripple';
+ rip.style.left = x + 'px';
+ rip.style.top = y + 'px';
+ bigBtn.appendChild(rip);
+ setTimeout(function(){
+ if(rip.parentNode) rip.parentNode.removeChild(rip);
+ }, 460);
+ }
+
+ function animateCountBump(){
+ bigCountEl.classList.remove('bump');
+ void bigCountEl.offsetWidth;
+ bigCountEl.classList.add('bump');
+ if(countBumpTimer) clearTimeout(countBumpTimer);
+ countBumpTimer = setTimeout(function(){
+ bigCountEl.classList.remove('bump');
+ }, 150);
+ }
+
+ bigBtn.addEventListener('pointerdown', function(e){
+ if(e.pointerType === 'mouse' && e.button !== 0) return;
+ bigBtn.classList.add('is-down');
+ spawnTapRipple(e.clientX, e.clientY);
+ });
+
+ function releaseTapDown(){
+ bigBtn.classList.remove('is-down');
+ }
+
+ bigBtn.addEventListener('pointerup', releaseTapDown);
+ bigBtn.addEventListener('pointercancel', releaseTapDown);
+ bigBtn.addEventListener('pointerleave', releaseTapDown);
+
+ bigBtn.addEventListener('click', function(){
  if(!currentId) return;
  if(navigator.vibrate) navigator.vibrate(25);
  var key = todayKey();
@@ -976,6 +1280,7 @@
  setCount(key, currentId, getCount(key, currentId) + 1);
  var nowDone = metTarget(key, zikirById(currentId));
  renderCounter();
+ animateCountBump();
  if(prevDone !== nowDone) renderToday();
  });
 
@@ -1017,23 +1322,9 @@
 
  function renderHistory(){
  syncFromStorage();
+ updateStreakDisplay();
  var tr = t();
- var totals = $('totalList');
  var daily = $('dailyList');
- totals.innerHTML = data.zikirs.length ? '' : '<div class="card muted" style="text-align:center">' + tr.noData + '</div>';
-
- data.zikirs.forEach(function(z){
- var sum = 0;
- Object.keys(data.counts).forEach(function(k){
- sum += getCount(k, z.id);
- });
- var c = document.createElement('div');
- c.className = 'card row';
- c.style.alignItems = 'center';
- c.innerHTML = '<span class="zikir-title" style="flex:1"></span><b style="font-family:\'Quicksand\',system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:1.25rem;color:var(--rose-accent)">' + sum.toLocaleString(tr.locale) + '</b>';
- c.firstChild.textContent = z.name;
- totals.appendChild(c);
- });
 
  var allActiveDays = Object.keys(data.counts).filter(function(k){
  var dayObj = data.counts[k];
@@ -1068,7 +1359,7 @@
 
  if(dayAllComplete(k)){
  var dayBadge = document.createElement('span');
- dayBadge.style.cssText = 'font-size:0.78rem;background:var(--green-bg);color:var(--green);padding:2px 9px;border-radius:999px;font-weight:700;';
+ dayBadge.className = 'badge-soft';
  dayBadge.textContent = tr.allDoneBadge;
  cardHeader.appendChild(dayBadge);
  }
@@ -1283,7 +1574,8 @@
  total += v;
  if(v > 0) active++;
  }
- $('stTotal').textContent = total.toLocaleString(tr.locale);
+ var dailyAvg = active > 0 ? Math.round(total / active) : 0;
+ $('stAvg').textContent = dailyAvg.toLocaleString(tr.locale);
  $('stDays').textContent = active;
  $('stHit').textContent = hit;
 
@@ -1297,46 +1589,46 @@
  var plotW = w - padL - padR;
  var plotH = h - padT - padB;
 
- ctx.font = '10.5px Quicksand,sans-serif';
+ ctx.font = '10.5px Plus Jakarta Sans,sans-serif';
  ctx.textBaseline = 'middle';
  ctx.textAlign = 'left';
  var lx = padL, ly = 15;
 
  if(single){
- ctx.fillStyle = '#965F68';
+ ctx.fillStyle = '#C8848E';
  ctx.fillRect(lx, ly - 5, 10, 10);
- ctx.fillStyle = '#5A3E43';
+ ctx.fillStyle = '#6A3F39';
  ctx.fillText(tr.chartReached, lx + 14, ly);
  lx += 76;
 
- ctx.fillStyle = '#E6C7C8';
+ ctx.fillStyle = '#E8D3D6';
  ctx.fillRect(lx, ly - 5, 10, 10);
- ctx.fillStyle = '#5A3E43';
+ ctx.fillStyle = '#6A3F39';
  ctx.fillText(tr.chartNotYet, lx + 14, ly);
  lx += 64;
 
  if(target > 0){
  ctx.setLineDash([4, 3]);
- ctx.strokeStyle = '#ab434e';
+ ctx.strokeStyle = '#6A3F39';
  ctx.lineWidth = 1.5;
  ctx.beginPath();
  ctx.moveTo(lx, ly);
  ctx.lineTo(lx + 14, ly);
  ctx.stroke();
  ctx.setLineDash([]);
- ctx.fillStyle = '#5A3E43';
+ ctx.fillStyle = '#6A3F39';
  ctx.fillText(tr.chartTarget(target), lx + 18, ly);
  }
  }else{
- ctx.fillStyle = '#CFA0A4';
+ ctx.fillStyle = '#C8848E';
  ctx.fillRect(lx, ly - 5, 10, 10);
- ctx.fillStyle = '#5A3E43';
+ ctx.fillStyle = '#6A3F39';
  ctx.fillText(tr.chartAllBars, lx + 14, ly);
  }
 
- ctx.strokeStyle = 'rgba(90,62,67,.14)';
- ctx.fillStyle = '#5A3E43';
- ctx.font = '10.5px Quicksand,sans-serif';
+ ctx.strokeStyle = 'rgba(106,63,57,.14)';
+ ctx.fillStyle = '#6A3F39';
+ ctx.font = '10.5px Plus Jakarta Sans,sans-serif';
  ctx.textAlign = 'right';
  for(var i = 0; i <= 4; i++){
  var val = step * i;
@@ -1353,11 +1645,11 @@
  if(!v) return;
  var bh = (v / maxY) * plotH;
  var dayKey = y + '-' + pad(m) + '-' + pad(idx + 1);
- ctx.fillStyle = single ? (metTarget(dayKey, single) ? '#965F68' : '#E6C7C8') : '#CFA0A4';
+ ctx.fillStyle = single ? (metTarget(dayKey, single) ? '#C8848E' : '#E8D3D6') : '#C8848E';
  ctx.fillRect(padL + idx * barW + barW * 0.15, padT + plotH - bh, barW * 0.7, bh);
  });
 
- ctx.fillStyle = '#5A3E43';
+ ctx.fillStyle = '#6A3F39';
  ctx.textAlign = 'center';
  ctx.textBaseline = 'top';
  for(var day = 1; day <= daysInMonth; day++){
@@ -1369,7 +1661,7 @@
  if(single && target > 0){
  var yT = padT + plotH - (target / maxY) * plotH;
  ctx.setLineDash([6, 4]);
- ctx.strokeStyle = '#ab434e';
+ ctx.strokeStyle = '#6A3F39';
  ctx.lineWidth = 1.5;
  ctx.beginPath();
  ctx.moveTo(padL, yT);
@@ -1378,8 +1670,8 @@
  ctx.setLineDash([]);
  }
 
- ctx.fillStyle = 'rgba(90,62,67,.82)';
- ctx.font = 'bold 10px Quicksand,sans-serif';
+ ctx.fillStyle = 'rgba(106,63,57,.85)';
+ ctx.font = 'bold 10px Plus Jakarta Sans,sans-serif';
  ctx.textAlign = 'center';
  ctx.textBaseline = 'bottom';
  ctx.fillText(tr.chartDate, padL + plotW / 2, h - 2);
@@ -1412,7 +1704,8 @@
  }
  });
 
- applyStaticLanguage();
+ setLang(lang);
+ restartStreakRotation();
  showPage(data.zikirs.length ? 'pageToday' : 'pageHome');
  window.addEventListener('resize', function(){
  if($('pageHistory').classList.contains('active') && $('subChart').classList.contains('active')) drawChart();
