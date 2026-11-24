@@ -36,7 +36,7 @@
  .page{display:none;padding:24px 16px;max-width:520px;margin:0 auto}
  .page.active{display:block}
 
- /* Header + Tombol ID / EN di Semua Halaman (Matte Tanpa Outline) */
+ /* Header + Tombol ID / EN di Semua Halaman */
  .top-bar{position:relative;display:flex;align-items:center;justify-content:center;min-height:44px}
  .lang-box{
  position:absolute;right:0;top:50%;transform:translateY(-50%);
@@ -86,7 +86,7 @@
  font-size:.82rem;color:var(--dusty-muted);line-height:1.48;
  }
 
- /* Form Input Simple Tanpa Kotak Pembungkus Luar */
+ /* Form Input Simple */
  .simple-form{display:flex;gap:8px;align-items:center}
  .simple-name{flex:1;min-width:0}
  .simple-target{width:78px;flex-shrink:0;text-align:center;font-variant-numeric:tabular-nums}
@@ -139,7 +139,7 @@
  .msg{min-height:18px;font-size:.82rem;color:var(--dusty-pink-deep);font-weight:600;margin-top:8px}
  .msg.ok{color:var(--dusty-ink);font-weight:700}
 
- /* Aksi Kartu Daftar Zikir (Rata Tengah Vertikal) */
+ /* Aksi Kartu Daftar Zikir */
  .crud-row{display:flex;gap:6px;align-items:center;align-self:center;flex-shrink:0}
  .drag-handle{
  width:28px;height:28px;border:none;border-radius:9px;
@@ -155,7 +155,7 @@
  .edit-box{margin-top:12px;padding-top:12px;border-top:1px dashed rgba(200,132,142,.26);display:grid;gap:8px}
  .edit-actions{display:flex;gap:8px;justify-content:flex-end}
 
- /* Streak (Di Halaman Riwayat) — Matte Tanpa Outline */
+ /* Streak (Di Halaman Riwayat) */
  .streak{
  display:flex;align-items:center;justify-content:space-between;gap:12px;
  background:var(--dusty-surface);
@@ -200,13 +200,28 @@
  }
 
  /* Tombol Tap Utama: Polos Tegas, Dusty Rose Kalem, Kesan Pearl Halus */
- .counter{text-align:center;padding:26px 16px}
+ .counter{text-align:center;padding:26px 16px;position:relative}
  .zname{font-family:'GFS Didot',Georgia,serif;font-size:1.52rem;line-height:1.38;color:var(--dusty-ink);margin-bottom:6px;word-break:break-word;white-space:pre-line}
+ .target-row{
+ display:inline-flex;align-items:center;justify-content:center;
+ gap:8px;flex-wrap:wrap;min-height:26px;
+ }
  .ztarget{font-size:.85rem;color:var(--dusty-muted);font-weight:600}
- .zhint{font-size:.76rem;color:var(--dusty-muted);opacity:.85;margin:4px 0 24px}
+ .done-inline{
+ display:inline-flex;align-items:center;justify-content:center;
+ min-height:26px;font-size:.78rem;font-weight:700;
+ color:var(--dusty-pink-deep);
+ }
+ .done-inline span{
+ background:var(--dusty-tint);
+ padding:3px 10px;border-radius:999px;
+ box-shadow:0 2px 7px rgba(181,109,120,.075);
+ white-space:nowrap;
+ }
+ .zhint{font-size:.76rem;color:var(--dusty-muted);opacity:.85;margin:8px 0 22px}
 
  .big{
- position:relative;overflow:hidden;
+ position:relative;overflow:hidden;z-index:5;
  width:174px;height:174px;margin:0 auto;border-radius:50%;
  border:none;cursor:pointer;
  background:
@@ -217,16 +232,27 @@
  inset 0 -4px 10px rgba(154,88,98,.18),
  0 10px 22px rgba(181,109,120,.2);
  display:flex;align-items:center;justify-content:center;color:var(--white);
- transition:transform .1s cubic-bezier(.22,1,.36,1), box-shadow .18s ease, filter .18s ease;
+ transition:transform .1s cubic-bezier(.22,1,.36,1), box-shadow .18s ease, filter .18s ease, width .18s ease, height .18s ease;
  user-select:none;-webkit-tap-highlight-color:transparent;
  }
+ .big.size-s{width:142px;height:142px}
+ .big.size-m{width:174px;height:174px}
+ .big.size-l{width:208px;height:208px}
  .big.is-down{
- transform:scale(.955);
  filter:brightness(.97);
  box-shadow:
  inset 0 2px 5px rgba(145,82,92,.22),
  0 5px 14px rgba(181,109,120,.18);
  }
+ .big.drag-mode{
+ cursor:grab;
+ touch-action:none;
+ box-shadow:
+ 0 0 0 3px rgba(255,255,255,.85),
+ 0 0 0 5px rgba(181,109,120,.4),
+ 0 12px 26px rgba(181,109,120,.25);
+ }
+ .big.drag-mode:active{cursor:grabbing}
 
  .tap-ripple{
  position:absolute;border-radius:50%;pointer-events:none;
@@ -247,27 +273,20 @@
  font-size:3.25rem;font-weight:400;line-height:1;letter-spacing:.5px;
  color:var(--white);
  text-shadow:0 1px 2px rgba(138,76,86,.16);
- transition:transform .14s cubic-bezier(.22,1,.36,1);
+ transition:transform .14s cubic-bezier(.22,1,.36,1), font-size .18s ease;
  }
+ .big.size-s .bigcount{font-size:2.65rem}
+ .big.size-l .bigcount{font-size:3.75rem}
  .bigcount.bump{transform:scale(1.1)}
 
- /* Status Tercapai & Aksi Sekunder Matte Tanpa Outline */
- .done{
- margin-top:18px;min-height:28px;font-size:.88rem;font-weight:700;
- color:var(--dusty-pink-deep);display:flex;align-items:center;justify-content:center;
- }
- .done span{
- background:var(--dusty-tint);
- padding:6px 14px;border-radius:999px;
- box-shadow:0 3px 9px rgba(181,109,120,.075);
- }
+ /* Aksi Sekunder */
  .badge-soft{
  font-size:0.76rem;
  background:var(--dusty-tint);
  color:var(--dusty-pink-deep);
  padding:2px 9px;border-radius:999px;font-weight:700;
  }
- .actions{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:14px}
+ .actions{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:16px}
  .btn-minus,.btn-reset{
  height:40px;border-radius:999px;border:none;
  background:var(--dusty-surface);
@@ -281,7 +300,30 @@
  .btn-reset{padding:0 16px;font-size:.82rem;gap:6px}
  .btn-reset.confirming{background:var(--dusty-pink-deep);color:var(--white)}
 
- /* Riwayat & Grafik — Matte Tanpa Outline */
+ /* Kontrol Posisi & Ukuran Lingkaran Tap */
+ .tap-tools{
+ display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;
+ margin-top:16px;padding-top:4px;
+ }
+ .pill-btn{
+ border:none;border-radius:999px;padding:6px 12px;font:inherit;font-size:.75rem;font-weight:600;
+ background:var(--dusty-tint);color:var(--dusty-ink);cursor:pointer;
+ box-shadow:0 2px 7px rgba(181,109,120,.065);
+ transition:background-color .12s ease,color .12s ease,transform .1s ease;
+ }
+ .pill-btn:active{transform:scale(.95)}
+ .pill-btn.on{background:var(--dusty-pink);color:var(--white)}
+ .size-group{
+ display:inline-flex;background:var(--dusty-tint);border-radius:999px;padding:2px;gap:2px;
+ box-shadow:0 2px 7px rgba(181,109,120,.065);
+ }
+ .size-opt{
+ border:none;background:transparent;color:var(--dusty-ink);
+ font:inherit;font-size:.72rem;font-weight:700;padding:4px 9px;border-radius:999px;cursor:pointer;
+ }
+ .size-opt.on{background:var(--dusty-pink);color:var(--white)}
+
+ /* Riwayat & Grafik */
  .tabs{
  display:flex;
  background:var(--dusty-surface);
@@ -324,26 +366,53 @@
  }
  .stats span{font-size:.73rem;font-weight:600;color:var(--dusty-muted)}
 
- /* Export & Import Sebelahan + Tombol Tanda Tanya (?) */
- .backup-section{margin-top:16px}
- .backup-grid{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:stretch}
- .btn-help{
- width:42px;border-radius:14px;border:none;
+ /* Backup Sejajar: Export & Import Ukuran Identik + Pop-up Kanan */
+ .backup-section{margin-top:14px;display:grid;gap:8px}
+ .backup-row{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:stretch}
+ .export-wrap{position:relative;display:flex;min-width:0}
+ .export-wrap .backup-btn,.import-btn{
+ flex:1;width:100%;height:38px;padding:0 12px;border-radius:12px;
+ font-size:.82rem;font-weight:600;line-height:1;
+ display:inline-flex;align-items:center;justify-content:center;
+ }
+ .export-popover{
+ display:none;
+ position:absolute;top:50%;left:calc(100% + 6px);transform:translateY(-50%);
+ z-index:20;
  background:var(--dusty-surface);
- color:var(--dusty-pink-deep);font:inherit;font-size:1rem;font-weight:700;cursor:pointer;
+ border-radius:14px;padding:4px;
+ box-shadow:0 8px 22px rgba(181,109,120,.18);
+ flex-direction:column;gap:3px;min-width:74px;
+ }
+ .export-popover.show{display:flex}
+ .export-opt{
+ border:none;background:transparent;color:var(--dusty-ink);
+ font:inherit;font-size:.76rem;font-weight:700;
+ padding:6px 11px;border-radius:10px;cursor:pointer;
+ text-align:left;white-space:nowrap;
+ transition:background-color .12s ease,color .12s ease;
+ }
+ .export-opt:hover,.export-opt:active{background:var(--dusty-pink);color:var(--white)}
+ .btn-help{
+ width:38px;height:38px;border-radius:12px;border:none;
+ background:var(--dusty-surface);
+ color:var(--dusty-pink-deep);font:inherit;font-size:.98rem;font-weight:700;cursor:pointer;
  display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
  box-shadow:0 4px 11px rgba(181,109,120,.075);
+ transition:background-color .14s ease,color .14s ease,transform .1s ease;
  }
+ .btn-help:active{transform:scale(.95)}
  .btn-help.on{background:var(--dusty-pink-deep);color:var(--white)}
  .help-box{
- display:none;margin-top:10px;padding:12px 14px;border-radius:18px;
+ display:none;margin-top:2px;padding:12px 14px;border-radius:18px;
  background:var(--dusty-surface);
  font-size:.82rem;line-height:1.5;color:var(--dusty-ink);
  box-shadow:0 5px 14px rgba(181,109,120,.075);
  }
  .help-box.show{display:block}
+ .help-box strong{font-weight:700;color:var(--dusty-ink)}
 
- /* Navigasi Bawah Kapsul Matte Tanpa Outline */
+ /* Navigasi Bawah Kapsul */
  nav{
  position:fixed;left:50%;transform:translateX(-50%);bottom:14px;
  width:calc(100% - 32px);max-width:468px;
@@ -397,20 +466,31 @@
 <!-- HITUNG (COUNT) -->
 <section class="page" id="pageToday">
  <div class="top-bar">
- <h1 id="h1Today">Hitung</h1>
+ <h1 id="h1Today">Zikir Hari Ini</h1>
  <button type="button" class="lang-box btnLang" aria-label="Switch language">ID</button>
  </div>
  <p class="by" id="todayDate"></p>
  <div class="chips" id="todayChips"></div>
  <div class="counter card" id="counterBox">
  <div class="zname" id="zName"></div>
- <div class="ztarget" id="zTarget"></div>
+ <div class="target-row">
+ <span class="ztarget" id="zTarget"></span>
+ <span class="done-inline" id="doneMsg"></span>
+ </div>
  <div class="zhint" id="zHint">Ketuk lingkaran untuk menghitung</div>
- <button class="big" id="bigBtn" aria-label="Tambah hitungan"><span class="bigcount" id="bigCount">0</span></button>
- <div class="done" id="doneMsg"></div>
+ <button class="big size-m" id="bigBtn" aria-label="Tambah hitungan"><span class="bigcount" id="bigCount">0</span></button>
  <div class="actions">
  <button class="btn-minus" id="minusBtn" aria-label="Kurangi">−</button>
  <button class="btn-reset" id="resetBtn">↺ Reset</button>
+ </div>
+ <div class="tap-tools">
+ <button type="button" class="pill-btn" id="btnMoveTap">Geser Posisi</button>
+ <div class="size-group" id="sizeGroup">
+ <button type="button" class="size-opt" data-size="s">S</button>
+ <button type="button" class="size-opt on" data-size="m">M</button>
+ <button type="button" class="size-opt" data-size="l">L</button>
+ </div>
+ <button type="button" class="pill-btn" id="btnResetPos" style="display:none">Reset Posisi</button>
  </div>
  </div>
  <div class="card muted" id="emptyToday" style="text-align:center;display:none;margin-top:16px">Belum ada zikir atau dua. Tambahkan dulu di menu Beranda.</div>
@@ -460,14 +540,20 @@
  <div><b id="stHit">0</b><span id="stHitLbl">Hari Target Tercapai</span></div>
  </div>
  <div class="backup-section">
- <div class="backup-grid">
- <button class="btn ghost small" id="btnExport" style="padding:11px 10px;font-size:.82rem">Ekspor CSV</button>
- <button class="btn ghost small" id="btnImport" style="padding:11px 10px;font-size:.82rem">Impor CSV</button>
- <button type="button" class="btn-help" id="btnHelpCsv" aria-label="Bantuan CSV" title="Info CSV">?</button>
+ <div class="backup-row">
+ <div class="export-wrap" id="exportWrap">
+ <button type="button" class="btn ghost backup-btn" id="btnExport">Ekspor</button>
+ <div class="export-popover" id="exportPopover" role="menu">
+ <button type="button" class="export-opt" id="optExportJson" role="menuitem">JSON</button>
+ <button type="button" class="export-opt" id="optExportCsv" role="menuitem">.CSV</button>
  </div>
- <input type="file" id="fileImport" accept=".csv,text/csv" style="display:none">
- <div class="help-box" id="helpCsvBox"></div>
- <div class="msg" id="csvMsg" style="text-align:center;margin-top:8px"></div>
+ </div>
+ <button type="button" class="btn ghost import-btn" id="btnImportJson">Impor</button>
+ <button type="button" class="btn-help" id="btnHelpBackup" aria-label="Bantuan Cadangan" title="Info">?</button>
+ </div>
+ <input type="file" id="fileImportJson" accept=".json,application/json" style="display:none">
+ <div class="help-box" id="helpBackupBox"></div>
+ <div class="msg" id="backupMsg" style="text-align:center;margin-top:4px"></div>
  </div>
  </div>
 </section>
@@ -482,6 +568,7 @@
 (function(){
  var KEY = 'zikirApp';
  var LANG_KEY = 'zikirAppLang';
+ var PREF_KEY = 'zikirTapPrefs';
  var $ = function(id){ return document.getElementById(id); };
 
  var I18N = {
@@ -511,12 +598,16 @@
  errEmptyName: 'Bacaan zikir atau dua belum diisi.',
  errTarget: 'Target harus angka lebih dari 0.',
  errDuplicate: 'Bacaan zikir atau dua itu sudah ada.',
- h1Today: 'Hitung',
- zTarget: function(t){ return 'Target Hari Ini: ' + t; },
+ h1Today: 'Zikir Hari Ini',
+ zTarget: function(t){ return 'Target: ' + t; },
  zHint: 'Ketuk lingkaran untuk menghitung',
- doneMsg: 'Target Hari Ini Tercapai 🎉',
+ zHintDrag: 'Seret lingkaran ke posisi yang nyaman, lalu ketuk Kunci',
+ doneMsg: 'Tercapai 🎉',
  btnReset: '↺ Reset',
  btnResetConfirm: 'Yakin Reset?',
+ btnMove: 'Geser Posisi',
+ btnLock: '✓ Kunci Posisi',
+ btnResetPos: 'Reset Posisi',
  emptyToday: 'Belum ada zikir atau dua. Tambahkan dulu di menu Beranda.',
  h1History: 'Riwayat',
  historySub: 'Catatan dan grafik zikirmu',
@@ -531,17 +622,14 @@
  stAvgLbl: 'Rata-Rata Harian',
  stDaysLbl: 'Hari Aktif',
  stHitLbl: 'Hari Target Tercapai',
- btnExport: 'Ekspor CSV',
- btnImport: 'Impor CSV',
- helpCsv: '<b>Ekspor CSV</b> menyimpan catatanmu ke file .csv sebagai cadangan atau untuk dibuka di spreadsheet. <b>Impor CSV</b> memulihkan data dari file .csv hasil ekspor aplikasi ini tanpa harus mengetik ulang.',
- noExportData: 'Belum ada data hitungan untuk diekspor.',
- exportedOk: function(n){ return 'File CSV berhasil diunduh (' + n + ' baris).'; },
- csvEmpty: 'File CSV kosong atau format tidak sesuai.',
- csvInvalid: 'Tidak ada data valid yang ditemukan di file CSV.',
- csvReadErr: 'Gagal membaca file CSV. Pastikan file berasal dari ekspor aplikasi ini.',
- importedOk: function(rows, added){
- return 'Berhasil memulihkan ' + rows + ' catatan' + (added ? ' (' + added + ' item baru ditambahkan).' : '.');
- },
+ btnExport: 'Ekspor',
+ btnImportJson: 'Impor',
+ helpBackupHtml: '<strong>Ekspor</strong> file CSV untuk menyimpan datanya ke spreadsheet, <strong>ekspor</strong> file JSON kemudian <strong>impor</strong> file JSON untuk memulihkan data di website.',
+ noExportData: 'Belum ada data untuk diekspor.',
+ exportedJsonOk: 'Cadangan JSON berhasil diunduh.',
+ exportedCsvOk: function(n){ return 'File .CSV berhasil diunduh (' + n + ' baris).'; },
+ jsonInvalid: 'Format file JSON tidak sesuai atau rusak.',
+ importedJsonOk: function(items){ return 'Data berhasil dipulihkan (' + items + ' zikir/dua).'; },
  navToday: 'Hitung',
  navHome: 'Beranda',
  navHistory: 'Riwayat',
@@ -578,12 +666,16 @@
  errEmptyName: 'Please enter a dhikr or dua.',
  errTarget: 'Target must be greater than 0.',
  errDuplicate: 'That dhikr or dua already exists.',
- h1Today: 'Count',
- zTarget: function(t){ return "Today's Target: " + t; },
+ h1Today: "Today's Dhikr",
+ zTarget: function(t){ return 'Target: ' + t; },
  zHint: 'Tap the circle to count',
- doneMsg: "Today's Target Reached 🎉",
+ zHintDrag: 'Drag the circle anywhere comfortable, then tap Lock',
+ doneMsg: 'Reached 🎉',
  btnReset: '↺ Reset',
  btnResetConfirm: 'Sure to Reset?',
+ btnMove: 'Move Position',
+ btnLock: '✓ Lock Position',
+ btnResetPos: 'Reset Position',
  emptyToday: 'No dhikr or dua yet. Add some on the Home tab.',
  h1History: 'History',
  historySub: 'Your dhikr log and chart',
@@ -598,17 +690,14 @@
  stAvgLbl: 'Daily Average',
  stDaysLbl: 'Active Days',
  stHitLbl: 'Target Days Met',
- btnExport: 'Export CSV',
- btnImport: 'Import CSV',
- helpCsv: '<b>Export CSV</b> saves your records to a .csv file as a backup or for spreadsheets. <b>Import CSV</b> restores data from a .csv file exported from this app without re-entering items.',
- noExportData: 'No count records available to export.',
- exportedOk: function(n){ return 'CSV file downloaded (' + n + ' rows).'; },
- csvEmpty: 'CSV file is empty or format does not match.',
- csvInvalid: 'No valid records found in the CSV file.',
- csvReadErr: 'Could not read CSV file. Make sure it was exported from this app.',
- importedOk: function(rows, added){
- return 'Restored ' + rows + ' records' + (added ? ' (' + added + ' new items added).' : '.');
- },
+ btnExport: 'Export',
+ btnImportJson: 'Import',
+ helpBackupHtml: '<strong>Export</strong> a CSV file to save your data to a spreadsheet, or <strong>export</strong> a JSON file and <strong>import</strong> it later to restore your data on the website.',
+ noExportData: 'No data available to export.',
+ exportedJsonOk: 'JSON backup downloaded.',
+ exportedCsvOk: function(n){ return '.CSV file downloaded (' + n + ' rows).'; },
+ jsonInvalid: 'Invalid or corrupted JSON file.',
+ importedJsonOk: function(items){ return 'Data restored (' + items + ' dhikr/dua items).'; },
  navToday: 'Count',
  navHome: 'Home',
  navHistory: 'History',
@@ -660,9 +749,11 @@
  $('dragHint').textContent = tr.dragHint;
 
  $('h1Today').textContent = tr.h1Today;
- $('zHint').textContent = tr.zHint;
+ $('zHint').textContent = isMoveMode ? tr.zHintDrag : tr.zHint;
  $('emptyToday').textContent = tr.emptyToday;
  if(!$('resetBtn').classList.contains('confirming')) $('resetBtn').textContent = tr.btnReset;
+ $('btnMoveTap').textContent = isMoveMode ? tr.btnLock : tr.btnMove;
+ $('btnResetPos').textContent = tr.btnResetPos;
 
  $('h1History').textContent = tr.h1History;
  $('historySub').textContent = tr.historySub;
@@ -673,8 +764,8 @@
  $('stDaysLbl').textContent = tr.stDaysLbl;
  $('stHitLbl').textContent = tr.stHitLbl;
  $('btnExport').textContent = tr.btnExport;
- $('btnImport').textContent = tr.btnImport;
- $('helpCsvBox').innerHTML = tr.helpCsv;
+ $('btnImportJson').textContent = tr.btnImportJson;
+ $('helpBackupBox').innerHTML = tr.helpBackupHtml;
 
  $('navToday').textContent = tr.navToday;
  $('navHome').textContent = tr.navHome;
@@ -688,7 +779,92 @@
  });
  }
 
+ function normalizeData(rawObj){
+ var out = { zikirs: [], counts: {}, nextId: 1 };
+ if(!rawObj || typeof rawObj !== 'object') return out;
+
+ var rawZikirs = Array.isArray(rawObj.zikirs)
+ ? rawObj.zikirs
+ : (Array.isArray(rawObj.items) ? rawObj.items : []);
+
+ var seenIds = {};
+ var maxNumId = 0;
+ rawZikirs.forEach(function(item, idx){
+ if(!item || typeof item !== 'object') return;
+ var nameStr = String(item.name || item.title || item.zikir || '').trim();
+ if(!nameStr) return;
+ var numTarget = parseInt(item.target, 10);
+ if(!numTarget || numTarget < 1) numTarget = 100;
+
+ var rawId = (item.id !== undefined && item.id !== null && String(item.id).trim() !== '')
+ ? String(item.id).trim()
+ : String(idx + 1);
+ if(seenIds[rawId]){
+ rawId = rawId + '_' + (idx + 1);
+ }
+ seenIds[rawId] = true;
+
+ var asInt = parseInt(rawId, 10);
+ if(!isNaN(asInt) && asInt > maxNumId) maxNumId = asInt;
+
+ out.zikirs.push({
+ id: rawId,
+ name: nameStr,
+ target: numTarget
+ });
+ });
+
+ var rawCounts = (rawObj.counts && typeof rawObj.counts === 'object' && !Array.isArray(rawObj.counts))
+ ? rawObj.counts
+ : ((rawObj.history && typeof rawObj.history === 'object' && !Array.isArray(rawObj.history)) ? rawObj.history : {});
+
+ Object.keys(rawCounts).forEach(function(dateKey){
+ var cleanDate = String(dateKey || '').trim();
+ if(!cleanDate) return;
+ var dayMap = rawCounts[dateKey];
+ if(!dayMap || typeof dayMap !== 'object' || Array.isArray(dayMap)) return;
+ var cleanDay = {};
+ Object.keys(dayMap).forEach(function(zId){
+ var numVal = Number(dayMap[zId]);
+ if(!isNaN(numVal) && isFinite(numVal) && numVal > 0){
+ cleanDay[String(zId)] = Math.max(0, Math.round(numVal));
+ }
+ });
+ if(Object.keys(cleanDay).length > 0){
+ out.counts[cleanDate] = cleanDay;
+ }
+ });
+
+ var parsedNext = parseInt(rawObj.nextId, 10);
+ out.nextId = (!isNaN(parsedNext) && parsedNext > maxNumId) ? parsedNext : (maxNumId + out.zikirs.length + 1);
+ return out;
+ }
+
+ function load(){
+ try{
+ var raw = localStorage.getItem(KEY);
+ if(raw){
+ return normalizeData(JSON.parse(raw));
+ }
+ }catch(e){}
+ return { zikirs: [], counts: {}, nextId: 1 };
+ }
+
+ function save(){
+ try{
+ localStorage.setItem(KEY, JSON.stringify(data));
+ }catch(e){
+ var msgEl = $('backupMsg');
+ if(msgEl){
+ msgEl.className = 'msg';
+ msgEl.textContent = (lang === 'en') ? 'Failed to save to browser storage.' : 'Gagal menyimpan ke penyimpanan browser.';
+ }
+ }
+ }
+
  var data = load();
+ var tapPrefs = loadTapPrefs();
+ var isMoveMode = false;
  var currentId = null;
  var editingId = null;
  var showAllDays = false;
@@ -696,23 +872,23 @@
  var streakSubMode = 'yesterday';
  var streakRotTimer = null;
 
- function load(){
+ function loadTapPrefs(){
  try{
- var raw = localStorage.getItem(KEY);
+ var raw = localStorage.getItem(PREF_KEY);
  if(raw){
- var d = JSON.parse(raw);
+ var p = JSON.parse(raw);
  return {
- zikirs: Array.isArray(d.zikirs) ? d.zikirs : [],
- counts: (d.counts && typeof d.counts === 'object') ? d.counts : {},
- nextId: Number(d.nextId) || 1
+ x: Number(p.x) || 0,
+ y: Number(p.y) || 0,
+ size: (p.size === 's' || p.size === 'l') ? p.size : 'm'
  };
  }
  }catch(e){}
- return { zikirs: [], counts: {}, nextId: 1 };
+ return { x: 0, y: 0, size: 'm' };
  }
 
- function save(){
- try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+ function saveTapPrefs(){
+ try{ localStorage.setItem(PREF_KEY, JSON.stringify(tapPrefs)); }catch(e){}
  }
 
  function pad(n){ return String(n).padStart(2, '0'); }
@@ -876,7 +1052,12 @@
  restartStreakRotation();
  });
 
+ function closeExportPopover(){
+ $('exportPopover').classList.remove('show');
+ }
+
  function showPage(id){
+ closeExportPopover();
  syncFromStorage();
  var pages = document.querySelectorAll('.page');
  for(var i = 0; i < pages.length; i++){
@@ -902,6 +1083,7 @@
  var tabs = document.querySelectorAll('.tab');
  for(var tBtn = 0; tBtn < tabs.length; tBtn++){
  tabs[tBtn].addEventListener('click', function(){
+ closeExportPopover();
  syncFromStorage();
  var subName = this.dataset.sub;
  for(var a = 0; a < tabs.length; a++){
@@ -928,7 +1110,7 @@
  return;
  }
  }
- data.zikirs.push({ id: data.nextId++, name: name, target: target });
+ data.zikirs.push({ id: String(data.nextId++), name: name, target: target });
  save();
  $('inName').value = '';
  $('inTarget').value = '';
@@ -1187,6 +1369,10 @@
  chipsEl.scrollLeft = scrollLeft - w;
  });
 
+ function isArabicText(str){
+ return /[\u0600-\u06FF]/.test(str || '');
+ }
+
  function renderToday(){
  syncFromStorage();
  var tr = t();
@@ -1204,6 +1390,13 @@
  c.className = 'chip' + (String(z.id) === String(currentId) ? ' on' : '');
  c.textContent = (isDone ? '✓ ' : '') + z.name;
  c.title = z.name;
+ if(isArabicText(z.name)){
+ c.dir = 'rtl';
+ c.style.textAlign = 'right';
+ }else{
+ c.dir = 'ltr';
+ c.style.textAlign = 'left';
+ }
  c.addEventListener('click', function(){
  if(!moved){
  currentId = z.id;
@@ -1214,6 +1407,7 @@
  });
  var activeChip = chipsEl.querySelector('.chip.on');
  if(activeChip) activeChip.scrollIntoView({ behavior:'smooth', inline:'center', block:'nearest' });
+ applyTapPrefs();
  renderCounter();
  }
 
@@ -1226,13 +1420,51 @@
  var done = metTarget(key, z);
  $('zName').textContent = z.name;
  $('zTarget').textContent = tr.zTarget(z.target);
- $('bigCount').textContent = val;
  $('doneMsg').innerHTML = done ? '<span>' + tr.doneMsg + '</span>' : '';
+ $('bigCount').textContent = val;
  }
 
  var bigBtn = $('bigBtn');
  var bigCountEl = $('bigCount');
  var countBumpTimer = null;
+
+ function applyTapPrefs(isPressed){
+ bigBtn.classList.remove('size-s', 'size-m', 'size-l');
+ bigBtn.classList.add('size-' + tapPrefs.size);
+ var scaleStr = isPressed ? ' scale(.955)' : '';
+ bigBtn.style.transform = 'translate3d(' + tapPrefs.x + 'px,' + tapPrefs.y + 'px,0)' + scaleStr;
+
+ var sizeBtns = $('sizeGroup').querySelectorAll('.size-opt');
+ for(var i = 0; i < sizeBtns.length; i++){
+ sizeBtns[i].classList.toggle('on', sizeBtns[i].dataset.size === tapPrefs.size);
+ }
+ var hasMoved = (Math.abs(tapPrefs.x) > 2 || Math.abs(tapPrefs.y) > 2);
+ $('btnResetPos').style.display = hasMoved ? 'inline-block' : 'none';
+ }
+
+ $('sizeGroup').addEventListener('click', function(e){
+ var btn = e.target.closest('.size-opt');
+ if(!btn) return;
+ tapPrefs.size = btn.dataset.size;
+ saveTapPrefs();
+ applyTapPrefs();
+ });
+
+ $('btnMoveTap').addEventListener('click', function(){
+ var tr = t();
+ isMoveMode = !isMoveMode;
+ bigBtn.classList.toggle('drag-mode', isMoveMode);
+ $('btnMoveTap').classList.toggle('on', isMoveMode);
+ $('btnMoveTap').textContent = isMoveMode ? tr.btnLock : tr.btnMove;
+ $('zHint').textContent = isMoveMode ? tr.zHintDrag : tr.zHint;
+ });
+
+ $('btnResetPos').addEventListener('click', function(){
+ tapPrefs.x = 0;
+ tapPrefs.y = 0;
+ saveTapPrefs();
+ applyTapPrefs();
+ });
 
  function spawnTapRipple(clientX, clientY){
  var rect = bigBtn.getBoundingClientRect();
@@ -1258,22 +1490,56 @@
  }, 150);
  }
 
+ var isDraggingTap = false;
+ var dragStartX = 0, dragStartY = 0, origTapX = 0, origTapY = 0;
+
  bigBtn.addEventListener('pointerdown', function(e){
  if(e.pointerType === 'mouse' && e.button !== 0) return;
+ if(isMoveMode){
+ e.preventDefault();
+ isDraggingTap = true;
+ dragStartX = e.clientX;
+ dragStartY = e.clientY;
+ origTapX = tapPrefs.x;
+ origTapY = tapPrefs.y;
+ bigBtn.setPointerCapture(e.pointerId);
+ return;
+ }
  bigBtn.classList.add('is-down');
+ applyTapPrefs(true);
  spawnTapRipple(e.clientX, e.clientY);
  });
 
- function releaseTapDown(){
+ bigBtn.addEventListener('pointermove', function(e){
+ if(!isDraggingTap) return;
+ e.preventDefault();
+ tapPrefs.x = Math.round(origTapX + (e.clientX - dragStartX));
+ tapPrefs.y = Math.round(origTapY + (e.clientY - dragStartY));
+ applyTapPrefs(false);
+ });
+
+ function releaseTapDown(e){
+ if(isDraggingTap){
+ isDraggingTap = false;
+ saveTapPrefs();
+ applyTapPrefs(false);
+ return;
+ }
  bigBtn.classList.remove('is-down');
+ applyTapPrefs(false);
  }
 
  bigBtn.addEventListener('pointerup', releaseTapDown);
  bigBtn.addEventListener('pointercancel', releaseTapDown);
- bigBtn.addEventListener('pointerleave', releaseTapDown);
+ bigBtn.addEventListener('pointerleave', function(){
+ if(!isDraggingTap){
+ bigBtn.classList.remove('is-down');
+ applyTapPrefs(false);
+ }
+ });
 
  bigBtn.addEventListener('click', function(){
- if(!currentId) return;
+ if(isMoveMode || !currentId) return;
  if(navigator.vibrate) navigator.vibrate(25);
  var key = todayKey();
  var prevDone = metTarget(key, zikirById(currentId));
@@ -1406,16 +1672,55 @@
  }
  }
 
- $('btnHelpCsv').addEventListener('click', function(){
- var box = $('helpCsvBox');
+ $('btnHelpBackup').addEventListener('click', function(){
+ closeExportPopover();
+ var box = $('helpBackupBox');
  var isOpen = box.classList.toggle('show');
- $('btnHelpCsv').classList.toggle('on', isOpen);
+ $('btnHelpBackup').classList.toggle('on', isOpen);
  });
 
- $('btnExport').addEventListener('click', function(){
+ function triggerDownload(contentStr, mimeType, fileName){
+ var blob = new Blob([contentStr], { type: mimeType });
+ var url = URL.createObjectURL(blob);
+ var a = document.createElement('a');
+ a.style.display = 'none';
+ a.href = url;
+ a.download = fileName;
+ document.body.appendChild(a);
+ a.click();
+ setTimeout(function(){
+ if(a.parentNode) a.parentNode.removeChild(a);
+ URL.revokeObjectURL(url);
+ }, 1500);
+ }
+
+ function exportAsJson(){
  syncFromStorage();
  var tr = t();
- var csv = 'tanggal,zikir,jumlah,target\n';
+ var msgEl = $('backupMsg');
+ if(!data.zikirs.length && !Object.keys(data.counts).length){
+ msgEl.className = 'msg';
+ msgEl.textContent = tr.noExportData;
+ return;
+ }
+ var payload = {
+ app: 'Daily Dhikr',
+ version: 1,
+ exportedAt: new Date().toISOString(),
+ zikirs: data.zikirs,
+ counts: data.counts,
+ nextId: data.nextId
+ };
+ var jsonStr = JSON.stringify(payload, null, 2);
+ triggerDownload(jsonStr, 'application/json;charset=utf-8', 'daily-dhikr-backup-' + todayKey() + '.json');
+ msgEl.className = 'msg ok';
+ msgEl.textContent = tr.exportedJsonOk;
+ }
+
+ function exportAsCsv(){
+ syncFromStorage();
+ var tr = t();
+ var csv = '\uFEFFtanggal,zikir,jumlah,target\n';
  var rowCount = 0;
  Object.keys(data.counts).sort().forEach(function(k){
  var dayObj = data.counts[k] || {};
@@ -1430,109 +1735,102 @@
  }
  });
  });
- var msgEl = $('csvMsg');
+ var msgEl = $('backupMsg');
  if(rowCount === 0){
  msgEl.className = 'msg';
  msgEl.textContent = tr.noExportData;
  return;
  }
- var a = document.createElement('a');
- a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
- a.download = 'zikir-' + todayKey() + '.csv';
- a.click();
+ triggerDownload(csv, 'text/csv;charset=utf-8', 'zikir-' + todayKey() + '.csv');
  msgEl.className = 'msg ok';
- msgEl.textContent = tr.exportedOk(rowCount);
+ msgEl.textContent = tr.exportedCsvOk(rowCount);
+ }
+
+ $('btnExport').addEventListener('click', function(e){
+ e.stopPropagation();
+ $('exportPopover').classList.toggle('show');
  });
 
- $('btnImport').addEventListener('click', function(){
- $('fileImport').value = '';
- $('fileImport').click();
+ $('optExportJson').addEventListener('click', function(e){
+ e.stopPropagation();
+ closeExportPopover();
+ exportAsJson();
  });
 
- function parseCSVLine(line){
- var result = [], cur = '', inQuotes = false;
- for(var i = 0; i < line.length; i++){
- var ch = line[i];
- if(inQuotes){
- if(ch === '"' && line[i + 1] === '"'){ cur += '"'; i++; }
- else if(ch === '"'){ inQuotes = false; }
- else{ cur += ch; }
- }else{
- if(ch === '"'){ inQuotes = true; }
- else if(ch === ','){ result.push(cur); cur = ''; }
- else{ cur += ch; }
- }
- }
- result.push(cur);
- return result;
- }
+ $('optExportCsv').addEventListener('click', function(e){
+ e.stopPropagation();
+ closeExportPopover();
+ exportAsCsv();
+ });
 
- $('fileImport').addEventListener('change', function(e){
+ document.addEventListener('click', function(e){
+ if(!$('exportWrap').contains(e.target)){
+ closeExportPopover();
+ }
+ });
+
+ $('btnImportJson').addEventListener('click', function(){
+ closeExportPopover();
+ var inp = $('fileImportJson');
+ inp.value = '';
+ inp.click();
+ });
+
+ $('fileImportJson').addEventListener('change', function(e){
  var file = e.target.files && e.target.files[0];
  if(!file) return;
  var tr = t();
- var reader = new FileReader();
- reader.onload = function(evt){
- var msgEl = $('csvMsg');
+ var msgEl = $('backupMsg');
+
+ function handleTextContent(rawText){
  try{
- var text = String(evt.target.result || '').replace(/^\uFEFF/, '');
- var lines = text.split(/\r?\n/).filter(function(l){ return l.trim().length > 0; });
- if(lines.length < 2){
- msgEl.className = 'msg';
- msgEl.textContent = tr.csvEmpty;
- return;
+ var cleanText = String(rawText || '').replace(/^\uFEFF/, '').trim();
+ if(!cleanText) throw new Error('empty');
+ var parsed = JSON.parse(cleanText);
+ if(!parsed || typeof parsed !== 'object' || Array.isArray(parsed)){
+ throw new Error('invalid_root');
  }
-
- syncFromStorage();
- var importedRows = 0, addedZikirs = 0;
-
- for(var i = 1; i < lines.length; i++){
- var cols = parseCSVLine(lines[i]);
- if(cols.length < 4) continue;
- var dateStr = cols[0].trim();
- var zName = cols[1].trim();
- var countVal = parseInt(cols[2], 10);
- var targetVal = parseInt(cols[3], 10) || 1;
-
- if(!/^\d{4}-\d{2}-\d{2}$/.test(dateStr) || !zName || isNaN(countVal)) continue;
-
- var existing = null;
- for(var j = 0; j < data.zikirs.length; j++){
- if(data.zikirs[j].name.toLowerCase() === zName.toLowerCase()){
- existing = data.zikirs[j];
- break;
+ var hasZikirs = Array.isArray(parsed.zikirs) || Array.isArray(parsed.items);
+ var hasCounts = (parsed.counts && typeof parsed.counts === 'object' && !Array.isArray(parsed.counts)) ||
+ (parsed.history && typeof parsed.history === 'object' && !Array.isArray(parsed.history));
+ if(!hasZikirs && !hasCounts){
+ throw new Error('missing_fields');
  }
- }
- if(!existing){
- existing = { id: data.nextId++, name: zName, target: Math.max(1, targetVal) };
- data.zikirs.push(existing);
- addedZikirs++;
- }
-
- if(!data.counts[dateStr] || typeof data.counts[dateStr] !== 'object'){
- data.counts[dateStr] = {};
- }
- var prevCount = Number(data.counts[dateStr][String(existing.id)]) || 0;
- data.counts[dateStr][String(existing.id)] = Math.max(prevCount, Math.max(0, countVal));
- importedRows++;
- }
-
- if(importedRows === 0){
- msgEl.className = 'msg';
- msgEl.textContent = tr.csvInvalid;
- return;
- }
-
+ var imported = normalizeData(parsed);
+ data = imported;
+ currentId = data.zikirs.length ? data.zikirs[0].id : null;
+ editingId = null;
  save();
+ renderHome();
  renderHistory();
+ if($('subChart').classList.contains('active')) drawChart();
  msgEl.className = 'msg ok';
- msgEl.textContent = tr.importedOk(importedRows, addedZikirs);
+ msgEl.textContent = tr.importedJsonOk(data.zikirs.length);
  }catch(err){
  msgEl.className = 'msg';
- msgEl.textContent = tr.csvReadErr;
+ msgEl.textContent = tr.jsonInvalid;
  }
+ }
+
+ if(typeof file.text === 'function'){
+ file.text().then(handleTextContent).catch(function(){
+ var reader = new FileReader();
+ reader.onload = function(evt){ handleTextContent(evt && evt.target ? evt.target.result : ''); };
+ reader.onerror = function(){
+ msgEl.className = 'msg';
+ msgEl.textContent = tr.jsonInvalid;
  };
  reader.readAsText(file, 'UTF-8');
+ });
+ }else{
+ var reader = new FileReader();
+ reader.onload = function(evt){ handleTextContent(evt && evt.target ? evt.target.result : ''); };
+ reader.onerror = function(){
+ msgEl.className = 'msg';
+ msgEl.textContent = tr.jsonInvalid;
+ };
+ reader.readAsText(file, 'UTF-8');
+ }
  });
 
  $('monthPick').addEventListener('change', drawChart);
@@ -1556,7 +1854,7 @@
  if(!y || !m) return;
 
  var daysInMonth = new Date(y, m, 0).getDate();
- var single = $('filterSel').value !== 'all' ? zikirById(Number($('filterSel').value)) : null;
+ var single = $('filterSel').value !== 'all' ? zikirById($('filterSel').value) : null;
 
  var values = [];
  var total = 0, active = 0, hit = 0;
