@@ -448,9 +448,9 @@
  <div class="doa-text" id="doaText"></div>
  </div>
 
- <h2 id="h2Add">Tambah Zikir atau Dua</h2>
+ <h2 id="h2Add">Tambah Zikir atau Doa</h2>
  <div class="simple-form">
- <input id="inName" class="simple-name" type="text" placeholder="Tulis zikir atau dua..." maxlength="1000">
+ <input id="inName" class="simple-name" type="text" placeholder="Tulis zikir atau doa..." maxlength="1000">
  <input id="inTarget" class="simple-target" type="number" placeholder="100" min="1" inputmode="numeric">
  <button type="button" class="btn-plus" id="btnAdd" aria-label="Simpan">+</button>
  </div>
@@ -493,7 +493,7 @@
  <button type="button" class="pill-btn" id="btnResetPos" style="display:none">Reset Posisi</button>
  </div>
  </div>
- <div class="card muted" id="emptyToday" style="text-align:center;display:none;margin-top:16px">Belum ada zikir atau dua. Tambahkan dulu di menu Beranda.</div>
+ <div class="card muted" id="emptyToday" style="text-align:center;display:none;margin-top:16px">Belum ada zikir atau doa. Tambahkan dulu di menu Beranda.</div>
 </section>
 
 <!-- RIWAYAT (HISTORY) -->
@@ -509,7 +509,7 @@
  <div class="num" id="streakNum">0</div>
  <div>
  <div class="streak-title" id="streakLabel">Hari Berturut-Turut</div>
- <div class="streak-sub" id="streakSub">Tambahkan zikir atau dua untuk mulai</div>
+ <div class="streak-sub" id="streakSub">Tambahkan zikir atau doa untuk mulai</div>
  </div>
  </div>
  <div class="best-pill" id="bestPill">Terbaik: 0h</div>
@@ -579,15 +579,15 @@
  streakLabel: 'Hari Berturut-Turut',
  bestPrefix: 'Terbaik',
  dayShort: 'h',
- streakNoData: 'Tambahkan zikir atau dua untuk mulai',
+ streakNoData: 'Tambahkan zikir atau doa untuk mulai',
  streakYesterday: function(met, total){ return 'Kemarin, ' + met + ' dari ' + total + ' tercapai'; },
  streakToday: function(met, total){ return 'Hari ini, ' + met + ' dari ' + total + ' tercapai'; },
- h2Add: 'Tambah Zikir atau Dua',
- phName: 'Tulis zikir atau dua...',
+ h2Add: 'Tambah Zikir atau Doa',
+ phName: 'Tulis zikir atau doa...',
  phTarget: '100',
  h2List: 'Daftar Zikir',
  dragHint: 'Seret ☰ untuk urutkan',
- emptyList: 'Belum ada zikir atau dua.',
+ emptyList: 'Belum ada zikir atau doa.',
  perDay: function(t){ return 'Target ' + t + ' per hari'; },
  btnEdit: 'Edit',
  btnDel: 'Hapus',
@@ -595,9 +595,9 @@
  btnCancel: 'Batal',
  btnSave: 'Simpan',
  btnDrag: 'Geser urutan',
- errEmptyName: 'Bacaan zikir atau dua belum diisi.',
+ errEmptyName: 'Bacaan zikir atau doa belum diisi.',
  errTarget: 'Target harus angka lebih dari 0.',
- errDuplicate: 'Bacaan zikir atau dua itu sudah ada.',
+ errDuplicate: 'Bacaan zikir atau doa itu sudah ada.',
  h1Today: 'Zikir Hari Ini',
  zTarget: function(t){ return 'Target: ' + t; },
  zHint: 'Ketuk lingkaran untuk menghitung',
@@ -608,7 +608,7 @@
  btnMove: 'Geser Posisi',
  btnLock: '✓ Kunci Posisi',
  btnResetPos: 'Reset Posisi',
- emptyToday: 'Belum ada zikir atau dua. Tambahkan dulu di menu Beranda.',
+ emptyToday: 'Belum ada zikir atau doa. Tambahkan dulu di menu Beranda.',
  h1History: 'Riwayat',
  historySub: 'Catatan dan grafik zikirmu',
  tabLog: 'Riwayat',
@@ -618,7 +618,7 @@
  showAll: 'Lihat Semua',
  show7Days: '7 Hari Terakhir',
  allDoneBadge: '✓ Semua Tercapai',
- allDhikr: 'Semua Zikir & Dua',
+ allDhikr: 'Semua Zikir & Doa',
  stAvgLbl: 'Rata-Rata Harian',
  stDaysLbl: 'Hari Aktif',
  stHitLbl: 'Hari Target Tercapai',
@@ -629,7 +629,7 @@
  exportedJsonOk: 'Cadangan JSON berhasil diunduh.',
  exportedCsvOk: function(n){ return 'File .CSV berhasil diunduh (' + n + ' baris).'; },
  jsonInvalid: 'Format file JSON tidak sesuai atau rusak.',
- importedJsonOk: function(items){ return 'Data berhasil dipulihkan (' + items + ' zikir/dua).'; },
+ importedJsonOk: function(items){ return 'Data berhasil dipulihkan (' + items + ' zikir/doa).'; },
  navToday: 'Hitung',
  navHome: 'Beranda',
  navHistory: 'Riwayat',
